@@ -1,0 +1,106 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.graalvm.buildtools.native' version '0.9.24'
+    id 'com.diffplug.spotless' version "6.20.0"
+}
+
+group 'ai.mender'
+version '0.0.1-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'info.picocli:picocli:4.7.4'
+    implementation "org.antlr:antlr4-runtime:4.13.0"
+    implementation 'org.antlr:antlr4:4.13.0'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+compileJava {
+    options.compilerArgs += ["-Aproject=${project.group}/${project.name}"]
+}
+
+application {
+    mainClass = 'ai.mender.Main'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+sourceCompatibility = JavaVersion.VERSION_20 // TO THE MOON
+targetCompatibility = JavaVersion.VERSION_20 // TO THE MOON
+
+graalvmNative {
+    binaries.all {
+        resources.autodetect()
+    }
+    binaries.main {
+
+        javaLauncher = javaToolchains.launcherFor {
+            languageVersion = JavaLanguageVersion.of(20)
+            vendor = JvmVendorSpec.matching("Oracle")
+        }
+    }
+    toolchainDetection = false
+}
+
+sourceSets.main.java.srcDirs = ['src/main/java','src/main-generated/java']
+
+task generateLexer(type:JavaExec) {
+    def lexerName = "CPP14Lexer"
+    inputs.file("vendor/${lexerName}.g4")
+    outputs.file("src/main-generated/java/${lexerName}.java")
+    outputs.file("src/main-generated/java/${lexerName}.interp")
+    outputs.file("src/main-generated/java/${lexerName}.tokens")
+    main = 'org.antlr.v4.Tool'
+    classpath = sourceSets.main.runtimeClasspath
+    workingDir = 'vendor'
+    args = ['-Dlanguage=Java', "${lexerName}.g4", '-o', '../src/main-generated/java/']
+}
+task generateParser(type:JavaExec) {
+    dependsOn generateLexer
+    def lexerName = "CPP14Lexer"
+    def parserName = "CPP14Parser"
+    inputs.file("vendor/${parserName}.g4")
+    inputs.file("src/main-generated/java/${lexerName}.tokens")
+    outputs.file("src/main-generated/java/${parserName}.java")
+    outputs.file("src/main-generated/java/${parserName}.interp")
+    outputs.file("src/main-generated/java/${parserName}.tokens")
+    main = 'org.antlr.v4.Tool'
+    classpath = sourceSets.main.runtimeClasspath
+    args = ['-Dlanguage=Java', "${parserName}.g4", '-o', '../src/main-generated/java/']
+    workingDir = 'vendor'
+}
+
+spotless {
+    // optional: limit format enforcement to just the files changed by this feature branch
+    ratchetFrom 'origin/main'
+
+    format 'misc', {
+        // define the files to apply `misc` to
+        target '*.gradle', '*.md', '.gitignore'
+
+        // define the steps to apply to those files
+        trimTrailingWhitespace()
+        indentWithSpaces()
+        endWithNewline()
+    }
+    java {
+        // don't need to set target, it is inferred from java
+
+
+        // fix formatting of type annotations
+        formatAnnotations()
+        importOrder()
+        // apply a specific flavor of google-java-format
+        googleJavaFormat('1.17.0').aosp().reflowLongStrings()
+    }
+}
