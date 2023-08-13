@@ -3,6 +3,7 @@ plugins {
     id 'application'
     id 'org.graalvm.buildtools.native' version '0.9.24'
     id 'com.diffplug.spotless' version "6.20.0"
+    id 'jacoco'
 }
 
 group 'ai.mender'
@@ -20,6 +21,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'com.approvaltests:approvaltests:18.7.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
 
@@ -33,6 +35,21 @@ application {
 
 test {
     useJUnitPlatform()
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/antlrgen/*'
+            ])
+        })
+    }
+}
+jacocoTestCoverageVerification {
+
 }
 
 sourceCompatibility = JavaVersion.VERSION_20 // TO THE MOON
