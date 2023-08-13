@@ -37,7 +37,7 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
         try {
 
             switch (extension.toLowerCase()) {
-                case "c" -> {
+                case "c", "cpp", "cc" -> {
                     collectCppFunctions(file, items, false);
                     success = true;
                 }

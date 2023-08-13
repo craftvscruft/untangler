@@ -7,6 +7,8 @@ import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import picocli.CommandLine;
 
 public class TestGetFunctionsCmd {
@@ -33,14 +35,15 @@ public class TestGetFunctionsCmd {
         return helloCPath;
     }
 
-    @Test
-    public void testCFile() {
-        int exitCode = cmd.execute("get", "fns", getTestResourcePath("hello.c"));
+    @ParameterizedTest
+    @ValueSource(strings = {"hello.c", "hello.cpp"})
+    public void testCFile(String fileName) {
+        int exitCode = cmd.execute("get", "fns", getTestResourcePath(fileName));
         Assertions.assertEquals(0, exitCode);
         String out = outWriter.toString();
         String err = errWriter.toString();
         Assertions.assertEquals("", err);
-        Approvals.verify(out);
+        Approvals.verify(out, Approvals.NAMES.withParameters(fileName));
     }
 
     @Test
