@@ -26,6 +26,7 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
     @CommandLine.Parameters(index = "0", description = "The source code file to analyze")
     private File file;
 
+    @CommandLine.Spec CommandLine.Model.CommandSpec spec;
     private boolean success = false;
 
     @Override
@@ -49,7 +50,7 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
             success = true;
         }
         ListResponse<FunctionRec> response = new ListResponse<>(success, message, items);
-        Console.printJson(response);
+        Console.printJson(response, spec.commandLine().getOut());
     }
 
     private static void collectCppFunctions(
