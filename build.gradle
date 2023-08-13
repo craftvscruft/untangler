@@ -85,7 +85,9 @@ graalvmNative {
 
 sourceSets.main.java.srcDirs = ['src/main/java','src/main-generated/java']
 
-task copyParserBase(type: Copy) {
+// ## CPP14 Parser Gen START
+
+task copyCppParserBase(type: Copy) {
     def pkgDir = providers.gradleProperty('untangler.antlrgen.cpp.packageDir').get()
     def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
     from('vendor/CPP14/Java/')
@@ -93,7 +95,7 @@ task copyParserBase(type: Copy) {
     include('CPP14ParserBase.java')
 }
 
-task generateLexer(type:JavaExec) {
+task generateCppLexer(type:JavaExec) {
     def lexerName = "CPP14Lexer"
     def pkg = providers.gradleProperty('untangler.antlrgen.cpp.package').get()
     def pkgDir = providers.gradleProperty('untangler.antlrgen.cpp.packageDir').get()
@@ -104,7 +106,6 @@ task generateLexer(type:JavaExec) {
     outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.tokens")
     main = 'org.antlr.v4.Tool'
 
-//    ResolvedArtifact artifact = configurations.testCompile.resolvedConfiguration.resolvedArtifacts.find { it.moduleVersion.id.name == "antlr4" }
     classpath = files(configurations.antlrGen.resolvedConfiguration.resolvedArtifacts*.file)
     workingDir = 'vendor/CPP14'
     args = [
@@ -116,8 +117,9 @@ task generateLexer(type:JavaExec) {
             pkg
     ]
 }
-task generateParser(type:JavaExec) {
-    dependsOn generateLexer, copyParserBase
+
+task generateCppParser(type:JavaExec) {
+    dependsOn generateCppLexer, copyCppParserBase
     def pkg = providers.gradleProperty('untangler.antlrgen.cpp.package').get()
     def pkgDir = providers.gradleProperty('untangler.antlrgen.cpp.packageDir').get()
     def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
@@ -140,6 +142,68 @@ task generateParser(type:JavaExec) {
     ]
     workingDir = 'vendor/CPP14'
 }
+
+// ## CPP14 Parser Gen END
+
+// ## Python Parser Gen START
+
+task copyPythonParserBase(type: Copy) {
+    def pkgDir = providers.gradleProperty('untangler.antlrgen.python.packageDir').get()
+    def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
+    from('vendor/Python/Java/')
+    into("$genSrcPath/$pkgDir/")
+    include('PythonParserBase.java')
+    include('PythonLexerBase.java')
+    include('PythonVersion.java')
+}
+
+task generatePythonLexer(type:JavaExec) {
+    def lexerName = "PythonLexer"
+    def pkg = providers.gradleProperty('untangler.antlrgen.python.package').get()
+    def pkgDir = providers.gradleProperty('untangler.antlrgen.python.packageDir').get()
+    def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
+    inputs.file("vendor/Python/${lexerName}.g4")
+    outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.java")
+    outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.interp")
+    outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.tokens")
+    main = 'org.antlr.v4.Tool'
+
+    classpath = files(configurations.antlrGen.resolvedConfiguration.resolvedArtifacts*.file)
+    workingDir = 'vendor/Python'
+    args = [
+            '-Dlanguage=Java',
+            "${lexerName}.g4",
+            '-o',
+            "../../${genSrcPath}/${pkgDir}/",
+            "-package",
+            pkg
+    ]
+}
+task generatePythonParser(type:JavaExec) {
+    dependsOn generatePythonLexer, copyPythonParserBase
+    def pkg = providers.gradleProperty('untangler.antlrgen.python.package').get()
+    def pkgDir = providers.gradleProperty('untangler.antlrgen.python.packageDir').get()
+    def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
+    def lexerName = "PythonLexer"
+    def parserName = "PythonParser"
+    inputs.file("vendor/Python/${parserName}.g4")
+    inputs.file("${genSrcPath}/${pkgDir}/${lexerName}.tokens")
+    outputs.file("${genSrcPath}/${pkgDir}/${parserName}.java")
+    outputs.file("${genSrcPath}/${pkgDir}/${parserName}.interp")
+    outputs.file("${genSrcPath}/${pkgDir}/${parserName}.tokens")
+    main = 'org.antlr.v4.Tool'
+    classpath = files(configurations.antlrGen.resolvedConfiguration.resolvedArtifacts*.file)
+    args = [
+            '-Dlanguage=Java',
+            "${parserName}.g4",
+            '-o',
+            "../../${genSrcPath}/${pkgDir}/",
+            "-package",
+            pkg
+    ]
+    workingDir = 'vendor/Python'
+}
+// ## Python Parser Gen END
 
 spotless {
     // optional: limit format enforcement to just the files changed by this feature branch
