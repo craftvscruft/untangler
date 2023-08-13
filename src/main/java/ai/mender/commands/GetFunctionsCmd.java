@@ -8,51 +8,66 @@ import ai.mender.parsing.CharsetUtils;
 import ai.mender.parsing.CppFunctionDefinitionNode;
 import antlrgen.CPP14Parser;
 import antlrgen.CPP14ParserBaseListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import picocli.CommandLine;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-
-
-@CommandLine.Command(name = "functions", mixinStandardHelpOptions = true,
-        description = "Lists functions defined in a file as json", aliases = {"function", "fns", "fn", "fun"})
-public class GetFunctionsCmd implements Runnable {
+@CommandLine.Command(
+        name = "functions",
+        mixinStandardHelpOptions = true,
+        description = "Lists functions defined in a file as json",
+        aliases = {"function", "fns", "fn", "fun"})
+public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator {
     @CommandLine.Parameters(index = "0", description = "The source code file to analyze")
     private File file;
 
+    private boolean success = false;
 
     @Override
     public void run() {
         var items = new ArrayList<FunctionRec>();
         var message = "OK";
-        var success = true;
-        CPP14ParserBaseListener listener = new CPP14ParserBaseListener() {
-
-            @Override
-            public void enterFunctionDefinition(CPP14Parser.FunctionDefinitionContext ctx) {
-                items.add(new CppFunctionDefinitionNode(ctx).toFunctionRec());
-            }
-        };
-
+        String extension = getExtension(file);
         try {
-            String extension = getExtension(file);
-            if (extension.equalsIgnoreCase("c")) {
-                CharStream inputStream = CharStreams.fromFileName(file.getAbsolutePath(), CharsetUtils.detectFileCharset(file));
-                CPP14Parser.TranslationUnitContext tree = Language.parseProgram(inputStream);
-                ParseTreeWalker.DEFAULT.walk(listener, tree);
-            } else {
-                message = "Unknown file type! Cannot parse.";
-                success = false;
-            }
 
-            Console.printJson(new ListResponse<>(success, message, items));
+            switch (extension.toLowerCase()) {
+                case "c" -> {
+                    collectCppFunctions(file, items, false);
+                    success = true;
+                }
+                default -> {
+                    message = "Unknown file type! Cannot parse.";
+                }
+            }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            message = e.getMessage();
+            success = true;
         }
+        ListResponse<FunctionRec> response = new ListResponse<>(success, message, items);
+        Console.printJson(response);
+    }
+
+    private static void collectCppFunctions(
+            File file, List<FunctionRec> items, boolean throwOnParseError) throws IOException {
+        CPP14ParserBaseListener listener =
+                new CPP14ParserBaseListener() {
+
+                    @Override
+                    public void enterFunctionDefinition(CPP14Parser.FunctionDefinitionContext ctx) {
+                        items.add(new CppFunctionDefinitionNode(ctx).toFunctionRec());
+                    }
+                };
+        CharStream inputStream =
+                CharStreams.fromFileName(
+                        file.getAbsolutePath(), CharsetUtils.detectFileCharset(file));
+        CPP14Parser.TranslationUnitContext tree =
+                Language.parseProgram(inputStream, throwOnParseError);
+        ParseTreeWalker.DEFAULT.walk(listener, tree);
     }
 
     private String getExtension(File file) {
@@ -64,4 +79,8 @@ public class GetFunctionsCmd implements Runnable {
         return extension;
     }
 
+    @Override
+    public int getExitCode() {
+        return success ? 0 : 1;
+    }
 }
