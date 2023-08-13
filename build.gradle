@@ -21,8 +21,11 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
     testImplementation 'com.approvaltests:approvaltests:18.7.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
 }
 
 compileJava {
@@ -36,6 +39,11 @@ application {
 test {
     useJUnitPlatform()
     finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+check {
+    // Run formatting whenever we run check so we don't get behind
+    dependsOn spotlessApply
 }
 
 jacocoTestReport {
@@ -73,20 +81,20 @@ sourceSets.main.java.srcDirs = ['src/main/java','src/main-generated/java']
 
 task generateLexer(type:JavaExec) {
     def lexerName = "CPP14Lexer"
-    inputs.file("vendor/${lexerName}.g4")
+    inputs.file("vendor/CPP14/${lexerName}.g4")
     outputs.file("src/main-generated/java/${lexerName}.java")
     outputs.file("src/main-generated/java/${lexerName}.interp")
     outputs.file("src/main-generated/java/${lexerName}.tokens")
     main = 'org.antlr.v4.Tool'
     classpath = sourceSets.main.runtimeClasspath
-    workingDir = 'vendor'
+    workingDir = 'vendor/CPP14'
     args = ['-Dlanguage=Java', "${lexerName}.g4", '-o', '../src/main-generated/java/']
 }
 task generateParser(type:JavaExec) {
     dependsOn generateLexer
     def lexerName = "CPP14Lexer"
     def parserName = "CPP14Parser"
-    inputs.file("vendor/${parserName}.g4")
+    inputs.file("vendor/CPP14/${parserName}.g4")
     inputs.file("src/main-generated/java/${lexerName}.tokens")
     outputs.file("src/main-generated/java/${parserName}.java")
     outputs.file("src/main-generated/java/${parserName}.interp")
@@ -94,7 +102,7 @@ task generateParser(type:JavaExec) {
     main = 'org.antlr.v4.Tool'
     classpath = sourceSets.main.runtimeClasspath
     args = ['-Dlanguage=Java', "${parserName}.g4", '-o', '../src/main-generated/java/']
-    workingDir = 'vendor'
+    workingDir = 'vendor/CPP14'
 }
 
 spotless {
