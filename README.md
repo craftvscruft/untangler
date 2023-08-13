@@ -26,3 +26,39 @@ export JAVA_HOME=...
 ./gradlew nativeCompile
 
 ...
+
+## Testing
+
+Just the unit tests:
+
+./gradlew test
+
+Everything:
+
+./gradlew spotlessApply check
+
+Coverage report in `open build/reports/jacoco/test/html/index.html`
+
+## Vision
+
+* Support each of the [core 6 refactorings](https://arlobelshee.com/the-core-6-refactorings) identified by Arlo Belshee
+* Support the Menderbot [target languages](https://github.com/craftvscruft/menderbot/issues/5) with reliable syntax tree manipulation
+* Operate independent of a language server
+* Be automation-friendly - commands should have an option to output json, for instance
+
+### Core 6 refactorings
+
+* Rename
+* Inline
+* Extract Method
+* Introduce Local Variable
+* Introduce Parameter
+* Introduce Field
+
+### Target languages
+
+1. Python
+2. C / C++
+3. Java
+4. C#
+5. JavaScript / TypeScript
