@@ -13,19 +13,24 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    antlrGen
+}
+
 dependencies {
     implementation 'info.picocli:picocli:4.7.4'
     implementation "org.antlr:antlr4-runtime:4.13.0"
-    implementation 'org.antlr:antlr4:4.13.0'
+    implementation 'com.ibm.icu:icu4j:73.2'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
     implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
     testImplementation 'com.approvaltests:approvaltests:18.7.1'
 
-
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
+    antlrGen 'org.antlr:antlr4:4.13.0'
 }
 
 compileJava {
@@ -79,29 +84,52 @@ graalvmNative {
 
 sourceSets.main.java.srcDirs = ['src/main/java','src/main-generated/java']
 
+task copyParserBase(type: Copy) {
+    from('vendor/CPP14/Java/')
+    into('src/main-generated/java/antlrgen/')
+    include('CPP14ParserBase.java')
+}
+
 task generateLexer(type:JavaExec) {
     def lexerName = "CPP14Lexer"
     inputs.file("vendor/CPP14/${lexerName}.g4")
-    outputs.file("src/main-generated/java/${lexerName}.java")
-    outputs.file("src/main-generated/java/${lexerName}.interp")
-    outputs.file("src/main-generated/java/${lexerName}.tokens")
+    outputs.file("src/main-generated/java/antlrgen/${lexerName}.java")
+    outputs.file("src/main-generated/java/antlrgen/${lexerName}.interp")
+    outputs.file("src/main-generated/java/antlrgen/${lexerName}.tokens")
     main = 'org.antlr.v4.Tool'
-    classpath = sourceSets.main.runtimeClasspath
+
+//    ResolvedArtifact artifact = configurations.testCompile.resolvedConfiguration.resolvedArtifacts.find { it.moduleVersion.id.name == "antlr4" }
+    classpath = files(configurations.antlrGen.resolvedConfiguration.resolvedArtifacts*.file)
     workingDir = 'vendor/CPP14'
-    args = ['-Dlanguage=Java', "${lexerName}.g4", '-o', '../src/main-generated/java/']
+    args = [
+            '-Dlanguage=Java',
+            "${lexerName}.g4",
+            '-o',
+            '../../src/main-generated/java/antlrgen/',
+            "-package",
+            "antlrgen"
+    ]
 }
 task generateParser(type:JavaExec) {
-    dependsOn generateLexer
+    dependsOn generateLexer, copyParserBase
+
     def lexerName = "CPP14Lexer"
     def parserName = "CPP14Parser"
     inputs.file("vendor/CPP14/${parserName}.g4")
-    inputs.file("src/main-generated/java/${lexerName}.tokens")
-    outputs.file("src/main-generated/java/${parserName}.java")
-    outputs.file("src/main-generated/java/${parserName}.interp")
-    outputs.file("src/main-generated/java/${parserName}.tokens")
+    inputs.file("src/main-generated/java/antlrgen/${lexerName}.tokens")
+    outputs.file("src/main-generated/java/antlrgen/${parserName}.java")
+    outputs.file("src/main-generated/java/antlrgen/${parserName}.interp")
+    outputs.file("src/main-generated/java/antlrgen/${parserName}.tokens")
     main = 'org.antlr.v4.Tool'
-    classpath = sourceSets.main.runtimeClasspath
-    args = ['-Dlanguage=Java', "${parserName}.g4", '-o', '../src/main-generated/java/']
+    classpath = files(configurations.antlrGen.resolvedConfiguration.resolvedArtifacts*.file)
+    args = [
+            '-Dlanguage=Java',
+            "${parserName}.g4",
+            '-o',
+            '../../src/main-generated/java/antlrgen/',
+            "-package",
+            "antlrgen"
+    ]
     workingDir = 'vendor/CPP14'
 }
 
