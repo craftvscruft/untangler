@@ -1,5 +1,5 @@
 // Generated from CPP14Lexer.g4 by ANTLR 4.13.0
-package antlrgen;
+package antlrgen.cpp14;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.CharStream;

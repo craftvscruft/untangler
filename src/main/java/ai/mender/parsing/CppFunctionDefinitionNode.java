@@ -2,11 +2,12 @@ package ai.mender.parsing;
 
 import ai.mender.Language;
 import ai.mender.domain.FunctionRec;
-import antlrgen.CPP14Parser;
-import antlrgen.CPP14ParserBaseListener;
+import antlrgen.cpp14.CPP14Parser;
+import antlrgen.cpp14.CPP14ParserBaseListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-public class CppFunctionDefinitionNode implements FunctionDefinitionNode<CPP14Parser.FunctionDefinitionContext> {
+public class CppFunctionDefinitionNode
+        implements FunctionDefinitionNode<CPP14Parser.FunctionDefinitionContext> {
     private final CPP14Parser.FunctionDefinitionContext ctx;
 
     public CppFunctionDefinitionNode(CPP14Parser.FunctionDefinitionContext ctx) {

@@ -61,6 +61,7 @@ jacocoTestReport {
         })
     }
 }
+
 jacocoTestCoverageVerification {
 
 }
@@ -85,17 +86,22 @@ graalvmNative {
 sourceSets.main.java.srcDirs = ['src/main/java','src/main-generated/java']
 
 task copyParserBase(type: Copy) {
+    def pkgDir = providers.gradleProperty('untangler.antlrgen.cpp.packageDir').get()
+    def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
     from('vendor/CPP14/Java/')
-    into('src/main-generated/java/antlrgen/')
+    into("$genSrcPath/$pkgDir/")
     include('CPP14ParserBase.java')
 }
 
 task generateLexer(type:JavaExec) {
     def lexerName = "CPP14Lexer"
+    def pkg = providers.gradleProperty('untangler.antlrgen.cpp.package').get()
+    def pkgDir = providers.gradleProperty('untangler.antlrgen.cpp.packageDir').get()
+    def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
     inputs.file("vendor/CPP14/${lexerName}.g4")
-    outputs.file("src/main-generated/java/antlrgen/${lexerName}.java")
-    outputs.file("src/main-generated/java/antlrgen/${lexerName}.interp")
-    outputs.file("src/main-generated/java/antlrgen/${lexerName}.tokens")
+    outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.java")
+    outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.interp")
+    outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.tokens")
     main = 'org.antlr.v4.Tool'
 
 //    ResolvedArtifact artifact = configurations.testCompile.resolvedConfiguration.resolvedArtifacts.find { it.moduleVersion.id.name == "antlr4" }
@@ -105,30 +111,32 @@ task generateLexer(type:JavaExec) {
             '-Dlanguage=Java',
             "${lexerName}.g4",
             '-o',
-            '../../src/main-generated/java/antlrgen/',
+            "../../${genSrcPath}/${pkgDir}/",
             "-package",
-            "antlrgen"
+            pkg
     ]
 }
 task generateParser(type:JavaExec) {
     dependsOn generateLexer, copyParserBase
-
+    def pkg = providers.gradleProperty('untangler.antlrgen.cpp.package').get()
+    def pkgDir = providers.gradleProperty('untangler.antlrgen.cpp.packageDir').get()
+    def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
     def lexerName = "CPP14Lexer"
     def parserName = "CPP14Parser"
     inputs.file("vendor/CPP14/${parserName}.g4")
-    inputs.file("src/main-generated/java/antlrgen/${lexerName}.tokens")
-    outputs.file("src/main-generated/java/antlrgen/${parserName}.java")
-    outputs.file("src/main-generated/java/antlrgen/${parserName}.interp")
-    outputs.file("src/main-generated/java/antlrgen/${parserName}.tokens")
+    inputs.file("${genSrcPath}/${pkgDir}/${lexerName}.tokens")
+    outputs.file("${genSrcPath}/${pkgDir}/${parserName}.java")
+    outputs.file("${genSrcPath}/${pkgDir}/${parserName}.interp")
+    outputs.file("${genSrcPath}/${pkgDir}/${parserName}.tokens")
     main = 'org.antlr.v4.Tool'
     classpath = files(configurations.antlrGen.resolvedConfiguration.resolvedArtifacts*.file)
     args = [
             '-Dlanguage=Java',
             "${parserName}.g4",
             '-o',
-            '../../src/main-generated/java/antlrgen/',
+            "../../${genSrcPath}/${pkgDir}/",
             "-package",
-            "antlrgen"
+            pkg
     ]
     workingDir = 'vendor/CPP14'
 }

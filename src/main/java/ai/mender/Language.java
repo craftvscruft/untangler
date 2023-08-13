@@ -1,8 +1,8 @@
 package ai.mender;
 
 import ai.mender.parsing.ThrowingErrorListener;
-import antlrgen.CPP14Lexer;
-import antlrgen.CPP14Parser;
+import antlrgen.cpp14.CPP14Lexer;
+import antlrgen.cpp14.CPP14Parser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
