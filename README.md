@@ -1,7 +1,19 @@
 # Untangler
+![Tests](https://github.com/craftvscruft/untangler/actions/workflows/ci.yml/badge.svg?branch=main)
+[![License: APACHE](https://img.shields.io/github/license/craftvscruft/untangler)](https://github.com/craftvscruft/untangler/blob/main/LICENSE)
 
-Multi-language refactoring tool implemented in Java, an experimental spin-off
+> Multi-language refactoring tool implemented in Java, an experimental spin-off
 of [MenderBot](https://github.com/craftvscruft/menderbot).
+
+## Status
+
+Prototype, not yet suitable for use.
+
+### Commands implemented:
+
+Commands will generally take the form `untangler <Action> <ResourceType> ...`
+
+* `untangler get functions`: List function definitions in a given file (C / C++ only)
 
 # Requirements (Build)
 
@@ -12,30 +24,45 @@ user.
 
 ## Running
 
+```
+# Your GraalVM JDK 20 instalation
 export JAVA_HOME=...
-./gradlew installDist
-build/install/untangler/bin/untangler
 
+./gradlew installDist
+
+build/install/untangler/bin/untangler
+```
+
+For easy rebuilding and running with the `un` shortcut, use:
+
+```
 alias un="./gradlew installDist -q && build/install/untangler/bin/untangler"
 
-un get functions build.gradle
+un get functions src/test/resources/hello.c
+```
 
-## Running native binary
+## Building native binary
 
+```
+# Your GraalVM JDK 20 instalation
 export JAVA_HOME=...
-./gradlew nativeCompile
 
-...
+./gradlew nativeCompile
+```
 
 ## Testing
 
 Just the unit tests:
 
+```
 ./gradlew test
+```
 
 Everything:
 
+```
 ./gradlew spotlessApply check
+```
 
 Coverage report in `open build/reports/jacoco/test/html/index.html`
 
@@ -62,3 +89,23 @@ Coverage report in `open build/reports/jacoco/test/html/index.html`
 3. Java
 4. C#
 5. JavaScript / TypeScript
+
+## Author
+
+👤 **Ray Myers**
+
+* YouTube: [Craft vs Cruft](https://www.youtube.com/channel/UC4nEbAo5xFsOZDk2v0RIGHA)
+* Twitter: [@lambdapocalypse](https://twitter.com/lambdapocalypse)
+* GitHub: [@raymyers](https://github.com/raymyers)
+* LinkedIn: [@cadrlife](https://linkedin.com/in/cadrlife)
+
+## Acknowledgements
+
+* [Antlr](https://www.antlr.org/) - the leading parser generator
+* [picocli](https://picocli.info/) - a mighty tiny command line interface
+
+## 📝 License
+
+Copyright © 2023 [Ray Myers](https://github.com/raymyers).
+
+This project is [Apache 2](https://www.apache.org/licenses/LICENSE-2.0) licensed.
