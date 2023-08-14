@@ -1,5 +1,3 @@
-package antlrgen.python;
-
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.TokenStream;
 

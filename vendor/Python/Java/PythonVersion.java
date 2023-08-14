@@ -1,5 +1,3 @@
-package antlrgen.python;
-
 public enum PythonVersion {
     Autodetect(0),
     Python2(2),
