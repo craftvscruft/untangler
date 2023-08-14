@@ -6,6 +6,7 @@ public class LanguageStrategies {
             case "c", "cpp", "cc" -> new CppStrategy();
             case "py" -> new PyStrategy();
             case "java" -> new JavaStrategy();
+            case "cs" -> new CSharpStrategy();
             default -> null;
         };
     }
