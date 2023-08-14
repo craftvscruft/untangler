@@ -1,20 +1,160 @@
-[
-{
-  "name":"ai.mender.domain.FunctionRec",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"line","parameterTypes":[] }, {"name":"name","parameterTypes":[] }]
-},
-{
-  "name":"ai.mender.domain.FunctionListResponse",
-  "allDeclaredFields":true,
-  "queryAllDeclaredMethods":true,
-  "queryAllDeclaredConstructors":true,
-  "methods":[{"name":"items","parameterTypes":[] }, {"name":"message","parameterTypes":[] }, {"name":"success","parameterTypes":[] }]
-},
-{
-  "name":"java.lang.reflect.RecordComponent",
-  "methods":[{"name":"getName","parameterTypes":[] }, {"name":"getType","parameterTypes":[] }]
-}
-]
+[ {
+  "name" : "ai.mender.domain.EditMode",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "values",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "valueOf",
+    "parameterTypes" : [ "java.lang.String" ]
+  }, {
+    "name" : "$values",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.domain.FunctionListResponse",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "message",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "success",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "items",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "writeTableOutput",
+    "parameterTypes" : [ "java.io.PrintWriter" ]
+  } ]
+}, {
+  "name" : "ai.mender.domain.FunctionRec",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "name",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "line",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.domain.SourceEdit",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "mode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "end",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "start",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "text",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.domain.SourceEditListResponse",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "message",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "success",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "edits",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "writeTableOutput",
+    "parameterTypes" : [ "java.io.PrintWriter" ]
+  } ]
+}, {
+  "name" : "ai.mender.domain.SourcePosition",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "line",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "col",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.domain.SourceRange",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "end",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "start",
+    "parameterTypes" : [ ]
+  } ]
+} ]

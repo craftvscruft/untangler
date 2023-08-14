@@ -100,9 +100,9 @@ alias nun="build/native/nativeCompile/untangler"
 ```
 
 If you get a reflection error, META-INF may need to be updated.
-Check the [Gradle native image](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#agent-support) docs for more
-
+Check the [Gradle native image](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#agent-support) docs for more info.
 So far what's been needed is for `META-INF/native-image/reflect-config.json` to list all the classes that we will serialize to Json.
+Try running GenerateReflectConfig to get new json (this should eventually be a build step).
 
 ## Author
 

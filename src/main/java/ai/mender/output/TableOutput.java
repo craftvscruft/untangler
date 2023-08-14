@@ -3,7 +3,6 @@ package ai.mender.output;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.PrintWriter;
-import java.io.Writer;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.RecordComponent;
 import java.util.Arrays;
@@ -12,12 +11,12 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class TableOutput {
-    public static <T extends Record> void writeTableOutput(Writer writer, List<T> items, Class<T> recClass) {
+    public static <T extends Record> void writeTableOutput(PrintWriter printWriter, List<T> items, Class<T> recClass) {
         RecordComponent[] rcs = recClass.getRecordComponents();
-        PrintWriter printWriter = new PrintWriter(writer);
         if (rcs.length == 0) {
             return;
         }
+
         var names = Arrays.stream(rcs).map(RecordComponent::getName).map(StringUtils::capitalize).toList();
 
         int columnCount = rcs.length;
@@ -31,6 +30,7 @@ public class TableOutput {
             printWriter.format(paddingForAllFields, strings);
             printWriter.println();
         }
+        printWriter.flush();
     }
 
     private static String computePaddingFormat(List<? extends Record> items, RecordComponent[] rcs, int columnCount) {

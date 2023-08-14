@@ -1,12 +1,12 @@
 package ai.mender.strategy.java;
 
-import ai.mender.domain.FunctionRec;
+import ai.mender.strategy.FunctionDefinitionNode;
 import ai.mender.strategy.TopLevelNode;
 import antlrgen.java20.Java20Parser;
 import antlrgen.java20.Java20ParserBaseListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class JavaTopLevelNode implements TopLevelNode {
     private final Java20Parser.CompilationUnitContext tree;
@@ -16,13 +16,13 @@ public class JavaTopLevelNode implements TopLevelNode {
     }
 
     @Override
-    public void collectFunctions(List<FunctionRec> items) {
+    public void forEachFunctionNode(Consumer<FunctionDefinitionNode> consumer) {
         Java20ParserBaseListener listener =
                 new Java20ParserBaseListener() {
 
                     @Override
                     public void enterMethodDeclaration(Java20Parser.MethodDeclarationContext ctx) {
-                        items.add(new JavaFunctionDefinitionNode(ctx).toFunctionRec());
+                        consumer.accept(new JavaFunctionDefinitionNode(ctx));
                     }
                 };
 

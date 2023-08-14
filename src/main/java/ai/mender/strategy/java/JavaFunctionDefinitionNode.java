@@ -1,8 +1,11 @@
 package ai.mender.strategy.java;
 
+import ai.mender.domain.SourcePosition;
+import ai.mender.domain.SourceRange;
 import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.strategy.FunctionDefinitionNode;
 import antlrgen.java20.Java20Parser;
+import org.antlr.v4.runtime.tree.TerminalNode;
 
 
 public class JavaFunctionDefinitionNode implements FunctionDefinitionNode<Java20Parser.MethodDeclarationContext> {
@@ -13,13 +16,29 @@ public class JavaFunctionDefinitionNode implements FunctionDefinitionNode<Java20
     }
 
 
+    private TerminalNode getNameAntlrTerminal() {
+        Java20Parser.MethodDeclaratorContext methodDeclarator = ctx.methodHeader().methodDeclarator();
+        return methodDeclarator.Identifier();
+    }
+
     @Override
     public String getName() {
-        return SyntaxTreeUtil.getTextIncludingWhitespace(ctx.methodHeader().methodDeclarator().Identifier());
+        return SyntaxTreeUtil.getTextIncludingWhitespace(getNameAntlrTerminal());
     }
 
     @Override
     public Java20Parser.MethodDeclarationContext getAntlrNode() {
         return ctx;
+    }
+
+    @Override
+    public SourceRange getNameRange() {
+        TerminalNode terminal = getNameAntlrTerminal();
+        int startColumn = terminal.getSymbol().getCharPositionInLine();
+        int line = terminal.getSymbol().getLine();
+        int length = terminal.getSymbol().getText().length();
+        SourcePosition start = new SourcePosition(line, startColumn);
+        SourcePosition end = new SourcePosition(line, startColumn + length);
+        return new SourceRange(start, end);
     }
 }
