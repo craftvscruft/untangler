@@ -3,6 +3,8 @@ package ai.mender;
 import ai.mender.parsing.ThrowingErrorListener;
 import antlrgen.cpp14.CPP14Lexer;
 import antlrgen.cpp14.CPP14Parser;
+import antlrgen.python.PythonLexer;
+import antlrgen.python.PythonParser;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
@@ -32,5 +34,20 @@ public class Language {
             parser.addErrorListener(ThrowingErrorListener.INSTANCE);
         }
         return parser.translationUnit();
+    }
+
+    public static PythonParser.File_inputContext parsePyProgram(
+            CharStream inputStream, boolean throwOnParseError) {
+        PythonLexer lexer = new PythonLexer(inputStream);
+        if (throwOnParseError) {
+            lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+        }
+
+        CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+        PythonParser parser = new PythonParser(commonTokenStream);
+        if (throwOnParseError) {
+            parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+        }
+        return parser.file_input();
     }
 }

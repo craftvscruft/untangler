@@ -100,7 +100,7 @@ spotless {
         endWithNewline()
     }
     java {
-        target(['src/main/java', 'src/test/java'])
+        target(['src/main/java', 'src/test/java']) // don't format generated code.
 
         // fix formatting of type annotations
         formatAnnotations()
