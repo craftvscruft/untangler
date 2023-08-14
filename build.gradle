@@ -227,7 +227,7 @@ tasks.addRule("Pattern: generateParser<Lang>") { String taskName ->
 tasks.register('generateAllParsers') {
     dependsOn 'generateParserPython'
     dependsOn 'generateParserCPP14'
-    dependsOn 'generateParserJava'
+    dependsOn 'generateParserJava20'
     dependsOn 'generateParserCSharp'
     dependsOn 'generateParserTypeScript'
 }

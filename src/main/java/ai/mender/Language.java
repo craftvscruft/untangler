@@ -9,6 +9,9 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.Interval;
+import org.antlr.v4.runtime.tree.TerminalNode;
+
+import java.util.function.Function;
 
 public class Language {
 
@@ -19,6 +22,13 @@ public class Language {
         int a = ctx.start.getStartIndex();
         int b = ctx.stop.getStopIndex();
         return ctx.start.getInputStream().getText(new Interval(a, b));
+    }
+
+    public static String getTextIncludingWhitespace(TerminalNode ctx) {
+        if (null == ctx) {
+            return "";
+        }
+        return ctx.getText();
     }
 
     public static CPP14Parser.TranslationUnitContext parseProgram(
@@ -50,4 +60,6 @@ public class Language {
         }
         return parser.file_input();
     }
+
+
 }
