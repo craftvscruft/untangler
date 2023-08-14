@@ -1,13 +1,15 @@
 package ai.mender.strategy;
 
-import ai.mender.Language;
 import ai.mender.domain.FunctionRec;
 import ai.mender.parsing.CharsetUtils;
 import ai.mender.parsing.CppFunctionDefinitionNode;
+import ai.mender.parsing.ThrowingErrorListener;
+import antlrgen.cpp14.CPP14Lexer;
 import antlrgen.cpp14.CPP14Parser;
 import antlrgen.cpp14.CPP14ParserBaseListener;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.File;
@@ -41,8 +43,18 @@ public class CppStrategy implements LanguageStrategy {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        CPP14Lexer lexer = new CPP14Lexer(inputStream);
+        if (throwOnParseError) {
+            lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+        }
+
+        CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+        CPP14Parser parser = new CPP14Parser(commonTokenStream);
+        if (throwOnParseError) {
+            parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+        }
         CPP14Parser.TranslationUnitContext tree =
-                Language.parseProgram(inputStream, throwOnParseError);
+                parser.translationUnit();
         return tree;
     }
 }
