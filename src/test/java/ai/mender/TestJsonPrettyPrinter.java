@@ -1,6 +1,5 @@
 package ai.mender;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.util.Arrays;
 import java.util.List;
 import org.approvaltests.Approvals;
@@ -14,13 +13,13 @@ public class TestJsonPrettyPrinter {
     record Bottom(String foo, int bar) {}
 
     @Test
-    public void testEmpty() throws JsonProcessingException {
+    public void testEmpty() {
         // Verify as string not json because we care about the formatting here.
         Approvals.verify(Console.toJson(new Empty()));
     }
 
     @Test
-    public void testObjectWithListOfObject() throws JsonProcessingException {
+    public void testObjectWithListOfObject() {
         // Verify as string not json because we care about the formatting here.
         Bottom rec1 = new Bottom("foo1", 1);
         Bottom rec2 = new Bottom("foo2", 2);

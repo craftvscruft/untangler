@@ -41,6 +41,8 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
             message = e.getMessage();
         }
         ListResponse<FunctionRec> response = new ListResponse<>(success, message, items);
+
+
         Console.printJson(response, spec.commandLine().getOut());
     }
 

@@ -41,15 +41,6 @@ alias un="./gradlew installDist -q && build/install/untangler/bin/untangler"
 un get functions src/test/resources/hello.c
 ```
 
-## Building native binary
-
-```
-# Your GraalVM JDK 20 instalation
-export JAVA_HOME=...
-
-./gradlew nativeCompile
-```
-
 ## Testing
 
 Just the unit tests:
@@ -89,6 +80,29 @@ Coverage report in `open build/reports/jacoco/test/html/index.html`
 3. Java
 4. C#
 5. JavaScript / TypeScript
+
+## Building native binary
+
+```
+# Your GraalVM JDK 20 instalation
+export JAVA_HOME=...
+
+./gradlew nativeCompile
+
+# Run with:
+
+build/native/nativeCompile/untangler
+```
+
+During development, you might alias this `nun` for native untangler.
+```
+alias nun="build/native/nativeCompile/untangler"
+```
+
+If you get a reflection error, META-INF may need to be updated.
+Check the [Gradle native image](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html#agent-support) docs for more
+
+So far what's been needed is for `META-INF/native-image/reflect-config.json` to list all the classes that we will serialize to Json.
 
 ## Author
 
