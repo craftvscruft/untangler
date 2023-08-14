@@ -100,8 +100,7 @@ spotless {
         endWithNewline()
     }
     java {
-        // don't need to set target, it is inferred from java
-
+        target(['src/main/java', 'src/test/java'])
 
         // fix formatting of type annotations
         formatAnnotations()
@@ -230,4 +229,5 @@ tasks.register('generateAllParsers') {
     dependsOn 'generateParserCPP14'
     dependsOn 'generateParserJava'
     dependsOn 'generateParserCSharp'
+    dependsOn 'generateParserTypeScript'
 }
