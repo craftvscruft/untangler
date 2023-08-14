@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TableOutput {
-    public static void writeTableOutput(Writer writer, List<FunctionRec> items, Class<FunctionRec> recClass) {
+    public static <T extends Record> void writeTableOutput(Writer writer, List<T> items, Class<T> recClass) {
         RecordComponent[] rcs = recClass.getRecordComponents();
         PrintWriter printWriter = new PrintWriter(writer);
         if (rcs.length == 0) {
@@ -22,22 +22,27 @@ public class TableOutput {
 
         int columnCount = rcs.length;
 
+        String paddingForAllFields = computePaddingFormat(items, rcs, columnCount);
+        printWriter.format(paddingForAllFields, names.toArray());
+
+        printWriter.println();
+        for (Record item : items) {
+            Object[] strings = Arrays.stream(rcs).map(rc -> getRecordValue(rc, item)).map(Object::toString).toArray();
+            printWriter.format(paddingForAllFields, strings);
+            printWriter.println();
+        }
+    }
+
+    private static String computePaddingFormat(List<? extends Record> items, RecordComponent[] rcs, int columnCount) {
         List<Integer> maxLengthByColumn = Arrays.stream(rcs).map(rc -> getMaxLengthOfRecordFieldValue(rc, items)).toList();
         String paddedForAllButLast = maxLengthByColumn.stream()
                 .map(maxWidth -> "%-" + (maxWidth + 1) + "s")
                 .limit(columnCount - 1)
                 .collect(Collectors.joining());
-        printWriter.format(paddedForAllButLast.concat("%s"), names.toArray());
-
-        printWriter.println();
-        for (Record item : items) {
-            Object[] strings = Arrays.stream(rcs).map(rc -> getRecordValue(rc, item)).map(Object::toString).toArray();
-            printWriter.format(paddedForAllButLast.concat("%s"), strings);
-            printWriter.println();
-        }
+        return paddedForAllButLast.concat("%s");
     }
 
-    private static int getMaxLengthOfRecordFieldValue(RecordComponent rc, List<FunctionRec> items1) {
+    private static int getMaxLengthOfRecordFieldValue(RecordComponent rc, List<? extends Record> items1) {
         return items1.stream().map(item ->
                 getRecordValue(rc, item).toString().length()).max(Integer::compare).orElse(0);
     }
