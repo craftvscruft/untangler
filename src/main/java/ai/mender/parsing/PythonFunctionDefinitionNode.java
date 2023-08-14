@@ -17,7 +17,12 @@ public class PythonFunctionDefinitionNode
     }
 
     public FunctionRec toFunctionRec() {
-        return new FunctionRec(findName());
+        return new FunctionRec(findName(), getStartLine());
+    }
+
+    @Override
+    public PythonParser.FuncdefContext getAntlrNode() {
+        return ctx;
     }
 
     private String findName() {

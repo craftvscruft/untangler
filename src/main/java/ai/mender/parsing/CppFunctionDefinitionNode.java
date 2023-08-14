@@ -15,7 +15,12 @@ public class CppFunctionDefinitionNode
     }
 
     public FunctionRec toFunctionRec() {
-        return new FunctionRec(findName());
+        return new FunctionRec(findName(), getStartLine());
+    }
+
+    @Override
+    public CPP14Parser.FunctionDefinitionContext getAntlrNode() {
+        return ctx;
     }
 
     private String findName() {

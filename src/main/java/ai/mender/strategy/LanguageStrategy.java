@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LanguageStrategy {
     void collectFunctions(File file, List<FunctionRec> items, boolean throwOnParseError);
+
+
 }

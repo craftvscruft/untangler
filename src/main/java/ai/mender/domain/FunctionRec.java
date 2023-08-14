@@ -1,4 +1,4 @@
 package ai.mender.domain;
 
-public record FunctionRec(String name) {
+public record FunctionRec(String name, int line) {
 }

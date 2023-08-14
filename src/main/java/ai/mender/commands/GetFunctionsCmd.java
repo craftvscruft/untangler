@@ -8,7 +8,8 @@ import java.io.File;
 import java.util.ArrayList;
 
 import ai.mender.strategy.LanguageStrategy;
-import ai.strategy.LanguageStrategies;
+import ai.mender.strategy.LanguageStrategies;
+import ai.mender.strategy.SourceFile;
 import picocli.CommandLine;
 
 @CommandLine.Command(
@@ -29,7 +30,7 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
         var message = "OK";
         LanguageStrategy languageStrategy = null;
         try {
-            languageStrategy = LanguageStrategies.createStrategyForFile(file);
+            languageStrategy = LanguageStrategies.createStrategyForFile(new SourceFile(file));
             if (languageStrategy != null) {
                 languageStrategy.collectFunctions(file, items, false);
                 success = true;
