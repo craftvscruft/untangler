@@ -1,11 +1,12 @@
 package antlrgen.csharp;
-
+import org.antlr.v4.runtime.*;
 import java.util.ArrayDeque;
 import java.util.Deque;
-import org.antlr.v4.runtime.*;
 
-abstract class CSharpLexerBase extends Lexer {
-    protected CSharpLexerBase(CharStream input) {
+abstract class CSharpLexerBase extends Lexer
+{
+    protected CSharpLexerBase(CharStream input)
+    {
         super(input);
     }
 
@@ -14,29 +15,36 @@ abstract class CSharpLexerBase extends Lexer {
     protected final Deque<Integer> curlyLevels = new ArrayDeque<>();
     protected boolean verbatium;
 
-    protected void OnInterpolatedRegularStringStart() {
+    protected void OnInterpolatedRegularStringStart()
+    {
         interpolatedStringLevel++;
         interpolatedVerbatiums.push(false);
         verbatium = false;
     }
 
-    protected void OnInterpolatedVerbatiumStringStart() {
+    protected void OnInterpolatedVerbatiumStringStart()
+    {
         interpolatedStringLevel++;
         interpolatedVerbatiums.push(true);
         verbatium = true;
     }
 
-    protected void OnOpenBrace() {
-        if (interpolatedStringLevel > 0) {
+    protected void OnOpenBrace()
+    {
+        if (interpolatedStringLevel > 0)
+        {
             curlyLevels.push(curlyLevels.pop() + 1);
         }
     }
 
-    protected void OnCloseBrace() {
+    protected void OnCloseBrace()
+    {
 
-        if (interpolatedStringLevel > 0) {
+        if (interpolatedStringLevel > 0)
+        {
             curlyLevels.push(curlyLevels.pop() - 1);
-            if (curlyLevels.peek() == 0) {
+            if (curlyLevels.peek() == 0)
+            {
                 curlyLevels.pop();
                 skip();
                 popMode();
@@ -44,43 +52,53 @@ abstract class CSharpLexerBase extends Lexer {
         }
     }
 
-    protected void OnColon() {
+    protected void OnColon()
+    {
 
-        if (interpolatedStringLevel > 0) {
+        if (interpolatedStringLevel > 0)
+        {
             int ind = 1;
             boolean switchToFormatString = true;
-            while ((char) _input.LA(ind) != '}') {
-                if (_input.LA(ind) == ':' || _input.LA(ind) == ')') {
+            while ((char)_input.LA(ind) != '}')
+            {
+                if (_input.LA(ind) == ':' || _input.LA(ind) == ')')
+                {
                     switchToFormatString = false;
                     break;
                 }
                 ind++;
             }
-            if (switchToFormatString) {
+            if (switchToFormatString)
+            {
                 mode(CSharpLexer.INTERPOLATION_FORMAT);
             }
         }
     }
 
-    protected void OpenBraceInside() {
+    protected void OpenBraceInside()
+    {
         curlyLevels.push(1);
     }
 
-    protected void OnDoubleQuoteInside() {
+    protected void OnDoubleQuoteInside()
+    {
         interpolatedStringLevel--;
         interpolatedVerbatiums.pop();
         verbatium = (interpolatedVerbatiums.size() > 0 ? interpolatedVerbatiums.peek() : false);
     }
 
-    protected void OnCloseBraceInside() {
+    protected void OnCloseBraceInside()
+    {
         curlyLevels.pop();
     }
 
-    protected boolean IsRegularCharInside() {
+    protected boolean IsRegularCharInside()
+    {
         return !verbatium;
     }
 
-    protected boolean IsVerbatiumDoubleQuoteInside() {
+    protected boolean IsVerbatiumDoubleQuoteInside()
+    {
         return verbatium;
     }
 }

@@ -1,11 +1,11 @@
 package antlrgen.python;
-
-import java.util.ArrayDeque;
-import java.util.Deque;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CommonToken;
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.Token;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public abstract class PythonLexerBase extends Lexer {
     public static int TabSize = 8;
@@ -30,21 +30,18 @@ public abstract class PythonLexerBase extends Lexer {
     public void emit(Token token) {
         super.setToken(token);
 
-        if (_buffer[_firstTokensInd] != null) {
+        if (_buffer[_firstTokensInd] != null)
+        {
             _lastTokenInd = IncTokenInd(_lastTokenInd);
 
-            if (_lastTokenInd == _firstTokensInd) {
+            if (_lastTokenInd == _firstTokensInd)
+            {
                 // Enlarge buffer
                 Token[] newArray = new Token[_buffer.length * 2];
                 int destInd = newArray.length - (_buffer.length - _firstTokensInd);
 
                 System.arraycopy(_buffer, 0, newArray, 0, _firstTokensInd);
-                System.arraycopy(
-                        _buffer,
-                        _firstTokensInd,
-                        newArray,
-                        destInd,
-                        _buffer.length - _firstTokensInd);
+                System.arraycopy(_buffer, _firstTokensInd, newArray, destInd, _buffer.length - _firstTokensInd);
 
                 _firstTokensInd = destInd;
                 _buffer = newArray;
@@ -58,15 +55,17 @@ public abstract class PythonLexerBase extends Lexer {
     @Override
     public Token nextToken() {
         // Check if the end-of-file is ahead and there are still some DEDENTS expected.
-        if (_input.LA(1) == EOF && _indents.size() > 0) {
-            if (_buffer[_lastTokenInd] == null
-                    || _buffer[_lastTokenInd].getType() != PythonLexer.LINE_BREAK) {
+        if (_input.LA(1) == EOF && _indents.size() > 0)
+        {
+            if (_buffer[_lastTokenInd] == null || _buffer[_lastTokenInd].getType() != PythonLexer.LINE_BREAK)
+            {
                 // First emit an extra line break that serves as the end of the statement.
                 emit(PythonLexer.LINE_BREAK);
             }
 
             // Now emit as much DEDENT tokens as needed.
-            while (_indents.size() != 0) {
+            while (_indents.size() != 0)
+            {
                 emit(PythonLexer.DEDENT);
                 _indents.pop();
             }
@@ -74,14 +73,16 @@ public abstract class PythonLexerBase extends Lexer {
 
         Token next = super.nextToken();
 
-        if (_buffer[_firstTokensInd] == null) {
+        if (_buffer[_firstTokensInd] == null)
+        {
             return next;
         }
 
         Token result = _buffer[_firstTokensInd];
         _buffer[_firstTokensInd] = null;
 
-        if (_firstTokensInd != _lastTokenInd) {
+        if (_firstTokensInd != _lastTokenInd)
+        {
             _firstTokensInd = IncTokenInd(_firstTokensInd);
         }
 
@@ -94,7 +95,8 @@ public abstract class PythonLexerBase extends Lexer {
         char next = (char) _input.LA(1);
 
         // Process whitespaces in HandleSpaces
-        if (next != ' ' && next != '\t' && IsNotNewLineOrComment(next)) {
+        if (next != ' ' && next != '\t' && IsNotNewLineOrComment(next))
+        {
             ProcessNewLine(0);
         }
     }
@@ -102,8 +104,8 @@ public abstract class PythonLexerBase extends Lexer {
     protected void HandleSpaces() {
         char next = (char) _input.LA(1);
 
-        if ((_lastToken == null || _lastToken.getType() == PythonLexer.NEWLINE)
-                && IsNotNewLineOrComment(next)) {
+        if ((_lastToken == null || _lastToken.getType() == PythonLexer.NEWLINE) && IsNotNewLineOrComment(next))
+        {
             // Calculates the indentation of the provided spaces, taking the
             // following rules into account:
             //
@@ -145,12 +147,16 @@ public abstract class PythonLexerBase extends Lexer {
 
         int previous = _indents.size() == 0 ? 0 : _indents.peek();
 
-        if (indent > previous) {
+        if (indent > previous)
+        {
             _indents.push(indent);
             emit(PythonLexer.INDENT);
-        } else {
+        }
+        else
+        {
             // Possibly emit more than 1 DEDENT token.
-            while (_indents.size() != 0 && _indents.peek() > indent) {
+            while (_indents.size() != 0 && _indents.peek() > indent)
+            {
                 emit(PythonLexer.DEDENT);
                 _indents.pop();
             }
@@ -167,13 +173,7 @@ public abstract class PythonLexerBase extends Lexer {
 
     private void emit(int tokenType, int channel, String text) {
         int charIndex = getCharIndex();
-        CommonToken token =
-                new CommonToken(
-                        _tokenFactorySourcePair,
-                        tokenType,
-                        channel,
-                        charIndex - text.length(),
-                        charIndex - 1);
+        CommonToken token = new CommonToken(_tokenFactorySourcePair, tokenType, channel, charIndex - text.length(), charIndex - 1);
         token.setLine(getLine());
         token.setCharPositionInLine(getCharPositionInLine());
         token.setText(text);
@@ -181,3 +181,4 @@ public abstract class PythonLexerBase extends Lexer {
         emit(token);
     }
 }
+

@@ -1,9 +1,9 @@
 package antlrgen.python;
-
 import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.TokenStream;
 
-public abstract class PythonParserBase extends Parser {
+public abstract class PythonParserBase extends Parser
+{
     public PythonVersion Version = PythonVersion.Autodetect;
 
     protected PythonParserBase(TokenStream input) {
@@ -22,3 +22,4 @@ public abstract class PythonParserBase extends Parser {
         }
     }
 }
+
