@@ -2,7 +2,7 @@ package ai.mender.commands;
 
 import ai.mender.Console;
 import ai.mender.domain.FunctionRec;
-import ai.mender.domain.ListResponse;
+import ai.mender.domain.FunctionListResponse;
 import ai.mender.strategy.LanguageStrategies;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
@@ -19,6 +19,13 @@ import java.util.ArrayList;
 public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator {
     @CommandLine.Parameters(index = "0", description = "The source code file to analyze")
     private File file;
+
+    @CommandLine.Option(names = {"--output", "-o"}, defaultValue = "text",
+            description = {
+                    "Output format",
+                    "Supported: text (default), json"
+            })
+    private OutputFormat outputFormat;
 
     @CommandLine.Spec CommandLine.Model.CommandSpec spec;
     private boolean success = false;
@@ -40,10 +47,10 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
         } catch (Exception e) {
             message = e.getMessage();
         }
-        ListResponse<FunctionRec> response = new ListResponse<>(success, message, items);
+        FunctionListResponse response = new FunctionListResponse(success, message, items);
 
 
-        Console.printJson(response, spec.commandLine().getOut());
+        Console.printOutput(response, spec.commandLine().getOut(), outputFormat);
     }
 
     @Override

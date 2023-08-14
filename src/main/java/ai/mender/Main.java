@@ -13,6 +13,8 @@ public class Main {
 //    private String algorithm = "SHA-256";
 
     public static void main(String... args) {
-        System.exit(new CommandLine(new Main()).execute(args));
+        CommandLine commandLine = new CommandLine(new Main());
+        commandLine.setCaseInsensitiveEnumValuesAllowed(true);
+        System.exit(commandLine.execute(args));
     }
 }
