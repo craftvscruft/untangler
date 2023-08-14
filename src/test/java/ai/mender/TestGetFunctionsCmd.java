@@ -1,8 +1,5 @@
 package ai.mender;
 
-import java.io.File;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import picocli.CommandLine;
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 
 public class TestGetFunctionsCmd {
     private CommandLine cmd;
