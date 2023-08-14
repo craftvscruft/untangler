@@ -1,6 +1,5 @@
 package ai.mender.parsing;
 
-import ai.mender.Language;
 import antlrgen.java20.Java20Parser;
 
 
@@ -14,7 +13,7 @@ public class JavaFunctionDefinitionNode implements FunctionDefinitionNode<Java20
 
     @Override
     public String getName() {
-        return Language.getTextIncludingWhitespace(ctx.methodHeader().methodDeclarator().Identifier());
+        return SyntaxTreeUtil.getTextIncludingWhitespace(ctx.methodHeader().methodDeclarator().Identifier());
     }
 
     @Override

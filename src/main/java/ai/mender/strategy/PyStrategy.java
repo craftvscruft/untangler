@@ -1,13 +1,15 @@
 package ai.mender.strategy;
 
-import ai.mender.Language;
 import ai.mender.domain.FunctionRec;
 import ai.mender.parsing.CharsetUtils;
 import ai.mender.parsing.PythonFunctionDefinitionNode;
+import ai.mender.parsing.ThrowingErrorListener;
+import antlrgen.python.PythonLexer;
 import antlrgen.python.PythonParser;
 import antlrgen.python.PythonParserBaseListener;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
+import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.File;
@@ -40,7 +42,17 @@ public class PyStrategy implements LanguageStrategy {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        PythonParser.File_inputContext tree = Language.parsePyProgram(inputStream, throwOnParseError);
+        PythonLexer lexer = new PythonLexer(inputStream);
+        if (throwOnParseError) {
+            lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
+        }
+
+        CommonTokenStream commonTokenStream = new CommonTokenStream(lexer);
+        PythonParser parser = new PythonParser(commonTokenStream);
+        if (throwOnParseError) {
+            parser.addErrorListener(ThrowingErrorListener.INSTANCE);
+        }
+        PythonParser.File_inputContext tree = parser.file_input();
         return tree;
     }
 }

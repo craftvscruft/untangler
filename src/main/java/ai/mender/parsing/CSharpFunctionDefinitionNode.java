@@ -1,6 +1,5 @@
 package ai.mender.parsing;
 
-import ai.mender.Language;
 import antlrgen.csharp.CSharpParser;
 
 public class CSharpFunctionDefinitionNode implements FunctionDefinitionNode<CSharpParser.Method_declarationContext> {
@@ -12,7 +11,7 @@ public class CSharpFunctionDefinitionNode implements FunctionDefinitionNode<CSha
 
     @Override
     public String getName() {
-        return Language.getTextIncludingWhitespace(ctx.method_member_name());
+        return SyntaxTreeUtil.getTextIncludingWhitespace(ctx.method_member_name());
     }
 
     @Override

@@ -1,6 +1,5 @@
 package ai.mender.parsing;
 
-import ai.mender.Language;
 import antlrgen.python.PythonParser;
 
 public class PythonFunctionDefinitionNode
@@ -18,7 +17,7 @@ public class PythonFunctionDefinitionNode
 
     @Override
     public String getName() {
-        return Language.getTextIncludingWhitespace(ctx.name());
+        return SyntaxTreeUtil.getTextIncludingWhitespace(ctx.name());
     }
 
 }
