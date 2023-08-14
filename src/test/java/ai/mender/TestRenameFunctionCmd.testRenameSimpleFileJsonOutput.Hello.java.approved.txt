@@ -1,0 +1,18 @@
+{
+  "success" : true,
+  "message" : "OK",
+  "edits" : [
+    {
+      "start" : {
+        "line" : 2,
+        "col" : 23
+      },
+      "end" : {
+        "line" : 2,
+        "col" : 27
+      },
+      "text" : "main2",
+      "mode" : "Replace"
+    }
+  ]
+}

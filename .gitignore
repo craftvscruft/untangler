@@ -27,3 +27,5 @@ build/
 .idea/
 .gradle/
 .DS_Store
+
+*.received.*

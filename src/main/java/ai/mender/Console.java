@@ -3,42 +3,46 @@ package ai.mender;
 
 import ai.mender.commands.OutputFormat;
 import ai.mender.domain.FunctionListResponse;
+import ai.mender.domain.SourceEditListResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.StringWriter;
 
 public class Console {
     private static ObjectMapper MAPPER = JsonMapper.builder()
             .build().setDefaultPrettyPrinter(new JsonPrettyPrinter());
-    public static <T> void printOutput(T result, PrintWriter out, OutputFormat outputFormat) {
+    public static <T> void printOutput(T value, PrintWriter out, OutputFormat outputFormat) {
         switch (outputFormat) {
-            case json -> out.println(toJson(result));
-            case text -> out.println(toText(result));
+            case json -> toJson(out, value);
+            case text -> toText(out, value);
         }
     }
 
-    private static <T> String toText(T value) {
+    private static <T> void toText(PrintWriter out, T value) {
         if (value instanceof FunctionListResponse listResponse) {
-            StringWriter writer = new StringWriter();
-            PrintWriter printWriter = new PrintWriter(writer);
-            listResponse.writeTableOutput(printWriter);
+            listResponse.writeTableOutput(out);
             if (!listResponse.success()) {
-                printWriter.println(listResponse.message());
+                out.println(listResponse.message());
             }
-            printWriter.flush();
-            return writer.toString();
+        } else if (value instanceof SourceEditListResponse listResponse) {
+            listResponse.writeTableOutput(out);
+            if (!listResponse.success()) {
+                out.println(listResponse.message());
+            }
+        } else {
+            out.println(value.toString());
         }
-        return value.toString();
     }
 
-    public static <T extends Object> String toJson(T object) {
+    public static <T extends Object> void toJson(PrintWriter out, T object) {
         try {
             ObjectWriter writer = MAPPER.writerWithDefaultPrettyPrinter();
-            return writer.writeValueAsString(object);
+            writer.writeValue(out, object);
+            out.println();
+            out.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

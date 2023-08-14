@@ -1,12 +1,12 @@
 package ai.mender.strategy.python;
 
-import ai.mender.domain.FunctionRec;
+import ai.mender.strategy.FunctionDefinitionNode;
 import ai.mender.strategy.TopLevelNode;
 import antlrgen.python.PythonParser;
 import antlrgen.python.PythonParserBaseListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import java.util.List;
+import java.util.function.Consumer;
 
 public class PythonTopLevelNode implements TopLevelNode {
     private final PythonParser.File_inputContext tree;
@@ -16,13 +16,12 @@ public class PythonTopLevelNode implements TopLevelNode {
     }
 
     @Override
-    public void collectFunctions(List<FunctionRec> items) {
+    public void forEachFunctionNode(Consumer<FunctionDefinitionNode> consumer) {
         PythonParserBaseListener listener =
                 new PythonParserBaseListener() {
-
                     @Override
                     public void enterFuncdef(PythonParser.FuncdefContext ctx) {
-                        items.add(new PythonFunctionDefinitionNode(ctx).toFunctionRec());
+                        consumer.accept(new PythonFunctionDefinitionNode(ctx));
                     }
                 };
         ParseTreeWalker.DEFAULT.walk(listener, tree);

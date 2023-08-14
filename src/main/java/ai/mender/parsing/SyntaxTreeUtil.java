@@ -1,5 +1,7 @@
 package ai.mender.parsing;
 
+import ai.mender.domain.SourcePosition;
+import ai.mender.domain.SourceRange;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.Interval;
 import org.antlr.v4.runtime.tree.TerminalNode;
@@ -25,4 +27,7 @@ public class SyntaxTreeUtil {
     }
 
 
+    public static SourceRange nodeToSourceRange(ParserRuleContext antlrNode) {
+        return new SourceRange(new SourcePosition(antlrNode.start.getLine(), antlrNode.start.getCharPositionInLine()), new SourcePosition(antlrNode.stop.getLine(), antlrNode.stop.getCharPositionInLine() + antlrNode.stop.getText().length()));
+    }
 }

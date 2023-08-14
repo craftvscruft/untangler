@@ -1,9 +1,11 @@
 package ai.mender.strategy.cpp;
 
+import ai.mender.domain.SourceRange;
 import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.strategy.FunctionDefinitionNode;
 import antlrgen.cpp14.CPP14Parser;
 import antlrgen.cpp14.CPP14ParserBaseListener;
+import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class CppFunctionDefinitionNode
@@ -15,15 +17,24 @@ public class CppFunctionDefinitionNode
     }
 
     @Override
+    public String getName() {
+        return SyntaxTreeUtil.getTextIncludingWhitespace(getNameAntlrNode());
+    }
+
+    @Override
     public CPP14Parser.FunctionDefinitionContext getAntlrNode() {
         return ctx;
     }
 
     @Override
-    public String getName() {
+    public SourceRange getNameRange() {
+        return SyntaxTreeUtil.nodeToSourceRange(getNameAntlrNode());
+    }
+
+    private ParserRuleContext getNameAntlrNode() {
         FunctionNameListener listener = new FunctionNameListener();
         ParseTreeWalker.DEFAULT.walk(listener, ctx);
-        return SyntaxTreeUtil.getTextIncludingWhitespace(listener.firstFoundId);
+        return listener.firstFoundId;
     }
 
     private static class FunctionNameListener extends CPP14ParserBaseListener {

@@ -1,5 +1,6 @@
 package ai.mender.strategy.python;
 
+import ai.mender.domain.SourceRange;
 import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.strategy.FunctionDefinitionNode;
 import antlrgen.python.PythonParser;
@@ -13,13 +14,18 @@ public class PythonFunctionDefinitionNode
     }
 
     @Override
+    public String getName() {
+        return SyntaxTreeUtil.getTextIncludingWhitespace(this.ctx.name());
+    }
+    @Override
     public PythonParser.FuncdefContext getAntlrNode() {
         return ctx;
     }
 
     @Override
-    public String getName() {
-        return SyntaxTreeUtil.getTextIncludingWhitespace(ctx.name());
+    public SourceRange getNameRange() {
+        return SyntaxTreeUtil.nodeToSourceRange(this.ctx.name());
     }
+
 
 }
