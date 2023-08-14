@@ -1,4 +1,4 @@
-package ai.mender.parsing;
+package ai.mender.strategy;
 
 import ai.mender.domain.FunctionRec;
 import org.antlr.v4.runtime.ParserRuleContext;

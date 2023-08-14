@@ -1,36 +1,25 @@
-package ai.mender.strategy;
+package ai.mender.strategy.csharp;
 
-import ai.mender.domain.FunctionRec;
-import ai.mender.parsing.CSharpFunctionDefinitionNode;
 import ai.mender.parsing.CharsetUtils;
 import ai.mender.parsing.ThrowingErrorListener;
+import ai.mender.strategy.LanguageStrategy;
+import ai.mender.strategy.SourceFile;
+import ai.mender.strategy.TopLevelNode;
 import antlrgen.csharp.CSharpLexer;
 import antlrgen.csharp.CSharpParser;
-import antlrgen.csharp.CSharpParserBaseListener;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+
 
 public class CSharpStrategy implements LanguageStrategy {
-    @Override
-    public void collectFunctions(File file, List<FunctionRec> items, boolean throwOnParseError) {
-        CSharpParserBaseListener listener =
-                new CSharpParserBaseListener() {
-
-                    @Override
-                    public void enterMethod_declaration(CSharpParser.Method_declarationContext ctx) {
-                        items.add(new CSharpFunctionDefinitionNode(ctx).toFunctionRec());
-                    }
-                };
-
-        var tree = parseTree(file, throwOnParseError);
-        ParseTreeWalker.DEFAULT.walk(listener, tree);
-    }
+//    @Override
+//    public void collectFunctions(File file, List<FunctionRec> items, boolean throwOnParseError) {
+//
+//    }
 
     private static CSharpParser.Compilation_unitContext parseTree(File file, boolean throwOnParseError) {
         CharStream inputStream = getCharStream(file);
@@ -59,4 +48,8 @@ public class CSharpStrategy implements LanguageStrategy {
         return inputStream;
     }
 
+    @Override
+    public TopLevelNode parseTopLevel(SourceFile sourceFile) {
+        return new CSharpTopLevelNode(parseTree(sourceFile.file(), false));
+    }
 }

@@ -1,44 +1,31 @@
-package ai.mender.strategy;
+package ai.mender.strategy.python;
 
-import ai.mender.domain.FunctionRec;
 import ai.mender.parsing.CharsetUtils;
-import ai.mender.parsing.PythonFunctionDefinitionNode;
 import ai.mender.parsing.ThrowingErrorListener;
+import ai.mender.strategy.LanguageStrategy;
+import ai.mender.strategy.SourceFile;
+import ai.mender.strategy.TopLevelNode;
 import antlrgen.python.PythonLexer;
 import antlrgen.python.PythonParser;
-import antlrgen.python.PythonParserBaseListener;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class PyStrategy implements LanguageStrategy {
 
     @Override
-    public void collectFunctions(
-            File file, List<FunctionRec> items, boolean throwOnParseError) {
-        PythonParserBaseListener listener =
-                new PythonParserBaseListener() {
-
-                    @Override
-                    public void enterFuncdef(PythonParser.FuncdefContext ctx) {
-                        items.add(new PythonFunctionDefinitionNode(ctx).toFunctionRec());
-                    }
-                };
-
-        PythonParser.File_inputContext tree = parseTree(file, throwOnParseError);
-        ParseTreeWalker.DEFAULT.walk(listener, tree);
+    public TopLevelNode parseTopLevel(SourceFile sourceFile) {
+        return new PythonTopLevelNode(parseTree(sourceFile));
     }
 
-    private static PythonParser.File_inputContext parseTree(File file, boolean throwOnParseError) {
+    private static PythonParser.File_inputContext parseTree(SourceFile sourceFile) {
+        boolean throwOnParseError = false;
         CharStream inputStream = null;
         try {
             inputStream = CharStreams.fromFileName(
-                    file.getAbsolutePath(), CharsetUtils.detectFileCharset(file));
+                    sourceFile.file().getAbsolutePath(), CharsetUtils.detectFileCharset(sourceFile.file()));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -3,9 +3,9 @@ package ai.mender.commands;
 import ai.mender.Console;
 import ai.mender.domain.FunctionListResponse;
 import ai.mender.domain.FunctionRec;
-import ai.mender.strategy.LanguageStrategies;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
+import ai.mender.strategy.TopLevelNode;
 import picocli.CommandLine;
 
 import java.io.File;
@@ -34,15 +34,19 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
     public void run() {
         var items = new ArrayList<FunctionRec>();
         var message = "OK";
-        LanguageStrategy languageStrategy = null;
         try {
-            languageStrategy = LanguageStrategies.createStrategyForFile(new SourceFile(file));
-            if (languageStrategy != null) {
-                languageStrategy.collectFunctions(file, items, false);
-                success = true;
-            } else {
+            SourceFile sourceFile = new SourceFile(file);
+            LanguageStrategy languageStrategy = sourceFile.createStrategyForFile();
+            if (!file.exists()) {
+                message = "File not found";
+                success = false;
+            } else if (languageStrategy == null) {
                 message = "Unknown file type! Cannot parse.";
                 success = false;
+            } else {
+                TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
+                tree.collectFunctions(items);
+                success = true;
             }
         } catch (Exception e) {
             message = e.getMessage();

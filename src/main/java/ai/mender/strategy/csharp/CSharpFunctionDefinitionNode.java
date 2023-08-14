@@ -1,5 +1,7 @@
-package ai.mender.parsing;
+package ai.mender.strategy.csharp;
 
+import ai.mender.parsing.SyntaxTreeUtil;
+import ai.mender.strategy.FunctionDefinitionNode;
 import antlrgen.csharp.CSharpParser;
 
 public class CSharpFunctionDefinitionNode implements FunctionDefinitionNode<CSharpParser.Method_declarationContext> {
