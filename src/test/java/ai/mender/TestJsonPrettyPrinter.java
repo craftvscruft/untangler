@@ -1,9 +1,10 @@
 package ai.mender;
 
-import java.util.Arrays;
-import java.util.List;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class TestJsonPrettyPrinter {
     record Empty() {}

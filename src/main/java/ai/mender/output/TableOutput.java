@@ -1,6 +1,5 @@
 package ai.mender.output;
 
-import ai.mender.domain.FunctionRec;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.PrintWriter;

@@ -1,10 +1,9 @@
 package ai.mender.strategy;
 
 import ai.mender.domain.FunctionRec;
-import ai.mender.parsing.CharsetUtils;
 import ai.mender.parsing.CSharpFunctionDefinitionNode;
+import ai.mender.parsing.CharsetUtils;
 import ai.mender.parsing.ThrowingErrorListener;
-import antlrgen.cpp14.CPP14Lexer;
 import antlrgen.csharp.CSharpLexer;
 import antlrgen.csharp.CSharpParser;
 import antlrgen.csharp.CSharpParserBaseListener;

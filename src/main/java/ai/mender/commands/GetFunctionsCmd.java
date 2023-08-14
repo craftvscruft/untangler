@@ -1,8 +1,8 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.domain.FunctionRec;
 import ai.mender.domain.FunctionListResponse;
+import ai.mender.domain.FunctionRec;
 import ai.mender.strategy.LanguageStrategies;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
