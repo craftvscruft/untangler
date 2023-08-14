@@ -1,20 +1,14 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.Language;
 import ai.mender.domain.FunctionRec;
 import ai.mender.domain.ListResponse;
-import ai.mender.parsing.CharsetUtils;
-import ai.mender.parsing.CppFunctionDefinitionNode;
-import antlrgen.cpp14.CPP14Parser;
-import antlrgen.cpp14.CPP14ParserBaseListener;
+
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
+
+import ai.mender.strategy.LanguageStrategy;
+import ai.strategy.LanguageStrategies;
 import picocli.CommandLine;
 
 @CommandLine.Command(
@@ -33,51 +27,21 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
     public void run() {
         var items = new ArrayList<FunctionRec>();
         var message = "OK";
-        String extension = getExtension(file);
+        LanguageStrategy languageStrategy = null;
         try {
-
-            switch (extension.toLowerCase()) {
-                case "c", "cpp", "cc" -> {
-                    collectCppFunctions(file, items, false);
-                    success = true;
-                }
-                default -> {
-                    message = "Unknown file type! Cannot parse.";
-                }
+            languageStrategy = LanguageStrategies.createStrategyForFile(file);
+            if (languageStrategy != null) {
+                languageStrategy.collectFunctions(file, items, false);
+                success = true;
+            } else {
+                message = "Unknown file type! Cannot parse.";
+                success = false;
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             message = e.getMessage();
-            success = true;
         }
         ListResponse<FunctionRec> response = new ListResponse<>(success, message, items);
         Console.printJson(response, spec.commandLine().getOut());
-    }
-
-    private static void collectCppFunctions(
-            File file, List<FunctionRec> items, boolean throwOnParseError) throws IOException {
-        CPP14ParserBaseListener listener =
-                new CPP14ParserBaseListener() {
-
-                    @Override
-                    public void enterFunctionDefinition(CPP14Parser.FunctionDefinitionContext ctx) {
-                        items.add(new CppFunctionDefinitionNode(ctx).toFunctionRec());
-                    }
-                };
-        CharStream inputStream =
-                CharStreams.fromFileName(
-                        file.getAbsolutePath(), CharsetUtils.detectFileCharset(file));
-        CPP14Parser.TranslationUnitContext tree =
-                Language.parseProgram(inputStream, throwOnParseError);
-        ParseTreeWalker.DEFAULT.walk(listener, tree);
-    }
-
-    private String getExtension(File file) {
-        var extension = "";
-        String[] split = file.getName().split("\\.");
-        if (split.length > 1) {
-            extension = split[split.length - 1];
-        }
-        return extension;
     }
 
     @Override

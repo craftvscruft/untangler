@@ -36,7 +36,7 @@ public class TestGetFunctionsCmd {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"hello.c", "hello.cpp"})
+    @ValueSource(strings = {"hello.c", "hello.cpp", "hello.py"})
     public void testListingFunctionsInSimpleFile(String fileName) {
         int exitCode = cmd.execute("get", "fns", getTestResourcePath(fileName));
         Assertions.assertEquals(0, exitCode);
