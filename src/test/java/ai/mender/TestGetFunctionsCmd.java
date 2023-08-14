@@ -13,14 +13,13 @@ import picocli.CommandLine;
 
 public class TestGetFunctionsCmd {
 
-    private Main app;
     private CommandLine cmd;
     private StringWriter outWriter;
     private StringWriter errWriter;
 
     @BeforeEach
     public void setup() {
-        app = new Main();
+        Main app = new Main();
         cmd = new CommandLine(app);
         outWriter = new StringWriter();
         errWriter = new StringWriter();
@@ -31,12 +30,11 @@ public class TestGetFunctionsCmd {
     private String getTestResourcePath(String fileName) {
         ClassLoader classLoader = getClass().getClassLoader();
         File file = new File(classLoader.getResource(fileName).getFile());
-        String helloCPath = file.getAbsolutePath();
-        return helloCPath;
+        return file.getAbsolutePath();
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {"hello.c", "hello.cpp", "hello.py", "Hello.java"})
+    @ValueSource(strings = {"hello.c", "hello.cpp", "hello.py", "Hello.java", "Hello.cs"})
     public void testListingFunctionsInSimpleFile(String fileName) {
         int exitCode = cmd.execute("get", "fns", getTestResourcePath(fileName));
         Assertions.assertEquals(0, exitCode);
