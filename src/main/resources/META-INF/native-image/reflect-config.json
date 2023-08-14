@@ -1,0 +1,20 @@
+[
+{
+  "name":"ai.mender.domain.FunctionRec",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"line","parameterTypes":[] }, {"name":"name","parameterTypes":[] }]
+},
+{
+  "name":"ai.mender.domain.ListResponse",
+  "allDeclaredFields":true,
+  "queryAllDeclaredMethods":true,
+  "queryAllDeclaredConstructors":true,
+  "methods":[{"name":"items","parameterTypes":[] }, {"name":"message","parameterTypes":[] }, {"name":"success","parameterTypes":[] }]
+},
+{
+  "name":"java.lang.reflect.RecordComponent",
+  "methods":[{"name":"getName","parameterTypes":[] }, {"name":"getType","parameterTypes":[] }]
+}
+]

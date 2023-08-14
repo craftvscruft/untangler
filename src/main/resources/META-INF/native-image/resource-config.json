@@ -1,0 +1,7 @@
+{
+  "resources":{
+  "includes":[{
+    "pattern":"java.base:\\Qsun/text/resources/LineBreakIteratorData\\E"
+  }]},
+  "bundles":[]
+}
