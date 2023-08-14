@@ -8,7 +8,11 @@ public interface FunctionDefinitionNode<T extends ParserRuleContext> {
         return getAntlrNode().start.getLine();
     }
 
-    FunctionRec toFunctionRec();
+    default FunctionRec toFunctionRec() {
+        return new FunctionRec(getName(), getStartLine());
+    }
+
+    String getName();
 
     T getAntlrNode();
 }

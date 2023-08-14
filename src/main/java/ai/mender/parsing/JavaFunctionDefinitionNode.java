@@ -1,7 +1,6 @@
 package ai.mender.parsing;
 
 import ai.mender.Language;
-import ai.mender.domain.FunctionRec;
 import antlrgen.java20.Java20Parser;
 
 
@@ -13,9 +12,9 @@ public class JavaFunctionDefinitionNode implements FunctionDefinitionNode<Java20
     }
 
 
-    public FunctionRec toFunctionRec() {
-        String name = Language.getTextIncludingWhitespace(ctx.methodHeader().methodDeclarator().Identifier());
-        return new FunctionRec(name, getStartLine());
+    @Override
+    public String getName() {
+        return Language.getTextIncludingWhitespace(ctx.methodHeader().methodDeclarator().Identifier());
     }
 
     @Override

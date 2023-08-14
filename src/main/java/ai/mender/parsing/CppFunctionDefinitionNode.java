@@ -1,7 +1,6 @@
 package ai.mender.parsing;
 
 import ai.mender.Language;
-import ai.mender.domain.FunctionRec;
 import antlrgen.cpp14.CPP14Parser;
 import antlrgen.cpp14.CPP14ParserBaseListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -14,16 +13,13 @@ public class CppFunctionDefinitionNode
         this.ctx = ctx;
     }
 
-    public FunctionRec toFunctionRec() {
-        return new FunctionRec(findName(), getStartLine());
-    }
-
     @Override
     public CPP14Parser.FunctionDefinitionContext getAntlrNode() {
         return ctx;
     }
 
-    private String findName() {
+    @Override
+    public String getName() {
         FunctionNameListener listener = new FunctionNameListener();
         ParseTreeWalker.DEFAULT.walk(listener, ctx);
         return Language.getTextIncludingWhitespace(listener.firstFoundId);

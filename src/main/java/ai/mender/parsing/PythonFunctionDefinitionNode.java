@@ -1,12 +1,7 @@
 package ai.mender.parsing;
 
 import ai.mender.Language;
-import ai.mender.domain.FunctionRec;
-import antlrgen.cpp14.CPP14Parser;
-import antlrgen.cpp14.CPP14ParserBaseListener;
 import antlrgen.python.PythonParser;
-import antlrgen.python.PythonParserBaseListener;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 public class PythonFunctionDefinitionNode
         implements FunctionDefinitionNode<PythonParser.FuncdefContext> {
@@ -16,18 +11,14 @@ public class PythonFunctionDefinitionNode
         this.ctx = ctx;
     }
 
-    public FunctionRec toFunctionRec() {
-        return new FunctionRec(findName(), getStartLine());
-    }
-
     @Override
     public PythonParser.FuncdefContext getAntlrNode() {
         return ctx;
     }
 
-    private String findName() {
+    @Override
+    public String getName() {
         return Language.getTextIncludingWhitespace(ctx.name());
     }
-
 
 }

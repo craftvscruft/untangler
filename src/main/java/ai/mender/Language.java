@@ -11,8 +11,6 @@ import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.Interval;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
-import java.util.function.Function;
-
 public class Language {
 
     public static String getTextIncludingWhitespace(ParserRuleContext ctx) {

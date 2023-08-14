@@ -3,14 +3,13 @@ package ai.mender.commands;
 import ai.mender.Console;
 import ai.mender.domain.FunctionRec;
 import ai.mender.domain.ListResponse;
+import ai.mender.strategy.LanguageStrategies;
+import ai.mender.strategy.LanguageStrategy;
+import ai.mender.strategy.SourceFile;
+import picocli.CommandLine;
 
 import java.io.File;
 import java.util.ArrayList;
-
-import ai.mender.strategy.LanguageStrategy;
-import ai.mender.strategy.LanguageStrategies;
-import ai.mender.strategy.SourceFile;
-import picocli.CommandLine;
 
 @CommandLine.Command(
         name = "functions",
