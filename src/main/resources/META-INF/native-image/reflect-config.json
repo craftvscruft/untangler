@@ -7,7 +7,7 @@
   "methods":[{"name":"line","parameterTypes":[] }, {"name":"name","parameterTypes":[] }]
 },
 {
-  "name":"ai.mender.domain.ListResponse",
+  "name":"ai.mender.domain.FunctionListResponse",
   "allDeclaredFields":true,
   "queryAllDeclaredMethods":true,
   "queryAllDeclaredConstructors":true,
