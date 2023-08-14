@@ -1,19 +1,14 @@
 package ai.mender.strategy.python;
 
-import ai.mender.parsing.CharsetUtils;
 import ai.mender.parsing.ThrowingErrorListener;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;
 import antlrgen.python.PythonLexer;
 import antlrgen.python.PythonParser;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
-import java.io.IOException;
-
-public class PyStrategy implements LanguageStrategy {
+public class PythonStrategy implements LanguageStrategy {
 
     @Override
     public TopLevelNode parseTopLevel(SourceFile sourceFile) {
@@ -22,14 +17,7 @@ public class PyStrategy implements LanguageStrategy {
 
     private static PythonParser.File_inputContext parseTree(SourceFile sourceFile) {
         boolean throwOnParseError = false;
-        CharStream inputStream = null;
-        try {
-            inputStream = CharStreams.fromFileName(
-                    sourceFile.file().getAbsolutePath(), CharsetUtils.detectFileCharset(sourceFile.file()));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        PythonLexer lexer = new PythonLexer(inputStream);
+        PythonLexer lexer = new PythonLexer(sourceFile.getCharStream());
         if (throwOnParseError) {
             lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
         }

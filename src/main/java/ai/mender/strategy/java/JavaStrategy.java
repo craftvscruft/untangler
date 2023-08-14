@@ -1,6 +1,5 @@
 package ai.mender.strategy.java;
 
-import ai.mender.parsing.CharsetUtils;
 import ai.mender.parsing.ThrowingErrorListener;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
@@ -8,10 +7,7 @@ import ai.mender.strategy.TopLevelNode;
 import antlrgen.java20.Java20Lexer;
 import antlrgen.java20.Java20Parser;
 import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-
-import java.io.IOException;
 
 public class JavaStrategy implements LanguageStrategy {
 
@@ -32,13 +28,7 @@ public class JavaStrategy implements LanguageStrategy {
 
     @Override
     public TopLevelNode parseTopLevel(SourceFile sourceFile) {
-        CharStream inputStream = null;
-        try {
-            inputStream = CharStreams.fromFileName(
-                    sourceFile.file().getAbsolutePath(), CharsetUtils.detectFileCharset(sourceFile.file()));
-        } catch (IOException e) {
-            throw new RuntimeException(e.getMessage(), e);
-        }
-        return new JavaTopLevelNode(parseProgram(inputStream, false));
+        return new JavaTopLevelNode(parseProgram(sourceFile.getCharStream(), false));
     }
+
 }
