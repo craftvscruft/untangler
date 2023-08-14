@@ -9,6 +9,7 @@ import java.lang.reflect.RecordComponent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class TableOutput {
     public static <T extends Record> void writeTableOutput(Writer writer, List<T> items, Class<T> recClass) {
@@ -41,9 +42,11 @@ public class TableOutput {
         return paddedForAllButLast.concat("%s");
     }
 
-    private static int getMaxLengthOfRecordFieldValue(RecordComponent rc, List<? extends Record> items1) {
-        return items1.stream().map(item ->
-                getRecordValue(rc, item).toString().length()).max(Integer::compare).orElse(0);
+    private static int getMaxLengthOfRecordFieldValue(RecordComponent rc, List<? extends Record> items) {
+        Stream<Integer> itemFieldValueLengths = items.stream().map(item ->
+                getRecordValue(rc, item).toString().length());
+        Stream<Integer> headerAndItemFieldValueLengths = Stream.concat(Stream.of(rc.getName().length()), itemFieldValueLengths);
+        return headerAndItemFieldValueLengths.max(Integer::compare).orElse(0);
     }
 
     private static <T extends Record> Object getRecordValue(RecordComponent rc, T value) {

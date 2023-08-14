@@ -1,5 +1,7 @@
-package ai.mender.parsing;
+package ai.mender.strategy.java;
 
+import ai.mender.parsing.SyntaxTreeUtil;
+import ai.mender.strategy.FunctionDefinitionNode;
 import antlrgen.java20.Java20Parser;
 
 

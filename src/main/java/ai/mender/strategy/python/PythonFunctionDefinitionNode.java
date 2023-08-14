@@ -1,5 +1,7 @@
-package ai.mender.parsing;
+package ai.mender.strategy.python;
 
+import ai.mender.parsing.SyntaxTreeUtil;
+import ai.mender.strategy.FunctionDefinitionNode;
 import antlrgen.python.PythonParser;
 
 public class PythonFunctionDefinitionNode

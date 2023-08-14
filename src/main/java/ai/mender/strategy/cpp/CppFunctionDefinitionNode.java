@@ -1,5 +1,7 @@
-package ai.mender.parsing;
+package ai.mender.strategy.cpp;
 
+import ai.mender.parsing.SyntaxTreeUtil;
+import ai.mender.strategy.FunctionDefinitionNode;
 import antlrgen.cpp14.CPP14Parser;
 import antlrgen.cpp14.CPP14ParserBaseListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;

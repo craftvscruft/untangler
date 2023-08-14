@@ -1,40 +1,24 @@
-package ai.mender.strategy;
+package ai.mender.strategy.cpp;
 
-import ai.mender.domain.FunctionRec;
 import ai.mender.parsing.CharsetUtils;
-import ai.mender.parsing.CppFunctionDefinitionNode;
 import ai.mender.parsing.ThrowingErrorListener;
+import ai.mender.strategy.LanguageStrategy;
+import ai.mender.strategy.SourceFile;
+import ai.mender.strategy.TopLevelNode;
 import antlrgen.cpp14.CPP14Lexer;
 import antlrgen.cpp14.CPP14Parser;
-import antlrgen.cpp14.CPP14ParserBaseListener;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
-import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.List;
 
 public class CppStrategy implements LanguageStrategy {
 
     @Override
-    public void collectFunctions(
-            File file, List<FunctionRec> items, boolean throwOnParseError) {
-        CPP14ParserBaseListener listener =
-                new CPP14ParserBaseListener() {
-
-                    @Override
-                    public void enterFunctionDefinition(CPP14Parser.FunctionDefinitionContext ctx) {
-                        items.add(new CppFunctionDefinitionNode(ctx).toFunctionRec());
-                    }
-                };
-
-        CPP14Parser.TranslationUnitContext tree = parseTree(file, throwOnParseError);
-        ParseTreeWalker.DEFAULT.walk(listener, tree);
-    }
-
-    private static CPP14Parser.TranslationUnitContext parseTree(File file, boolean throwOnParseError) {
+    public TopLevelNode parseTopLevel(SourceFile sourceFile) {
+        boolean throwOnParseError = false;
+        var file = sourceFile.file();
         CharStream inputStream =
                 null;
         try {
@@ -55,6 +39,6 @@ public class CppStrategy implements LanguageStrategy {
         }
         CPP14Parser.TranslationUnitContext tree =
                 parser.translationUnit();
-        return tree;
+        return new CppTopLevelNode(tree);
     }
 }
