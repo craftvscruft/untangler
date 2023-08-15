@@ -17,7 +17,11 @@ import java.util.ArrayList;
         description = "Lists functions defined in a file as json",
         aliases = {"function", "fns", "fn"})
 public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator {
-    @CommandLine.Parameters(index = "0", description = "The source code file to analyze")
+    @CommandLine.Option(
+            names = {"--file", "-f"},
+            description = "The source code file to analyze",
+            required = true,
+            defaultValue = "${env:UNTANGLER_DEFAULT_FILE}")
     private File file;
 
     @CommandLine.Option(names = {"--output", "-o"}, defaultValue = "text",

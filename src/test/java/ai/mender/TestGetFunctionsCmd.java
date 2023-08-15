@@ -36,7 +36,7 @@ public class TestGetFunctionsCmd {
     @ParameterizedTest
     @ValueSource(strings = {"hello.c", "hello.cpp", "hello.py", "Hello.java", "Hello.cs"})
     public void testListingFunctionsSimpleFileJsonOutput(String fileName) {
-        int exitCode = cmd.execute("get", "fns", getTestResourcePath(fileName), "-o", "json");
+        int exitCode = cmd.execute("get", "fns", "-f", getTestResourcePath(fileName), "-o", "json");
         Assertions.assertEquals(0, exitCode);
         String out = outWriter.toString();
         String err = errWriter.toString();
@@ -47,7 +47,7 @@ public class TestGetFunctionsCmd {
     @Test
     public void testListingFunctionsSimpleFileTextOutput() {
         String fileName = "hello.c";
-        int exitCode = cmd.execute("get", "fns", getTestResourcePath(fileName), "-o", "text");
+        int exitCode = cmd.execute("get", "fns", "-f", getTestResourcePath(fileName), "-o", "text");
         Assertions.assertEquals(0, exitCode);
         String out = outWriter.toString();
         String err = errWriter.toString();
@@ -58,7 +58,7 @@ public class TestGetFunctionsCmd {
     @Test
     public void testListingFunctionsSimpleFileYamlOutput() {
         String fileName = "hello.c";
-        int exitCode = cmd.execute("get", "fns", getTestResourcePath(fileName), "-o", "yaml");
+        int exitCode = cmd.execute("get", "fns", "-f", getTestResourcePath(fileName), "-o", "yaml");
         Assertions.assertEquals(0, exitCode);
         String out = outWriter.toString();
         String err = errWriter.toString();
@@ -68,7 +68,7 @@ public class TestGetFunctionsCmd {
 
     @Test
     public void testUnknownFileType() {
-        int exitCode = cmd.execute("get", "fns", "build.gradle");
+        int exitCode = cmd.execute("get", "fns", "-f", "build.gradle");
         Assertions.assertEquals(1, exitCode);
     }
 }

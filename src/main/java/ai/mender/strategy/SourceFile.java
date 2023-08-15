@@ -12,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 
 public record SourceFile(File file) {
-    static String getExtension(File file) {
+    public static String getExtension(File file) {
         var extension = "";
         String[] split = file.getName().split("\\.");
         if (split.length > 1) {

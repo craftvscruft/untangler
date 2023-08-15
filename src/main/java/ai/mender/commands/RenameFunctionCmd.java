@@ -15,14 +15,21 @@ import java.io.File;
         description = "Rename function in file",
         aliases = "fn")
 public class RenameFunctionCmd implements Runnable, CommandLine.IExitCodeGenerator {
-    @CommandLine.Parameters(index = "0", description = "The source code file to analyze")
-    private File file;
 
-    @CommandLine.Option(names = "--from", description = "The old name")
+
+    @CommandLine.Parameters(index = "0", description = "The old name")
     private String from;
 
-    @CommandLine.Option(names = "--to", description = "The new name")
+    @CommandLine.Parameters(index = "1", description = "The new name")
     private String to;
+
+    @CommandLine.Option(
+            names = {"--file", "-f"},
+            description = "The source code file to analyze",
+            required = true,
+            defaultValue = "${env:UNTANGLER_DEFAULT_FILE}"
+    )
+    private File file;
     @CommandLine.Option(names = {"--output", "-o"}, defaultValue = "text",
             description = {
                     "Output format",

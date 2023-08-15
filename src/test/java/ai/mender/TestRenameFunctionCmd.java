@@ -38,7 +38,7 @@ public class TestRenameFunctionCmd {
         String[] split = fileNameFnName.split("_");
         String fileName = split[0];
         String fnName = split[1];
-        int exitCode = cmd.execute("ren", "fn", getTestResourcePath(fileName), "--from", fnName, "--to", fnName+2,"-o", "json");
+        int exitCode = cmd.execute("ren", "fn", "-f", getTestResourcePath(fileName), fnName, fnName+2,"-o", "json");
         Assertions.assertEquals(0, exitCode);
         String out = outWriter.toString();
         String err = errWriter.toString();
