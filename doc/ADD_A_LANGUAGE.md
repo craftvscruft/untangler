@@ -45,8 +45,11 @@ Next generate the parsers and confirm the project still builds.
 ## Add language support
 Now comes the hard part.
 
-Start with `TestGetFunctionsCmd.java`, add a source code example and see if you can get the test 
-to act as you expect.
+In `TestGetFunctionsCmd.java`, add a source code example. The ultimate goal will be getting it to 
+output what you expect.
+
+Most language-specific details should be in the `strategy` package, you might start by 
+subclassing LanguageServer in your own sub-package.
 
 ## Update Docs
 

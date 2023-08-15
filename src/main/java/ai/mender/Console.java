@@ -7,16 +7,21 @@ import ai.mender.domain.SourceEditListResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 
 public class Console {
-    private static ObjectMapper MAPPER = JsonMapper.builder()
+    private static ObjectMapper JSON_MAPPER = JsonMapper.builder()
             .build().setDefaultPrettyPrinter(new JsonPrettyPrinter());
+
+    private static ObjectMapper YAML_MAPPER = YAMLMapper.builder()
+            .build();
     public static <T> void printOutput(T value, PrintWriter out, OutputFormat outputFormat) {
         switch (outputFormat) {
             case json -> toJson(out, value);
+            case yaml -> toYaml(out, value);
             case text -> toText(out, value);
         }
     }
@@ -39,7 +44,18 @@ public class Console {
 
     public static <T extends Object> void toJson(PrintWriter out, T object) {
         try {
-            ObjectWriter writer = MAPPER.writerWithDefaultPrettyPrinter();
+            ObjectWriter writer = JSON_MAPPER.writerWithDefaultPrettyPrinter();
+            writer.writeValue(out, object);
+            out.println();
+            out.flush();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T extends Object> void toYaml(PrintWriter out, T object) {
+        try {
+            ObjectWriter writer = YAML_MAPPER.writerWithDefaultPrettyPrinter();
             writer.writeValue(out, object);
             out.println();
             out.flush();
