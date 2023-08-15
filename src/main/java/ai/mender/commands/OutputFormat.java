@@ -1,3 +1,3 @@
 package ai.mender.commands;
 
-public enum OutputFormat { text, json }
+public enum OutputFormat { text, json, yaml}

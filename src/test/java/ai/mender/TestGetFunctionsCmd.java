@@ -56,6 +56,17 @@ public class TestGetFunctionsCmd {
     }
 
     @Test
+    public void testListingFunctionsSimpleFileYamlOutput() {
+        String fileName = "hello.c";
+        int exitCode = cmd.execute("get", "fns", getTestResourcePath(fileName), "-o", "yaml");
+        Assertions.assertEquals(0, exitCode);
+        String out = outWriter.toString();
+        String err = errWriter.toString();
+        Assertions.assertEquals("", err);
+        Approvals.verify(out);
+    }
+
+    @Test
     public void testUnknownFileType() {
         int exitCode = cmd.execute("get", "fns", "build.gradle");
         Assertions.assertEquals(1, exitCode);

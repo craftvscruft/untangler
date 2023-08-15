@@ -29,3 +29,10 @@ build/
 .DS_Store
 
 *.received.*
+
+# Eclipse LSP generates these
+.classpath
+.factorypath
+.project
+.metadata/
+.settings/

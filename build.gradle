@@ -21,14 +21,17 @@ dependencies {
     implementation 'info.picocli:picocli:4.7.4'
     implementation "org.antlr:antlr4-runtime:4.13.0"
     implementation 'com.ibm.icu:icu4j:73.2'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.13.2'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
+    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2'
+
     implementation 'org.apache.commons:commons-lang3:3.13.0'
-    annotationProcessor 'info.picocli:picocli-codegen:4.6.3'
+    implementation 'org.eclipse.lsp4j:org.eclipse.lsp4j:0.21.0'
+    annotationProcessor 'info.picocli:picocli-codegen:4.7.3'
 
 
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.2'
     testImplementation 'com.approvaltests:approvaltests:18.7.1'
 
@@ -57,11 +60,11 @@ check {
 jacocoTestReport {
     dependsOn test // tests are required to run before generating the report
     afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
+        classDirectories.setFrom(files(classDirectories.files.collect {
             fileTree(dir: it, exclude: [
                     '**/antlrgen/*'
             ])
-        })
+        }))
     }
 }
 
