@@ -1,0 +1,72 @@
+(translationUnit (declarationseq (declaration (blockDeclaration (simpleDeclaration (declSpecifierSeq
+(declSpecifier (typeSpecifier (trailingTypeSpecifier (simpleTypeSpecifier double)))))
+(initDeclaratorList (initDeclarator (declarator (pointerDeclarator (noPointerDeclarator
+(declaratorid (idExpression (unqualifiedId global1)))))))) ;))) (declaration (functionDefinition
+(declSpecifierSeq (declSpecifier (typeSpecifier (trailingTypeSpecifier (simpleTypeSpecifier
+void))))) (declarator (pointerDeclarator (noPointerDeclarator (noPointerDeclarator (declaratorid
+(idExpression (unqualifiedId foo)))) (parametersAndQualifiers ( (parameterDeclarationClause
+(parameterDeclarationList (parameterDeclaration (declSpecifierSeq (declSpecifier (typeSpecifier
+(trailingTypeSpecifier (simpleTypeSpecifier double))))) (declarator (pointerDeclarator
+(noPointerDeclarator (declaratorid (idExpression (unqualifiedId arg1))))))) , (parameterDeclaration
+(declSpecifierSeq (declSpecifier (typeSpecifier (trailingTypeSpecifier (simpleTypeSpecifier
+double))))) (declarator (pointerDeclarator (noPointerDeclarator (declaratorid (idExpression
+(unqualifiedId arg2))))))))) ))))) (functionBody (compoundStatement { (statementSeq (statement
+(declarationStatement (blockDeclaration (simpleDeclaration (declSpecifierSeq (declSpecifier
+(typeSpecifier (trailingTypeSpecifier (simpleTypeSpecifier double))))) (initDeclaratorList
+(initDeclarator (declarator (pointerDeclarator (noPointerDeclarator (declaratorid (idExpression
+(unqualifiedId s)))))) (initializer (braceOrEqualInitializer = (initializerClause
+(assignmentExpression (logicalOrExpression (logicalAndExpression (inclusiveOrExpression
+(exclusiveOrExpression (andExpression (equalityExpression (relationalExpression (shiftExpression
+(additiveExpression (multiplicativeExpression (pointerMemberExpression (castExpression
+(unaryExpression (postfixExpression (primaryExpression (idExpression (unqualifiedId
+currentPoint))))))))))))))))) (assignmentOperator =) (initializerClause (assignmentExpression
+(conditionalExpression (logicalOrExpression (logicalAndExpression (inclusiveOrExpression
+(exclusiveOrExpression (andExpression (equalityExpression (relationalExpression (shiftExpression
+(additiveExpression (multiplicativeExpression (pointerMemberExpression (castExpression
+(unaryExpression (postfixExpression (postfixExpression (primaryExpression (idExpression
+(unqualifiedId calculateBezierPoint)))) ( (expressionList (initializerList (initializerClause
+(assignmentExpression (conditionalExpression (logicalOrExpression (logicalAndExpression
+(inclusiveOrExpression (exclusiveOrExpression (andExpression (equalityExpression
+(relationalExpression (shiftExpression (additiveExpression (multiplicativeExpression
+(pointerMemberExpression (castExpression (unaryExpression (postfixExpression (primaryExpression
+(idExpression (unqualifiedId t)))))))))))))))))))))) )))))) - (multiplicativeExpression
+(pointerMemberExpression (castExpression (unaryExpression (postfixExpression (postfixExpression
+(primaryExpression (idExpression (unqualifiedId calculateBezierPoint)))) ( (expressionList
+(initializerList (initializerClause (assignmentExpression (conditionalExpression
+(logicalOrExpression (logicalAndExpression (inclusiveOrExpression (exclusiveOrExpression
+(andExpression (equalityExpression (relationalExpression (shiftExpression (additiveExpression
+(multiplicativeExpression (pointerMemberExpression (castExpression (unaryExpression
+(postfixExpression (primaryExpression (idExpression (unqualifiedId u))))))))))))))))))))))
+)))))))))))))))))))))))) ;)))) (statement (declarationStatement (blockDeclaration (simpleDeclaration
+(initDeclaratorList (initDeclarator (declarator (pointerDeclarator (noPointerDeclarator
+(declaratorid (idExpression (unqualifiedId global1)))))) (initializer (braceOrEqualInitializer =
+(initializerClause (assignmentExpression (conditionalExpression (logicalOrExpression
+(logicalAndExpression (inclusiveOrExpression (exclusiveOrExpression (andExpression
+(equalityExpression (relationalExpression (shiftExpression (additiveExpression
+(multiplicativeExpression (pointerMemberExpression (castExpression (unaryExpression
+(postfixExpression (primaryExpression (idExpression (unqualifiedId arg1))))))))))))))))))))))))
+;))))) }))))) <EOF>)
+====PASS===
+(root
+  (simpleDeclWithSpec
+    (idExpr global1))
+  (fn
+    (idExpr foo arg1 arg2)
+    (fnBody
+      (simpleDeclWithSpec
+        (idExpr s)
+        (initializer
+          (idExpr currentPoint calculateBezierPoint t calculateBezierPoint u)))
+      (simpleDecl
+        (idExpr global1)
+        (initializer
+          (idExpr arg1))))))
+====PASS===
+(root
+  (decl global1)
+  (fn
+    (name foo)
+    (params arg1 arg2)
+    (fnBody
+      (decl s)
+      (ref currentPoint calculateBezierPoint t calculateBezierPoint u global1 arg1))))

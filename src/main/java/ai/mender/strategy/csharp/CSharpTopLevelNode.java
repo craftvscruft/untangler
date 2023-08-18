@@ -28,4 +28,5 @@ public class CSharpTopLevelNode implements TopLevelNode {
 
         ParseTreeWalker.DEFAULT.walk(listener, this.tree);
     }
+
 }

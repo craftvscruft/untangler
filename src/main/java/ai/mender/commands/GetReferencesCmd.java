@@ -1,7 +1,7 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.domain.SourceEditListResponse;
+import ai.mender.domain.ReferencesResponse;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;
@@ -10,18 +10,15 @@ import picocli.CommandLine;
 import java.io.File;
 
 @CommandLine.Command(
-        name = "function",
+        name = "references",
         mixinStandardHelpOptions = true,
-        description = "Rename function in file",
-        aliases = "fn")
-public class RenameFunctionCmd implements Runnable, CommandLine.IExitCodeGenerator {
+        description = "Get references to a name in a file",
+        aliases = {"refs", "ref"})
+public class GetReferencesCmd implements Runnable, CommandLine.IExitCodeGenerator {
 
 
-    @CommandLine.Parameters(index = "0", description = "The old name")
-    private String from;
-
-    @CommandLine.Parameters(index = "1", description = "The new name")
-    private String to;
+    @CommandLine.Parameters(index = "0", description = "Name of a symbol")
+    private String name;
 
     @CommandLine.Option(
             names = {"--file", "-f"},
@@ -54,10 +51,11 @@ public class RenameFunctionCmd implements Runnable, CommandLine.IExitCodeGenerat
                 success = false;
             } else {
                 TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
-                SourceEditListResponse response = languageStrategy.renameFunction(tree, from, to);
+                ReferencesResponse response = languageStrategy.references(tree, name);
+
                 Console.printOutput(response, spec.commandLine().getOut(), outputFormat);
-                success = response.success();
-                message = response.message();
+                success = true;
+                message = "OK";
             }
         } catch (Exception e) {
             message = e.getMessage();

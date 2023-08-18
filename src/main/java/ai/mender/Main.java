@@ -1,12 +1,20 @@
 package ai.mender;
+
 import ai.mender.commands.FormatCmd;
 import ai.mender.commands.GetCmd;
+import ai.mender.commands.GetReferencesCmd;
 import ai.mender.commands.RenameCmd;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
 @Command(name = "untangler", mixinStandardHelpOptions = true, version = "0.0.1-SNAPSHOT",
-        description = "Hello", subcommands = {GetCmd.class, RenameCmd.class, FormatCmd.class})
+        description = "Hello",
+        subcommands = {
+                GetCmd.class,
+                RenameCmd.class,
+                FormatCmd.class,
+                GetReferencesCmd.class
+        })
 public class Main {
 
     public static void main(String... args) {

@@ -1,8 +1,9 @@
 package ai.mender.strategy.java;
 
+import ai.mender.domain.ReferencesResponse;
 import ai.mender.parsing.ThrowingErrorListener;
+import ai.mender.strategy.ISourceFile;
 import ai.mender.strategy.LanguageStrategy;
-import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;
 import antlrgen.java20.Java20Lexer;
 import antlrgen.java20.Java20Parser;
@@ -27,8 +28,12 @@ public class JavaStrategy implements LanguageStrategy {
     }
 
     @Override
-    public TopLevelNode parseTopLevel(SourceFile sourceFile) {
+    public TopLevelNode parseTopLevel(ISourceFile sourceFile) {
         return new JavaTopLevelNode(parseProgram(sourceFile.getCharStream(), false));
     }
 
+    @Override
+    public ReferencesResponse references(TopLevelNode root, String name) {
+        return ReferencesResponse.empty(name);
+    }
 }

@@ -19,6 +19,12 @@
   "queryAllDeclaredMethods" : true,
   "queryAllDeclaredConstructors" : true,
   "methods" : [ {
+    "name" : "items",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "writeTableOutput",
+    "parameterTypes" : [ "java.io.PrintWriter" ]
+  }, {
     "name" : "equals",
     "parameterTypes" : [ "java.lang.Object" ]
   }, {
@@ -33,12 +39,6 @@
   }, {
     "name" : "success",
     "parameterTypes" : [ ]
-  }, {
-    "name" : "items",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "writeTableOutput",
-    "parameterTypes" : [ "java.io.PrintWriter" ]
   } ]
 }, {
   "name" : "ai.mender.domain.FunctionRec",
@@ -60,6 +60,78 @@
   }, {
     "name" : "line",
     "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.domain.Ref",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "name",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "range",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.domain.Reference",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "declarationRange",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "name",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "range",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.domain.ReferencesResponse",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "declarations",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "references",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "name",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "empty",
+    "parameterTypes" : [ "java.lang.String" ]
   } ]
 }, {
   "name" : "ai.mender.domain.SourceEdit",
@@ -94,6 +166,12 @@
   "queryAllDeclaredMethods" : true,
   "queryAllDeclaredConstructors" : true,
   "methods" : [ {
+    "name" : "edits",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "writeTableOutput",
+    "parameterTypes" : [ "java.io.PrintWriter" ]
+  }, {
     "name" : "equals",
     "parameterTypes" : [ "java.lang.Object" ]
   }, {
@@ -108,12 +186,6 @@
   }, {
     "name" : "success",
     "parameterTypes" : [ ]
-  }, {
-    "name" : "edits",
-    "parameterTypes" : [ ]
-  }, {
-    "name" : "writeTableOutput",
-    "parameterTypes" : [ "java.io.PrintWriter" ]
   } ]
 }, {
   "name" : "ai.mender.domain.SourcePosition",
@@ -121,6 +193,9 @@
   "queryAllDeclaredMethods" : true,
   "queryAllDeclaredConstructors" : true,
   "methods" : [ {
+    "name" : "col",
+    "parameterTypes" : [ ]
+  }, {
     "name" : "equals",
     "parameterTypes" : [ "java.lang.Object" ]
   }, {
@@ -132,9 +207,6 @@
   }, {
     "name" : "line",
     "parameterTypes" : [ ]
-  }, {
-    "name" : "col",
-    "parameterTypes" : [ ]
   } ]
 }, {
   "name" : "ai.mender.domain.SourceRange",
@@ -142,6 +214,9 @@
   "queryAllDeclaredMethods" : true,
   "queryAllDeclaredConstructors" : true,
   "methods" : [ {
+    "name" : "unknown",
+    "parameterTypes" : [ ]
+  }, {
     "name" : "equals",
     "parameterTypes" : [ "java.lang.Object" ]
   }, {
@@ -155,6 +230,21 @@
     "parameterTypes" : [ ]
   }, {
     "name" : "start",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "isUnknown",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "java.lang.reflect.RecordComponent",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "getName",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "getType",
     "parameterTypes" : [ ]
   } ]
 } ]

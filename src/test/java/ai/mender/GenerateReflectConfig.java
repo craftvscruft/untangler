@@ -7,8 +7,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class GenerateReflectConfig {
     public record ConfigEntry(String name, boolean allDeclaredFields, boolean queryAllDeclaredMethods, boolean queryAllDeclaredConstructors, MethodEntry[] methods) {
@@ -16,7 +18,7 @@ public class GenerateReflectConfig {
     public record MethodEntry(String name, String[] parameterTypes) {
     }
 
-    private static ConfigEntry RECORD_COMPONENT_ENTRY = new ConfigEntry(
+    private static final ConfigEntry RECORD_COMPONENT_ENTRY = new ConfigEntry(
             "java.lang.reflect.RecordComponent",
             true,
             true,
@@ -32,7 +34,8 @@ public class GenerateReflectConfig {
         InputStream stream = ClassLoader.getSystemClassLoader()
                 .getResourceAsStream(packageName.replaceAll("[.]", "/"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        List<ConfigEntry> configEntries = reader.lines()
+        List<ConfigEntry> configEntries = new ArrayList<>();
+        reader.lines()
                 .filter(line -> line.endsWith(".class"))
                 .map(line -> getClass(line, packageName))
                 .map(klass ->
@@ -44,7 +47,7 @@ public class GenerateReflectConfig {
                                 Arrays.stream(klass.getDeclaredMethods()).map(m -> new MethodEntry(
                                         m.getName(), Arrays.stream(m.getParameterTypes()).map(Class::getCanonicalName).toArray(String[]::new)
                                 )).toArray(MethodEntry[]::new)
-                        )).toList();
+                        )).forEachOrdered(configEntries::add);
         configEntries.add(RECORD_COMPONENT_ENTRY);
         System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(configEntries));
     }

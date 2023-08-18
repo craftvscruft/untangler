@@ -11,16 +11,22 @@ import org.antlr.v4.runtime.CharStreams;
 import java.io.File;
 import java.io.IOException;
 
-public record SourceFile(File file) {
+public record SourceFile(File file) implements ISourceFile {
     public static String getExtension(File file) {
+        return getExtension(file.getName());
+    }
+
+    private static String getExtension(String name) {
         var extension = "";
-        String[] split = file.getName().split("\\.");
+
+        String[] split = name.split("\\.");
         if (split.length > 1) {
             extension = split[split.length - 1];
         }
         return extension;
     }
 
+    @Override
     public CharStream getCharStream() {
         try {
             return CharStreams.fromFileName(
@@ -30,14 +36,48 @@ public record SourceFile(File file) {
         }
     }
 
+    @Override
     public LanguageStrategy createStrategyForFile() {
-        return switch (getExtension(file()).toLowerCase()) {
+        return createStrategyForExtension(getExtension(this.file()));
+    }
+
+    private static LanguageStrategy createStrategyForExtension(String extension) {
+        return switch (extension.toLowerCase()) {
             case "c", "cpp", "cc" -> new CppStrategy();
             case "py" -> new PythonStrategy();
             case "java" -> new JavaStrategy();
             case "cs" -> new CSharpStrategy();
             default -> null;
         };
+    }
+
+    public static class StringSourceFile implements ISourceFile {
+        private String name;
+        private String source;
+
+        public StringSourceFile(String name, String source) {
+            this.name = name;
+
+            this.source = source;
+        }
+
+        @Override
+        public CharStream getCharStream() {
+            return CharStreams.fromString(source, name);
+        }
+
+        @Override
+        public LanguageStrategy createStrategyForFile() {
+            return createStrategyForExtension(getExtension(name));
+        }
+
+        public String getSource() {
+            return source;
+        }
+
+        public void setSource(String source) {
+            this.source = source;
+        }
     }
 
 }

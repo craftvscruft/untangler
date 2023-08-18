@@ -13,7 +13,9 @@ Prototype, not yet suitable for use.
 
 Commands will generally take the form `untangler <Action> <ResourceType> ...`
 
-* `untangler get functions`: List function definitions in a given file (C / C++ only)
+* `untangler get functions`: List function definitions in a file (C / C++ only)
+* `untangler references`: Show symbol and declarations and reference in a file (C / C++ only)
+* `untangler rename function`: Rename a function and all references to it a file (C / C++ only)
 
 # Requirements (Build)
 
@@ -62,7 +64,7 @@ Coverage report in `open build/reports/jacoco/test/html/index.html`
 * Support each of the [core 6 refactorings](https://arlobelshee.com/the-core-6-refactorings) identified by Arlo Belshee
 * Support the Menderbot [target languages](https://github.com/craftvscruft/menderbot/issues/5) with reliable syntax tree manipulation
 * Operate independent of a language server
-* Be automation-friendly - commands should have an option to output json, for instance
+* Be automation-friendly,  commands should have an option to output json and indicate success with exit codes, for instance
 
 ### Core 6 refactorings
 

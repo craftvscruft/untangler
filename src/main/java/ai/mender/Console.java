@@ -2,8 +2,8 @@ package ai.mender;
 
 
 import ai.mender.commands.OutputFormat;
-import ai.mender.domain.FunctionListResponse;
-import ai.mender.domain.SourceEditListResponse;
+import ai.mender.domain.*;
+import ai.mender.output.TableOutput;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -37,8 +37,18 @@ public class Console {
             if (!listResponse.success()) {
                 out.println(listResponse.message());
             }
-        } else {
-            out.println(value.toString());
+        } else if (value instanceof ReferencesResponse referencesResponse) {
+            out.println("Declarations");
+            TableOutput.writeTableOutput(out, referencesResponse.declarations(), SourceRange.class);
+            out.println();
+            out.println("References");
+            TableOutput.writeTableOutput(out, referencesResponse.references(), Reference.class);
+        }else {
+            // TODO: Test
+            if (null != value) {
+                out.println(value);
+            }
+
         }
     }
 

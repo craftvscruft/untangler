@@ -28,4 +28,5 @@ public class JavaTopLevelNode implements TopLevelNode {
 
         ParseTreeWalker.DEFAULT.walk(listener, tree);
     }
+
 }

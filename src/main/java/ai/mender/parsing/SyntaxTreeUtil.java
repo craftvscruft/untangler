@@ -2,9 +2,13 @@ package ai.mender.parsing;
 
 import ai.mender.domain.SourcePosition;
 import ai.mender.domain.SourceRange;
+import ai.mender.strategy.TreeBuilder;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.misc.Interval;
 import org.antlr.v4.runtime.tree.TerminalNode;
+
+import java.util.Stack;
+import java.util.stream.Collectors;
 
 public class SyntaxTreeUtil {
     private SyntaxTreeUtil() {
@@ -28,6 +32,65 @@ public class SyntaxTreeUtil {
 
 
     public static SourceRange nodeToSourceRange(ParserRuleContext antlrNode) {
-        return new SourceRange(new SourcePosition(antlrNode.start.getLine(), antlrNode.start.getCharPositionInLine()), new SourcePosition(antlrNode.stop.getLine(), antlrNode.stop.getCharPositionInLine() + antlrNode.stop.getText().length()));
+        int startColumn = antlrNode.start.getCharPositionInLine() + 1;
+        SourcePosition start = new SourcePosition(antlrNode.start.getLine(), startColumn);
+        int stopColumn = antlrNode.stop.getCharPositionInLine() + antlrNode.stop.getText().length() + 1;
+        SourcePosition end = new SourcePosition(antlrNode.stop.getLine(), stopColumn);
+        return new SourceRange(start, end);
     }
+
+    public static String astToSexpr(Ast tree) {
+        return astToSexpr(tree, false);
+    }
+
+    public static String astToSexprWithRanges(Ast ast) {
+        return astToSexpr(ast, true);
+    }
+
+    private static String astToSexpr(Ast tree, boolean includeRanges) {
+        final String INDENT = "  ";
+        StringBuilder stringBuilder = new StringBuilder();
+        Stack<TreeBuilder.AstDepth> openNodes = new Stack<>();
+        openNodes.add(new TreeBuilder.AstDepth(tree, 0));
+
+        int prevDepth = 0;
+        while (!openNodes.isEmpty()) {
+            TreeBuilder.AstDepth nodeDepth = openNodes.pop();
+            Ast node = nodeDepth.node();
+            int depth = nodeDepth.depth();
+            if (depth < prevDepth) {
+                stringBuilder.append(")".repeat(prevDepth - depth));
+            }
+            if (depth > 0) {
+                stringBuilder.append("\n").append(INDENT.repeat(depth));
+            }
+            if (node.isChildless()) {
+                stringBuilder.append(renderNodeTag(node, includeRanges));
+            } else {
+                stringBuilder.append("(");
+                stringBuilder.append(renderNodeTag(node, includeRanges));
+
+                if (node.allChildrenAreChildless()) {
+                    stringBuilder.append(" ").append(node.children().stream().map(Ast::tag).collect(Collectors.joining(" ")));
+                    stringBuilder.append(")");
+                } else {
+                    node.reverseChildrenStream()
+                            .map(child -> new TreeBuilder.AstDepth(child, depth+1))
+                            .forEachOrdered(openNodes::push);
+                }
+            }
+            prevDepth = depth;
+        }
+        stringBuilder.append(")".repeat(prevDepth));
+        return stringBuilder.toString();
+    }
+
+    private static String renderNodeTag(Ast node, boolean includeRange) {
+        if (includeRange) {
+            return node.tag() + (node.range() == null ? "[missing]" : node.range().toString());
+        }
+        return node.tag();
+    }
+
+
 }

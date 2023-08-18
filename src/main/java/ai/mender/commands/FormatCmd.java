@@ -5,7 +5,8 @@ import picocli.CommandLine;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 @CommandLine.Command(
         name = "format",

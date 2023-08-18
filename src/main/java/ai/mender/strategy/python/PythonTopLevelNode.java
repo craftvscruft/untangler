@@ -26,4 +26,5 @@ public class PythonTopLevelNode implements TopLevelNode {
                 };
         ParseTreeWalker.DEFAULT.walk(listener, tree);
     }
+
 }
