@@ -1,9 +1,7 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.SimpleSelector;
-import ai.mender.domain.CommentListResponse;
-import ai.mender.domain.CommentRec;
+import ai.mender.domain.SourceEdit;
 import ai.mender.domain.SourceEditListResponse;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
@@ -11,7 +9,7 @@ import ai.mender.strategy.TopLevelNode;
 import picocli.CommandLine;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.List;
 
 @CommandLine.Command(
         name = "comment",
@@ -38,13 +36,17 @@ public class AddCommentCmd implements Runnable, CommandLine.IExitCodeGenerator {
                     "Supported: text (default), json"
             })
     private OutputFormat outputFormat;
+    @CommandLine.Option(
+            names = {"--write", "-w"},
+            description = "Write the modified version"
+    )
+    private boolean write;
 
     @CommandLine.Spec CommandLine.Model.CommandSpec spec;
     private boolean success = false;
 
     @Override
     public void run() {
-        var items = new ArrayList<CommentRec>();
         var message = "OK";
         try {
             SourceFile sourceFile = new SourceFile(file);
@@ -60,13 +62,18 @@ public class AddCommentCmd implements Runnable, CommandLine.IExitCodeGenerator {
                 SourceEditListResponse response = languageStrategy.insertComment(tree, line, text);
                 Console.printOutput(response, spec.commandLine().getOut(), outputFormat);
                 success = response.success();
+                if (success && write) {
+                    sourceFile.update(file, response.edits(), spec.commandLine().getErr());
+                }
             }
         } catch (Exception e) {
             success = false;
-            message = e.getMessage();
+            message = e.getClass() + " " + e.getMessage();
         }
-//        CommentListResponse response = new CommentListResponse(success, message, items);
-//        Console.printOutput(response, spec.commandLine().getOut(), outputFormat);
+        if (!success) {
+            Console.printOutput(message, spec.commandLine().getOut(), outputFormat);
+        }
+
     }
 
     @Override

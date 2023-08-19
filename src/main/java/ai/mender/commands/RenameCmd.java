@@ -66,9 +66,7 @@ public class RenameCmd implements Runnable, CommandLine.IExitCodeGenerator {
                 success = response.success();
                 message = response.message();
                 if (success && write) {
-                    List<SourceEdit> edits = response.edits();
-                    SourceFile.sortEditsCheckDupes(edits);
-                    sourceFile.update(file, edits, spec.commandLine().getErr());
+                    sourceFile.update(file, response.edits(), spec.commandLine().getErr());
                 }
             }
         } catch (Exception e) {

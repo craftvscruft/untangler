@@ -2,12 +2,14 @@ package ai.mender.strategy;
 
 import ai.mender.SimpleSelector;
 import ai.mender.domain.*;
+import com.google.common.annotations.VisibleForTesting;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public interface LanguageStrategy {
     TopLevelNode parseTopLevel(ISourceFile sourceFile);
@@ -29,13 +31,18 @@ public interface LanguageStrategy {
             return new SourceEditListResponse(false, message, Arrays.asList());
         }
         SourceRange declarationRange = declarations.get(0);
-        var results = new ArrayList<SourceEdit>();
-        results.add(new SourceEdit(declarationRange.start(), declarationRange.end(), EditMode.Replace, to));
-        referencesResponse.references().stream()
+        return createRenameEdits(to, referencesResponse, declarationRange);
+    }
+
+    static SourceEditListResponse createRenameEdits(String to, ReferencesResponse referencesResponse, SourceRange declarationRange) {
+        SourceEdit declarationEdit = new SourceEdit(declarationRange.start(), declarationRange.end(), EditMode.Replace, to);
+        Stream<SourceEdit> referenceEdits = referencesResponse.references().stream()
                 .filter(ref -> declarationRange.equals(ref.declarationRange()))
-                .map(ref -> new SourceEdit(ref.range().start(), ref.range().end(), EditMode.Replace, to))
-                .forEachOrdered(results::add);
-        return new SourceEditListResponse(true, "OK", results);
+                .map(ref -> new SourceEdit(ref.range().start(), ref.range().end(), EditMode.Replace, to));
+        List<SourceEdit> edits = Stream.concat(List.of(declarationEdit).stream(), referenceEdits)
+                .distinct()
+                .toList();
+        return new SourceEditListResponse(true, "OK", edits);
     }
 
     ReferencesResponse references(TopLevelNode root, SimpleSelector selector);
@@ -43,10 +50,8 @@ public interface LanguageStrategy {
     void forEachComment(ISourceFile sourceFile, Consumer<CommentRec> consumer);
 
     default SourceEditListResponse insertComment(TopLevelNode tree, int line, String text) {
-        SourcePosition start = new SourcePosition(line, 0);
-        SourcePosition end = new SourcePosition(line, 0);
         String commentText = formatMultiLineComment(text.trim());
-        SourceEdit edit = new SourceEdit(start, end, EditMode.Insert, commentText);
+        SourceEdit edit = SourceEdit.insert(new SourcePosition(line, 1), commentText);
         return new SourceEditListResponse(true, "OK", List.of(edit));
     }
 

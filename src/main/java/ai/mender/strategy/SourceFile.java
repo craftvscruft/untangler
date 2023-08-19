@@ -6,6 +6,8 @@ import ai.mender.strategy.cpp.CppStrategy;
 import ai.mender.strategy.csharp.CSharpStrategy;
 import ai.mender.strategy.java.JavaStrategy;
 import ai.mender.strategy.python.PythonStrategy;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Ordering;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 
@@ -31,15 +33,17 @@ public record SourceFile(File file) implements ISourceFile {
         return extension;
     }
 
-    public static void sortEditsCheckDupes(List<SourceEdit> edits) {
-        edits.sort(Comparator.comparing((SourceEdit e) -> e.start()));
-        for (int i = 0; i < edits.size() - 1; i++) {
-            var edit1 = edits.get(i);
-            var edit2 = edits.get(i+1);
+    public static ImmutableList<SourceEdit> sortedEditsCheckedForDupes(List<SourceEdit> inputEdits) {
+        var ordering = Ordering.from(Comparator.comparing((SourceEdit e) -> e.start()));
+        var sortedEdits = ordering.immutableSortedCopy(inputEdits);
+        for (int i = 0; i < sortedEdits.size() - 1; i++) {
+            var edit1 = sortedEdits.get(i);
+            var edit2 = sortedEdits.get(i+1);
             if (edit1.end().compareTo(edit2.start()) > 0) {
-                throw new RuntimeException("Edit ranges cannot overlap");
+                throw new RuntimeException(String.format("Edit ranges cannot overlap: %s <-> %s", edit1, edit2));
             }
         }
+        return sortedEdits;
     }
 
     @Override
@@ -67,7 +71,8 @@ public record SourceFile(File file) implements ISourceFile {
         };
     }
 
-    public void update(File file, List<SourceEdit> edits, PrintWriter consoleOut) throws IOException {
+    public void update(File file, List<SourceEdit> inputEdits, PrintWriter consoleOut) throws IOException {
+        List<SourceEdit> edits = SourceFile.sortedEditsCheckedForDupes(inputEdits);
         Path backupPath = backupFile(file, consoleOut);
         Charset charset = CharsetUtils.detectFileCharset(file);
         consoleOut.println("Writing " + file);
@@ -100,7 +105,7 @@ public record SourceFile(File file) implements ISourceFile {
 
 
     public static void applyEdits(List<SourceEdit> edits, Reader reader, Writer writer) throws IOException {
-        // Precondition, edits are in order of ascending start and do not overlap.
+        // Edits must be in order of ascending start and cannot overlap.
         int line = 1;
         int col = 1;
         int readCh;

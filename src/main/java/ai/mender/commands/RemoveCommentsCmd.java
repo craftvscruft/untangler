@@ -11,6 +11,7 @@ import picocli.CommandLine;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 @CommandLine.Command(
         name = "comments",
@@ -67,7 +68,6 @@ public class RemoveCommentsCmd implements Runnable, CommandLine.IExitCodeGenerat
                         .forEachOrdered(edits::add);
                 success = true;
                 if (success && write) {
-                    SourceFile.sortEditsCheckDupes(edits);
                     sourceFile.update(file, edits, spec.commandLine().getErr());
                 }
             }

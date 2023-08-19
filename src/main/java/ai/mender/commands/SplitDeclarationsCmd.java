@@ -79,7 +79,6 @@ public class SplitDeclarationsCmd implements Runnable, CommandLine.IExitCodeGene
                     }
                     success = true;
                     if (success && write && !edits.isEmpty()) {
-                        SourceFile.sortEditsCheckDupes(edits);
                         sourceFile.update(file, edits, spec.commandLine().getErr());
                     }
                 } else {
