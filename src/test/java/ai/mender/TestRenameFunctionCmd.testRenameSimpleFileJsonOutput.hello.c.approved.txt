@@ -11,8 +11,8 @@
         "line" : 2,
         "col" : 9
       },
-      "text" : "main2",
-      "mode" : "Replace"
+      "mode" : "Replace",
+      "text" : "main2"
     }
   ]
 }
