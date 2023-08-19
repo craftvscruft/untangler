@@ -1,0 +1,46 @@
+{
+  "selector" : {
+    "name" : "main",
+    "line" : 2
+  },
+  "declarations" : [
+    {
+      "start" : {
+        "line" : 2,
+        "col" : 5
+      },
+      "end" : {
+        "line" : 2,
+        "col" : 9
+      },
+      "unknown" : false
+    }
+  ],
+  "references" : [
+    {
+      "name" : "main",
+      "range" : {
+        "start" : {
+          "line" : 8,
+          "col" : 5
+        },
+        "end" : {
+          "line" : 8,
+          "col" : 9
+        },
+        "unknown" : false
+      },
+      "declarationRange" : {
+        "start" : {
+          "line" : 2,
+          "col" : 5
+        },
+        "end" : {
+          "line" : 2,
+          "col" : 9
+        },
+        "unknown" : false
+      }
+    }
+  ]
+}

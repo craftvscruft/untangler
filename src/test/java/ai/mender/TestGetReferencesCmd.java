@@ -3,6 +3,7 @@ package ai.mender;
 import org.approvaltests.Approvals;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import picocli.CommandLine;
@@ -11,7 +12,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-public class TestRenameFunctionCmd {
+public class TestGetReferencesCmd {
     private CommandLine cmd;
     private StringWriter outWriter;
     private StringWriter errWriter;
@@ -33,30 +34,26 @@ public class TestRenameFunctionCmd {
     }
 
     @ParameterizedTest
-    @ValueSource(strings = {
-            "hello.c_main", "hello.cpp_main",
-            /* "hello.py_hello", "Hello.java_main", "Hello.cs_Main" */
-    })
-    public void testRenameSimpleFileJsonOutput(String fileNameFnName) {
-        String[] split = fileNameFnName.split("_");
-        String fileName = split[0];
-        String fnName = split[1];
-        int exitCode = cmd.execute("ren", "-f", getTestResourcePath(fileName), fnName, fnName + 2,"-o", "json");
-//        Assertions.assertEquals(0, exitCode);
+    @ValueSource(strings = {"hello_refs.c"})
+    public void getAllRefsByName(String fileName) {
+        String selector = "main";
+        int exitCode = cmd.execute("get", "refs", selector, "-f", getTestResourcePath(fileName), "-o", "json");
+        Assertions.assertEquals(0, exitCode);
         String out = outWriter.toString();
         String err = errWriter.toString();
         Assertions.assertEquals("", err);
         Approvals.verify(out, Approvals.NAMES.withParameters(fileName));
     }
-// TODO
-//    @ParameterizedTest
-//    @ValueSource(strings = {
-//            "hello_name_collision.c"
-//    })
-//    public void shouldFailWhenRenamingToCollision(String fileName) {
-//        String fnName = "main";
-//        String newName = "main2";
-//        int exitCode = cmd.execute("ren", "-f", getTestResourcePath(fileName), fnName, newName,"-o", "json");
-//        Assertions.assertEquals(1, exitCode);
-//    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"hello_refs.c"})
+    public void getRefsByNameAndDeclarationLine(String fileName) {
+        String selector = "main:2";
+        int exitCode = cmd.execute("get", "refs", selector, "-f", getTestResourcePath(fileName), "-o", "json");
+        Assertions.assertEquals(0, exitCode);
+        String out = outWriter.toString();
+        String err = errWriter.toString();
+        Assertions.assertEquals("", err);
+        Approvals.verify(out, Approvals.NAMES.withParameters(fileName));
+    }
 }

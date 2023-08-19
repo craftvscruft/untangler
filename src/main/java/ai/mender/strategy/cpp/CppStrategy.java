@@ -1,5 +1,6 @@
 package ai.mender.strategy.cpp;
 
+import ai.mender.SimpleSelector;
 import ai.mender.domain.*;
 import ai.mender.parsing.*;
 import ai.mender.strategy.ISourceFile;
@@ -119,12 +120,12 @@ public class CppStrategy implements LanguageStrategy {
         return new CppTopLevelNode(tree, parser);
     }
 
-    public ReferencesResponse references(TopLevelNode root, String nameToResolve) {
+    public ReferencesResponse references(TopLevelNode root, SimpleSelector selector) {
 //        LOG.debug("References");
 
         CppTopLevelNode cppRoot = (CppTopLevelNode) root;
         Ast tree = getTransformedAst(parseAst(cppRoot));
-        Scope scope = new Scope(nameToResolve);
+        Scope scope = new Scope(selector);
 
         AstWalker astWalker = new AstWalker();
 //        astWalker

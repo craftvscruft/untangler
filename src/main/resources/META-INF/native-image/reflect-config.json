@@ -169,9 +169,6 @@
     "name" : "references",
     "parameterTypes" : [ ]
   }, {
-    "name" : "name",
-    "parameterTypes" : [ ]
-  }, {
     "name" : "equals",
     "parameterTypes" : [ "java.lang.Object" ]
   }, {
@@ -182,7 +179,10 @@
     "parameterTypes" : [ ]
   }, {
     "name" : "empty",
-    "parameterTypes" : [ "java.lang.String" ]
+    "parameterTypes" : [ "ai.mender.SimpleSelector" ]
+  }, {
+    "name" : "selector",
+    "parameterTypes" : [ ]
   } ]
 }, {
   "name" : "ai.mender.domain.SourceEdit",

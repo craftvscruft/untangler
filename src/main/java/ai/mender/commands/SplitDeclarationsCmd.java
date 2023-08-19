@@ -60,11 +60,8 @@ public class SplitDeclarationsCmd implements Runnable, CommandLine.IExitCodeGene
                 if (languageStrategy instanceof CppStrategy cppStrategy) {
                     TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
                     cppStrategy.forEachVarDeclarationStatement(tree, (DeclarationRec decl) -> {
-
                         if (Console.isLineMatch(decl.range(), line)) {
-//                            System.out.println("LineMatch");
                             declarations.add(decl);
-                            System.out.println(decl);
                         }
                     });
 

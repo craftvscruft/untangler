@@ -1,0 +1,82 @@
+{
+  "selector" : {
+    "name" : "main",
+    "line" : -1
+  },
+  "declarations" : [
+    {
+      "start" : {
+        "line" : 2,
+        "col" : 5
+      },
+      "end" : {
+        "line" : 2,
+        "col" : 9
+      },
+      "unknown" : false
+    },
+    {
+      "start" : {
+        "line" : 12,
+        "col" : 9
+      },
+      "end" : {
+        "line" : 12,
+        "col" : 13
+      },
+      "unknown" : false
+    }
+  ],
+  "references" : [
+    {
+      "name" : "main",
+      "range" : {
+        "start" : {
+          "line" : 8,
+          "col" : 5
+        },
+        "end" : {
+          "line" : 8,
+          "col" : 9
+        },
+        "unknown" : false
+      },
+      "declarationRange" : {
+        "start" : {
+          "line" : 2,
+          "col" : 5
+        },
+        "end" : {
+          "line" : 2,
+          "col" : 9
+        },
+        "unknown" : false
+      }
+    },
+    {
+      "name" : "main",
+      "range" : {
+        "start" : {
+          "line" : 13,
+          "col" : 5
+        },
+        "end" : {
+          "line" : 13,
+          "col" : 9
+        },
+        "unknown" : false
+      },
+      "declarationRange" : {
+        "start" : {
+          "line" : 12,
+          "col" : 9
+        },
+        "end" : {
+          "line" : 12,
+          "col" : 13
+        },
+        "unknown" : false
+      }
+    }
+  ]
+}

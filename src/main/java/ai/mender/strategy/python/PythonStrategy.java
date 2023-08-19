@@ -1,5 +1,6 @@
 package ai.mender.strategy.python;
 
+import ai.mender.SimpleSelector;
 import ai.mender.domain.CommentRec;
 import ai.mender.domain.ReferencesResponse;
 import ai.mender.parsing.ThrowingErrorListener;
@@ -36,7 +37,7 @@ public class PythonStrategy implements LanguageStrategy {
         return tree;
     }
     @Override
-    public ReferencesResponse references(TopLevelNode root, String name) {
+    public ReferencesResponse references(TopLevelNode root, SimpleSelector name) {
         throw new NotImplementedException("Reference operations not yet supported for this language");
     }
 

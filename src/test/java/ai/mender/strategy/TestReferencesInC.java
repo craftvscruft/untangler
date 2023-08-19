@@ -1,5 +1,6 @@
 package ai.mender.strategy;
 
+import ai.mender.SimpleSelector;
 import ai.mender.domain.Reference;
 import ai.mender.domain.ReferencesResponse;
 import ai.mender.domain.SourceRange;
@@ -86,7 +87,7 @@ public class TestReferencesInC {
         SourceFile.StringSourceFile stringSourceFile = new SourceFile.StringSourceFile("main.c", code);
         CppTopLevelNode topLevelNode = strategy.parseTopLevel(stringSourceFile);
 
-        return strategy.references(topLevelNode, name);
+        return strategy.references(topLevelNode, SimpleSelector.parse(name));
     }
 }
 //postfixExpression:

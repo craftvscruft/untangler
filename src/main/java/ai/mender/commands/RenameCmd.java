@@ -1,6 +1,7 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
+import ai.mender.SimpleSelector;
 import ai.mender.domain.SourceEdit;
 import ai.mender.domain.SourceEditListResponse;
 import ai.mender.strategy.LanguageStrategy;
@@ -60,7 +61,7 @@ public class RenameCmd implements Runnable, CommandLine.IExitCodeGenerator {
                 success = false;
             } else {
                 TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
-                SourceEditListResponse response = languageStrategy.rename(tree, from, to);
+                SourceEditListResponse response = languageStrategy.rename(tree, SimpleSelector.parse(from), to);
                 Console.printOutput(response, spec.commandLine().getOut(), outputFormat);
                 success = response.success();
                 message = response.message();

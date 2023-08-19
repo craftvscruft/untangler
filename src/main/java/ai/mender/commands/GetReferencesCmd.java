@@ -1,6 +1,7 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
+import ai.mender.SimpleSelector;
 import ai.mender.domain.ReferencesResponse;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
@@ -17,8 +18,8 @@ import java.io.File;
 public class GetReferencesCmd implements Runnable, CommandLine.IExitCodeGenerator {
 
 
-    @CommandLine.Parameters(index = "0", description = "Name of a symbol")
-    private String name;
+    @CommandLine.Parameters(index = "0", description = "Name of a symbol, line number, or 'name:line'")
+    private String selector;
 
     @CommandLine.Option(
             names = {"--file", "-f"},
@@ -51,7 +52,7 @@ public class GetReferencesCmd implements Runnable, CommandLine.IExitCodeGenerato
                 success = false;
             } else {
                 TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
-                ReferencesResponse response = languageStrategy.references(tree, name);
+                ReferencesResponse response = languageStrategy.references(tree, SimpleSelector.parse(selector));
 
                 Console.printOutput(response, spec.commandLine().getOut(), outputFormat);
                 success = true;
