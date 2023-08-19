@@ -1,5 +1,6 @@
 package ai.mender.strategy.cpp;
 
+import ai.mender.domain.CommentRec;
 import ai.mender.domain.ReferencesResponse;
 import ai.mender.parsing.*;
 import ai.mender.strategy.*;
@@ -9,6 +10,7 @@ import antlrgen.cpp14.CPP14ParserBaseListener;
 import com.google.common.annotations.VisibleForTesting;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.lang3.function.Consumers;
 import org.slf4j.Logger;
@@ -16,6 +18,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 public class CppStrategy implements LanguageStrategy {
     final Logger LOG = LoggerFactory.getLogger(CppStrategy.class);
@@ -162,5 +165,17 @@ public class CppStrategy implements LanguageStrategy {
         astWalker.walk(tree);
         scope.resolveUnknownFromCurrentScope();
         return scope.getReferences();
+    }
+
+    @Override
+    public void forEachComment(ISourceFile sourceFile, Consumer<CommentRec> consumer) {
+        CPP14Lexer lexer = new CPP14Lexer(sourceFile.getCharStream());
+        CommonTokenStream commonTokenStream = new CommonTokenStream(lexer, Token.HIDDEN_CHANNEL);
+        Token token;
+        while ((token = commonTokenStream.getTokenSource().nextToken()).getType()!= Token.EOF) {
+            if (token.getType() == CPP14Lexer.BlockComment || token.getType() == CPP14Lexer.LineComment) {
+                consumer.accept(new CommentRec(SyntaxTreeUtil.nodeToSourceRange(token), token.getText()));
+            }
+        }
     }
 }

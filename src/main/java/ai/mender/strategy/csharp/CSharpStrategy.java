@@ -1,5 +1,6 @@
 package ai.mender.strategy.csharp;
 
+import ai.mender.domain.CommentRec;
 import ai.mender.domain.ReferencesResponse;
 import ai.mender.parsing.ThrowingErrorListener;
 import ai.mender.strategy.ISourceFile;
@@ -8,7 +9,9 @@ import ai.mender.strategy.TopLevelNode;
 import antlrgen.csharp.CSharpLexer;
 import antlrgen.csharp.CSharpParser;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.apache.commons.lang3.NotImplementedException;
 
+import java.util.function.Consumer;
 
 
 public class CSharpStrategy implements LanguageStrategy {
@@ -35,6 +38,11 @@ public class CSharpStrategy implements LanguageStrategy {
 
     @Override
     public ReferencesResponse references(TopLevelNode root, String name) {
-        return ReferencesResponse.empty(name);
+        throw new NotImplementedException("Reference operations not yet supported for this language");
+    }
+
+    @Override
+    public void forEachComment(ISourceFile sourceFile, Consumer<CommentRec> consumer) {
+        throw new NotImplementedException("Comment operations not yet supported for this language");
     }
 }

@@ -23,6 +23,16 @@ copy "LANG_FROM_DIR"/*.g4 "LANG_FROM_DIR"/README.md "vendor/$LANGUAGE/"
 copy "LANG_FROM_DIR"/Java/*.java "vendor/$LANGUAGE/Java/"
 ```
 
+## Modify grammar files
+
+If comments are skipped in the Lexer, send them to HIDDEN channel instead, like:
+
+```
+// Modified for Untangler, making comments go to hidden not skipped
+BlockComment: '/*' .*? '*/' -> channel (HIDDEN);
+LineComment: '//' ~ [\r\n]* -> channel (HIDDEN);
+```
+
 ## Generate parser code
 
 Add a new dependency to generateAllParsers at the end of `build.gradle`. 

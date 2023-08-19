@@ -1,10 +1,12 @@
 package ai.mender.strategy.cpp;
 
+import ai.mender.domain.CommentRec;
 import ai.mender.domain.SourceRange;
 import ai.mender.parsing.Ast;
 import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.strategy.FunctionDefinitionNode;
 import ai.mender.strategy.TopLevelNode;
+import antlrgen.cpp14.CPP14Lexer;
 import antlrgen.cpp14.CPP14Parser;
 import antlrgen.cpp14.CPP14ParserBaseListener;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
@@ -21,10 +23,6 @@ public class CppTopLevelNode implements TopLevelNode {
     final private Logger LOG = LoggerFactory.getLogger(CppTopLevelNode.class);
     private final CPP14Parser.TranslationUnitContext tree;
     private CPP14Parser parser;
-
-    public CppTopLevelNode(CPP14Parser.TranslationUnitContext tree) {
-        this.tree = tree;
-    }
 
     public CppTopLevelNode(CPP14Parser.TranslationUnitContext tree, CPP14Parser parser) {
         this.tree = tree;
@@ -44,6 +42,8 @@ public class CppTopLevelNode implements TopLevelNode {
 
         ParseTreeWalker.DEFAULT.walk(listener, tree);
     }
+
+
 
     private String toStringTree() {
         return this.tree.toStringTree(this.parser);

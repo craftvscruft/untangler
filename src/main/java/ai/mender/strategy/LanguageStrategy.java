@@ -5,6 +5,7 @@ import ai.mender.domain.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public interface LanguageStrategy {
@@ -41,4 +42,6 @@ public interface LanguageStrategy {
     }
 
     ReferencesResponse references(TopLevelNode root, String from);
+
+    void forEachComment(ISourceFile sourceFile, Consumer<CommentRec> consumer);
 }

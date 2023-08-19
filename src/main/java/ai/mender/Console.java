@@ -43,6 +43,9 @@ public class Console {
             out.println();
             out.println("References");
             TableOutput.writeTableOutput(out, referencesResponse.references(), Reference.class);
+        } else if (value instanceof CommentListResponse commentListResponse) {
+            TableOutput.writeTableOutput(out, commentListResponse.items(), CommentRec.class);
+            out.println();
         }else {
             // TODO: Test
             if (null != value) {

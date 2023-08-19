@@ -4,9 +4,12 @@ import ai.mender.domain.SourcePosition;
 import ai.mender.domain.SourceRange;
 import ai.mender.strategy.TreeBuilder;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
 import org.antlr.v4.runtime.tree.TerminalNode;
+import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -36,6 +39,18 @@ public class SyntaxTreeUtil {
         SourcePosition start = new SourcePosition(antlrNode.start.getLine(), startColumn);
         int stopColumn = antlrNode.stop.getCharPositionInLine() + antlrNode.stop.getText().length() + 1;
         SourcePosition end = new SourcePosition(antlrNode.stop.getLine(), stopColumn);
+        return new SourceRange(start, end);
+    }
+
+    public static SourceRange nodeToSourceRange(Token token) {
+        int startColumn = token.getCharPositionInLine() + 1;
+        int startLine = token.getLine();
+        SourcePosition start = new SourcePosition(startLine, startColumn);
+        List<String> lines = token.getText().lines().toList();
+        int lastLineLength = lines.get(lines.size() - 1).length();
+        int endLine = startLine + lines.size() - 1;
+        int stopColumn = lines.size() > 1 ? (lastLineLength + 1) : startColumn + lastLineLength;
+        SourcePosition end = new SourcePosition(endLine, stopColumn);
         return new SourceRange(start, end);
     }
 
@@ -91,6 +106,7 @@ public class SyntaxTreeUtil {
         }
         return node.tag();
     }
+
 
 
 }
