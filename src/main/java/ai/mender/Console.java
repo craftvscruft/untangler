@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,5 +76,11 @@ public class Console {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static boolean isLineMatch(SourceRange range, String line) {
+        boolean numberMatch = (StringUtils.isNumeric(line) && Integer.parseInt(line) == range.start().line());
+        boolean wildCard = "*".equals(line);
+        return numberMatch || wildCard;
     }
 }

@@ -404,6 +404,7 @@ Whitespace: [ \t]+ -> skip;
 
 Newline: ('\r' '\n'? | '\n') -> skip;
 
-BlockComment: '/*' .*? '*/' -> skip;
+// Modified for Untangler, making comments go to hidden not skipped
+BlockComment: '/*' .*? '*/' -> channel (HIDDEN);
 
-LineComment: '//' ~ [\r\n]* -> skip;
+LineComment: '//' ~ [\r\n]* -> channel (HIDDEN);
