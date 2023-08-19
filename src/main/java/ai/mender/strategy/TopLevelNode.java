@@ -1,9 +1,7 @@
 package ai.mender.strategy;
 
-import ai.mender.domain.CommentRec;
 import ai.mender.domain.FunctionRec;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 

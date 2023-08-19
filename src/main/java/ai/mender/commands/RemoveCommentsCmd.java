@@ -1,14 +1,16 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.domain.*;
+import ai.mender.domain.CommentRec;
+import ai.mender.domain.EditMode;
+import ai.mender.domain.SourceEdit;
+import ai.mender.domain.SourceEditListResponse;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import picocli.CommandLine;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 @CommandLine.Command(
         name = "comments",
@@ -61,7 +63,7 @@ public class RemoveCommentsCmd implements Runnable, CommandLine.IExitCodeGenerat
                     }
                 });
                 comments.stream().map(comment ->
-                        new SourceEdit(comment.range().start(), comment.range().end(), "", EditMode.Replace))
+                        new SourceEdit(comment.range().start(), comment.range().end(), EditMode.Delete, ""))
                         .forEachOrdered(edits::add);
                 success = true;
                 if (success && write) {

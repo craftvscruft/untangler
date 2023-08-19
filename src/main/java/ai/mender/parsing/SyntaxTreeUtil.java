@@ -2,12 +2,13 @@ package ai.mender.parsing;
 
 import ai.mender.domain.SourcePosition;
 import ai.mender.domain.SourceRange;
+import ai.mender.domain.SourceText;
 import ai.mender.strategy.TreeBuilder;
+import antlrgen.cpp14.CPP14Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
 import org.antlr.v4.runtime.tree.TerminalNode;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Stack;
@@ -108,5 +109,9 @@ public class SyntaxTreeUtil {
     }
 
 
-
+    public static SourceText nodeToSourceText(CPP14Parser.InitDeclaratorContext ctx) {
+        return new SourceText(
+                getTextIncludingWhitespace(ctx),
+                nodeToSourceRange(ctx));
+    }
 }

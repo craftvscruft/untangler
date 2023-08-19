@@ -110,6 +110,9 @@ public record SourceFile(File file) implements ISourceFile {
                 boolean isAtEditStart = edit.start().line() == line && edit.start().col() == col;
                 if (isAtEditStart) {
                     writer.write(edit.text());
+                    if (edit.start().equals(edit.end())) {
+                        break; // Don't consume, just move on to next edit.
+                    }
                 }
 
                 readCh = reader.read();
@@ -134,6 +137,7 @@ public record SourceFile(File file) implements ISourceFile {
                 boolean isAfterEditEnd = line > edit.end().line() || (line == edit.end().line() && col > edit.end().col());
                 if (isAfterEditEnd) {
                     // After edit range, we're done.
+                    // Did we never write it? This could be an error case.
                     break;
                 }
             }

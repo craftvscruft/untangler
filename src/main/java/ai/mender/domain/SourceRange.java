@@ -13,4 +13,8 @@ public record SourceRange(SourcePosition start, SourcePosition end) {
     public boolean isUnknown() {
         return start.line() == -1;
     }
+
+    public boolean isWithin(SourceRange outerRange) {
+        return start.isWithin(outerRange) && end.isWithin(outerRange);
+    }
 }

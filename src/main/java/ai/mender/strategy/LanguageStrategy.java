@@ -33,10 +33,10 @@ public interface LanguageStrategy {
         }
         SourceRange declarationRange = declarations.get(0);
         var results = new ArrayList<SourceEdit>();
-        results.add(new SourceEdit(declarationRange.start(), declarationRange.end(), to, EditMode.Replace));
+        results.add(new SourceEdit(declarationRange.start(), declarationRange.end(), EditMode.Replace, to));
         referencesResponse.references().stream()
                 .filter(ref -> declarationRange.equals(ref.declarationRange()))
-                .map(ref -> new SourceEdit(ref.range().start(), ref.range().end(), to, EditMode.Replace))
+                .map(ref -> new SourceEdit(ref.range().start(), ref.range().end(), EditMode.Replace, to))
                 .forEachOrdered(results::add);
         return new SourceEditListResponse(true, "OK", results);
     }
