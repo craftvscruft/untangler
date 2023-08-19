@@ -5,7 +5,7 @@ import ai.mender.domain.SourcePosition;
 import ai.mender.domain.SourceRange;
 import org.antlr.v4.runtime.ParserRuleContext;
 
-public interface FunctionDefinitionNode<T extends ParserRuleContext> {
+public interface FunctionDefinitionNode<T extends ParserRuleContext> extends IParseNode {
     default int getStartLine()  {
         return getAntlrNode().start.getLine();
     }

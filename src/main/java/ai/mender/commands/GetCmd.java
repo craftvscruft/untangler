@@ -5,8 +5,6 @@ import picocli.CommandLine;
 
 @CommandLine.Command(name = "get", mixinStandardHelpOptions = true,
         description = "Display one or many resources",
-    subcommands = {GetFunctionsCmd.class})
+    subcommands = {GetFunctionsCmd.class, GetReferencesCmd.class})
 public class GetCmd {
-
-
 }

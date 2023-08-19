@@ -2,7 +2,6 @@ package ai.mender;
 
 import ai.mender.commands.FormatCmd;
 import ai.mender.commands.GetCmd;
-import ai.mender.commands.GetReferencesCmd;
 import ai.mender.commands.RenameCmd;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -12,8 +11,7 @@ import picocli.CommandLine.Command;
         subcommands = {
                 GetCmd.class,
                 RenameCmd.class,
-                FormatCmd.class,
-                GetReferencesCmd.class
+                FormatCmd.class
         })
 public class Main {
 
