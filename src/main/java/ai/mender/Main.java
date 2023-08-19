@@ -11,6 +11,7 @@ import picocli.CommandLine.Command;
                 RenameCmd.class,
                 FormatCmd.class,
                 RemoveCmd.class,
+                AddCmd.class,
                 MiscCmd.class
         })
 public class Main {

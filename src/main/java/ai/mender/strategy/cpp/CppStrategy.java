@@ -242,5 +242,9 @@ public class CppStrategy implements LanguageStrategy {
         ParseTreeWalker.DEFAULT.walk(listener, cppRoot.getTree());
         decls.forEach(consumer::accept);
     }
+    @Override
+    public String formatMultiLineComment(String text) {
+        return String.format("/* %s */\n", text);
+    }
 
 }

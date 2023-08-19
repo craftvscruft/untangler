@@ -11,8 +11,10 @@ import antlrgen.python.PythonLexer;
 import antlrgen.python.PythonParser;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.lang3.NotImplementedException;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class PythonStrategy implements LanguageStrategy {
 
@@ -44,5 +46,11 @@ public class PythonStrategy implements LanguageStrategy {
     @Override
     public void forEachComment(ISourceFile sourceFile, Consumer<CommentRec> consumer) {
         throw new NotImplementedException("Comment operations not yet supported for this language");
+    }
+
+    @Override
+    public String formatMultiLineComment(String text) {
+        // Creating doc-strings would require more context.
+        return text.lines().map(line -> "# " + line + "\n").collect(Collectors.joining());
     }
 }

@@ -46,4 +46,9 @@ public class JavaStrategy implements LanguageStrategy {
     public void forEachComment(ISourceFile sourceFile, Consumer<CommentRec> consumer) {
         throw new NotImplementedException("Comment operations not yet supported for this language");
     }
+
+    @Override
+    public String formatMultiLineComment(String text) {
+        return String.format("/* %s */\n", text);
+    }
 }

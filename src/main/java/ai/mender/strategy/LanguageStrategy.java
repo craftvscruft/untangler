@@ -13,8 +13,6 @@ public interface LanguageStrategy {
     TopLevelNode parseTopLevel(ISourceFile sourceFile);
 
     default SourceEditListResponse rename(TopLevelNode root, SimpleSelector fromSelector, String to) {
-
-
         var referencesResponse = references(root, fromSelector);
         List<SourceRange> declarations = referencesResponse.declarations();
         if (fromSelector.hasLine()) {
@@ -43,4 +41,16 @@ public interface LanguageStrategy {
     ReferencesResponse references(TopLevelNode root, SimpleSelector selector);
 
     void forEachComment(ISourceFile sourceFile, Consumer<CommentRec> consumer);
+
+    default SourceEditListResponse insertComment(TopLevelNode tree, int line, String text) {
+        SourcePosition start = new SourcePosition(line, 0);
+        SourcePosition end = new SourcePosition(line, 0);
+        String commentText = formatMultiLineComment(text.trim());
+        SourceEdit edit = new SourceEdit(start, end, EditMode.Insert, commentText);
+        return new SourceEditListResponse(true, "OK", List.of(edit));
+    }
+
+    String formatMultiLineComment(String text);
+
+
 }
