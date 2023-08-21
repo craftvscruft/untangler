@@ -17,7 +17,7 @@ import java.util.List;
         description = "Rename a symbol (function, variable, parameter)",
         aliases = "ren")
 public class RenameCmd implements Runnable, CommandLine.IExitCodeGenerator {
-    @CommandLine.Parameters(index = "0", description = "The old name")
+    @CommandLine.Parameters(index = "0", description = "The old name (or <OLDNAME>:<LINE>)")
     private String from;
 
     @CommandLine.Parameters(index = "1", description = "The new name")

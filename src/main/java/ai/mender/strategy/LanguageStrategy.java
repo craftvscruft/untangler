@@ -2,9 +2,7 @@ package ai.mender.strategy;
 
 import ai.mender.SimpleSelector;
 import ai.mender.domain.*;
-import com.google.common.annotations.VisibleForTesting;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
@@ -19,7 +17,7 @@ public interface LanguageStrategy {
         List<SourceRange> declarations = referencesResponse.declarations();
         if (fromSelector.hasLine()) {
             declarations = declarations.stream()
-                    .filter(sourceRange -> sourceRange.start().line() == fromSelector.line())
+                    .filter(sourceRange -> fromSelector.matchesLineRange(sourceRange))
                     .toList();
         }
         if (declarations.isEmpty()) {

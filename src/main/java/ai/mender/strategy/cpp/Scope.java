@@ -8,19 +8,19 @@ import ai.mender.parsing.Ast;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-class Scope {
+public class Scope {
     final private Logger LOG = LoggerFactory.getLogger(Scope.class);
     private final ReferencesResponse referenceResponse;
     Stack<Map<String, Ast>> varNameToDeclScope = new Stack<>();
     Map<Ast, Ast> refToDecl = new HashMap<>();
 
-    Scope(SimpleSelector selector) {
+    List<Ast> overridingDecls = new ArrayList<>();
+
+    public Scope(SimpleSelector selector) {
         this.referenceResponse = ReferencesResponse.empty(selector);
         this.varNameToDeclScope.push(new HashMap<>());
     }
@@ -70,17 +70,17 @@ class Scope {
         SimpleSelector selector = referenceResponse.selector();
         List<Reference> matchedReferences = referenceResponse.references()
                 .stream()
-                .filter(ref -> selector.matchesLine(ref.range()) || selector.matchesLine(ref.declarationRange()))
+                .filter(ref -> selector.matchesLineRange(ref.range()) || selector.matchesLineRange(ref.declarationRange()))
                 .toList();
         Stream<SourceRange> matchedDeclarations = referenceResponse.declarations()
                 .stream()
-                .filter(range -> selector.matchesLine(range));
+                .filter(range -> selector.matchesLineRange(range));
         Stream<SourceRange> declarationsFromMatchedReferences = matchedReferences.stream()
                 .map(Reference::declarationRange);
         List<SourceRange> combinedDeclarations = Stream.concat(matchedDeclarations, declarationsFromMatchedReferences)
                 .distinct().toList();
         ReferencesResponse filteredResponse = new ReferencesResponse(selector, combinedDeclarations, matchedReferences);
-        LOG.info("After line filter\nDeclarations {}\nReferences {}", referenceResponse.declarations(), referenceResponse.references());
+        LOG.info("After line filter\nDeclarations {}\nReferences {}", filteredResponse.declarations(), filteredResponse.references());
         return filteredResponse;
     }
 
@@ -97,6 +97,32 @@ class Scope {
                 SourceRange resolvedRange = currentScope.get(name).range();
                 references.set(i, new Reference(name, reference.range(), resolvedRange));
             }
+        }
+    }
+
+    public void addOverridingDeclaration(Ast ast) {
+        // This is for separate function declarations/definitions.
+        // Convert previous declarations to references
+        String name = ast.tag();
+        boolean matchesName = getSelector().matchesName(name);
+        LOG.info("Saw ref {}, matchesName {}", name, matchesName);
+        if (matchesName) {
+            Map<String, Ast> currentScope = this.varNameToDeclScope.peek();
+            this.referenceResponse.declarations().add(ast.range());
+            Ast oldDeclNode = currentScope.get(name);
+            if (null != oldDeclNode) {
+                this.referenceResponse.declarations().remove(oldDeclNode.range());
+                System.out.println(this.referenceResponse.declarations().size());
+                Predicate<Reference> isRefToOldDecl = ref -> ref.declarationRange().equals(oldDeclNode.range());
+                List<Reference> updatedReferences = this.referenceResponse.references().stream().filter(isRefToOldDecl).map(oldRef ->
+                        new Reference(oldRef.name(), oldRef.range(), ast.range())
+                ).toList();
+                this.referenceResponse.references().removeIf(isRefToOldDecl);
+                this.referenceResponse.references().addAll(updatedReferences);
+
+                this.referenceResponse.references().add(new Reference(name, oldDeclNode.range(), ast.range()));
+            }
+            currentScope.put(name, ast);
         }
     }
 }

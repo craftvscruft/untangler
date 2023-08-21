@@ -89,6 +89,24 @@ public class TestReferencesInC {
 
         return strategy.references(topLevelNode, SimpleSelector.parse(name));
     }
+
+    @Test
+    public void functionDefinitionsWithNoBodyCountAsRefsNotDeclarations() {
+        String code = """
+                int foo();
+                
+                int foo() {
+                }
+        """;
+        var refResponse = parseRefs(code, "foo");
+        Assertions.assertEquals(1, refResponse.references().size(), refResponse.toString());
+        Assertions.assertEquals(1, refResponse.declarations().size(), refResponse.toString());
+        Reference reference = refResponse.references().get(0);
+        SourceRange declaration = refResponse.declarations().get(0);
+        Assertions.assertEquals(1, reference.range().start().line());
+        Assertions.assertEquals(3, reference.declarationRange().start().line());
+        Assertions.assertEquals(3, declaration.start().line());
+    }
 }
 //postfixExpression:
 //        primaryExpression

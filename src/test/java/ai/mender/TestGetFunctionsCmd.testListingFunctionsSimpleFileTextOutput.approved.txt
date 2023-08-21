@@ -1,2 +1,2 @@
 Name Range
-main [2:1, 5:2]
+main 2:1-5:2

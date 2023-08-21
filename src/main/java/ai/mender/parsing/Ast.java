@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public record Ast(String tag, Ast parent, List<Ast> children, SourceRange range, int index){
+public record Ast(String tag, Ast parent, List<Ast> children, SourceRange range){
 
     public void addChild(Ast child) {
         children().add(child);
@@ -40,13 +40,13 @@ public record Ast(String tag, Ast parent, List<Ast> children, SourceRange range,
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ast ast = (Ast) o;
-        return index == ast.index && Objects.equal(tag, ast.tag) && Objects.equal(children, ast.children) && Objects.equal(range, ast.range);
+        return Objects.equal(tag, ast.tag) && Objects.equal(children, ast.children) && Objects.equal(range, ast.range);
     }
 
     @Override
     public int hashCode() {
         // Do not include parents.
-        return Objects.hashCode(tag, children, range, index);
+        return Objects.hashCode(tag, children, range);
     }
 
     @Override

@@ -50,7 +50,7 @@ public class TestAstWalker {
                 ast -> found.add(String.format("<unk_%s>", ast.tag())),
                 ast -> found.add(String.format("</unk_%s>", ast.tag())));
         SourceRange range = new SourceRange(new SourcePosition(1, 1), new SourcePosition(1, 1));
-        Ast listNode = new Ast("list", null, new ArrayList<>(), range, 0);
+        Ast listNode = new Ast("list", null, new ArrayList<>(), range);
         listenerRegistry.enter(listNode);
         Assertions.assertEquals("<list><list2>", String.join("", found));
         listenerRegistry.exit(listNode);

@@ -7,6 +7,7 @@ import ai.mender.strategy.FunctionDefinitionNode;
 import ai.mender.strategy.TopLevelNode;
 import antlrgen.cpp14.CPP14Parser;
 import antlrgen.cpp14.CPP14ParserBaseListener;
+import org.antlr.v4.runtime.Parser;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import org.apache.commons.lang3.text.WordUtils;
 import org.slf4j.Logger;
@@ -65,6 +66,11 @@ public class CppTopLevelNode implements TopLevelNode {
     CPP14Parser.TranslationUnitContext getTree() {
         return this.tree;
     }
+
+    Parser getParser() {
+        return parser;
+    }
+
 }
 
 

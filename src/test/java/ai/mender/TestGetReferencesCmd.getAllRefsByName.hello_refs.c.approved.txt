@@ -1,7 +1,8 @@
 {
   "selector" : {
     "name" : "main",
-    "line" : -1
+    "startLine" : -1,
+    "endLine" : -1
   },
   "declarations" : [
     {

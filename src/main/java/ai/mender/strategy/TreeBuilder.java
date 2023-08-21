@@ -9,7 +9,7 @@ import java.util.*;
 
 public class TreeBuilder {
     public static final String INDENT = "  ";
-    Ast root = new Ast("root", null, new ArrayList<>(), null, 0);
+    Ast root = new Ast("root", null, new ArrayList<>(), null);
     Ast current = root;
     Stack<Map<String, List<String>>> stack = new Stack<>();
     private SourceRange currentRange = null;
@@ -19,7 +19,7 @@ public class TreeBuilder {
     }
 
     public TreeBuilder enter(String tag) {
-        Ast newNode = new Ast(tag, current, new ArrayList<>(), currentRange, 0);
+        Ast newNode = new Ast(tag, current, new ArrayList<>(), currentRange);
         current.addChild(newNode);
         current = newNode;
         return this;
@@ -37,7 +37,7 @@ public class TreeBuilder {
     public void accumulate(String tag, String atom) {
         Optional<Ast> first = current.getFirstChildByTag(tag);
         first.ifPresentOrElse(
-                (found) -> found.addChild(new Ast(atom, found, new ArrayList<>(), currentRange, 0)),
+                (found) -> found.addChild(new Ast(atom, found, new ArrayList<>(), currentRange)),
                 () -> enter(tag).addAtom(atom).exit()
         );
     }

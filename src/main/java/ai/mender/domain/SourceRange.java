@@ -15,7 +15,7 @@ public record SourceRange(SourcePosition start, SourcePosition end) {
 
     @Override
     public String toString() {
-        return String.format("[%s:%s, %s:%s]", start.line(), start.col(), end.line(), end.col());
+        return String.format("%s:%s-%s:%s", start.line(), start.col(), end.line(), end.col());
     }
 
     public boolean isUnknown() {

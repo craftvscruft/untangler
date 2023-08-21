@@ -14,7 +14,9 @@ import com.google.common.annotations.VisibleForTesting;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
+import org.antlr.v4.runtime.tree.ParseTree;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import org.antlr.v4.runtime.tree.xpath.XPath;
 import org.apache.commons.lang3.function.Consumers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -156,7 +158,7 @@ public class CppStrategy implements LanguageStrategy {
                         List<String> nameTags = nameNode.childTags();
                         if (!nameTags.isEmpty()) {
                             // Warn if size not 1?
-                            scope.addDeclaration(nameNode.children().get(0));
+                            scope.addOverridingDeclaration(nameNode.children().get(0));
                         }
                     });
                     scope.push();
