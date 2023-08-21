@@ -12,6 +12,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GenerateReflectConfig {
+    // This must be re-run on changes to the domain package
+    // TODO: Make this auto-run and dump to META-INF/native-image/reflect-config.json
     public record ConfigEntry(String name, boolean allDeclaredFields, boolean queryAllDeclaredMethods, boolean queryAllDeclaredConstructors, MethodEntry[] methods) {
     }
     public record MethodEntry(String name, String[] parameterTypes) {

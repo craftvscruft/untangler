@@ -4,6 +4,8 @@ package ai.mender;
 import ai.mender.commands.OutputFormat;
 import ai.mender.domain.*;
 import ai.mender.output.TableOutput;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.json.JsonWriteFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.json.JsonMapper;
@@ -15,10 +17,13 @@ import java.io.PrintWriter;
 
 public class Console {
     private static ObjectMapper JSON_MAPPER = JsonMapper.builder()
-            .build().setDefaultPrettyPrinter(new JsonPrettyPrinter());
+            .build()
+            .disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET)
+            .setDefaultPrettyPrinter(new JsonPrettyPrinter());
 
     private static ObjectMapper YAML_MAPPER = YAMLMapper.builder()
-            .build();
+            .build()
+            .disable(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
     public static <T> void printOutput(T value, PrintWriter out, OutputFormat outputFormat) {
         switch (outputFormat) {
             case json -> toJson(out, value);
@@ -71,7 +76,6 @@ public class Console {
         try {
             ObjectWriter writer = YAML_MAPPER.writerWithDefaultPrettyPrinter();
             writer.writeValue(out, object);
-            out.println();
             out.flush();
         } catch (IOException e) {
             throw new RuntimeException(e);
