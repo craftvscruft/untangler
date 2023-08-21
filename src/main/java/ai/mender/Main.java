@@ -9,7 +9,6 @@ import picocli.CommandLine.Command;
         subcommands = {
                 GetCmd.class,
                 RenameCmd.class,
-                FormatCmd.class,
                 RemoveCmd.class,
                 AddCmd.class,
                 MiscCmd.class
