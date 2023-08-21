@@ -5,19 +5,37 @@
 > Multi-language refactoring tool implemented in Java, an experimental spin-off
 of [MenderBot](https://github.com/craftvscruft/menderbot).
 
+## Commands
+
+* `untangler get functions`: List function definitions in a file
+* `untangler get references`: Show symbol and declarations and reference in a file
+* `untangler rename`: Rename a symbol and all references to it a file
+* `untangler add comment`: Add a comment at a given line
+* `untangler remove comment`: Remove a comment at a given line
+
+All commands output text by default but can output machine-readable formats with arguments `-o json` or `-o yaml`.
+
+Arguments to each subcommand can be printed with `untangler <COMMAND> --help`.
+
+
 ## Status
 
-Prototype, not yet suitable for use.
+Prototype, not ready for production use.
 
-### Commands implemented:
+### Support by language
 
-Commands will generally take the form `untangler <Action> <ResourceType> ...`
+| Action            | Python | C / C++ | Java | C#   | js / ts |
+|-------------------|--------|---------|------|------|---------|
+| get functions     | Beta   | Beta    | Beta | Beta | -       |
+| get references    | Beta   | Beta    | Beta | Beta | -       |
+| rename            | -      | Beta    | -    | -    | -       |
+| add comment       | -      | Beta    | -    | -    | -       |
+| remove comment    | -      | Beta    | -    | -    | -       |
+| extract variable  | -      | -       | -    | -    | -       |
+| extract parameter | -      | -       | -    | -    | -       |
+| extract field     | -      | -       | -    | -    | -       |
 
-* `untangler get functions`: List function definitions in a file (C / C++ only)
-* `untangler references`: Show symbol and declarations and reference in a file (C / C++ only)
-* `untangler rename function`: Rename a function and all references to it a file (C / C++ only)
-
-# Requirements (Build)
+# Requirements (build)
 
 * GraalVM JDK20 ([Homebrew tap](https://github.com/graalvm/homebrew-tap))
 
