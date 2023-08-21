@@ -4,7 +4,17 @@
   "items" : [
     {
       "name" : "Main",
-      "line" : 7
+      "range" : {
+        "start" : {
+          "line" : 7,
+          "col" : 21
+        },
+        "end" : {
+          "line" : 12,
+          "col" : 10
+        },
+        "unknown" : false
+      }
     }
   ]
 }

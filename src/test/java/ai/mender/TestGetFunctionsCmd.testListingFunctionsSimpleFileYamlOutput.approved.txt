@@ -3,4 +3,11 @@ success: true
 message: "OK"
 items:
 - name: "main"
-  line: 2
+  range:
+    start:
+      line: 2
+      col: 1
+    end:
+      line: 5
+      col: 2
+    unknown: false

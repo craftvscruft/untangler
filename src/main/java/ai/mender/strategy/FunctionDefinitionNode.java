@@ -3,6 +3,7 @@ package ai.mender.strategy;
 import ai.mender.domain.FunctionRec;
 import ai.mender.domain.SourcePosition;
 import ai.mender.domain.SourceRange;
+import ai.mender.parsing.SyntaxTreeUtil;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public interface FunctionDefinitionNode<T extends ParserRuleContext> extends IParseNode {
@@ -11,7 +12,7 @@ public interface FunctionDefinitionNode<T extends ParserRuleContext> extends IPa
     }
 
     default FunctionRec toFunctionRec() {
-        return new FunctionRec(getName(), getStartLine());
+        return new FunctionRec(getName(), SyntaxTreeUtil.nodeToSourceRange(getAntlrNode()));
     }
 
     String getName();
