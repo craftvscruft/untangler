@@ -28,7 +28,11 @@ public class RemoveCommentsCmd implements Runnable, CommandLine.IExitCodeGenerat
             required = true,
             defaultValue = "${env:UNTANGLER_DEFAULT_FILE}")
     private File file;
-
+    @CommandLine.Option(
+            names = {"--sub"},
+            description = "Optional string to replace it with, such as space",
+            defaultValue = "")
+    private String sub;
     @CommandLine.Option(names = {"--output", "-o"}, defaultValue = "text",
             description = {
                     "Output format",
@@ -64,7 +68,7 @@ public class RemoveCommentsCmd implements Runnable, CommandLine.IExitCodeGenerat
                     }
                 });
                 comments.stream().map(comment ->
-                        new SourceEdit(comment.range().start(), comment.range().end(), EditMode.Delete, ""))
+                        new SourceEdit(comment.range().start(), comment.range().end(), EditMode.Delete, sub))
                         .forEachOrdered(edits::add);
                 success = true;
                 if (success && write) {

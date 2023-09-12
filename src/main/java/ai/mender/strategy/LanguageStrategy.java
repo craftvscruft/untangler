@@ -14,21 +14,29 @@ public interface LanguageStrategy {
 
     default SourceEditListResponse rename(TopLevelNode root, SimpleSelector fromSelector, String to) {
         var referencesResponse = references(root, fromSelector);
-        List<SourceRange> declarations = referencesResponse.declarations();
+        List<SourceRange> selectedDeclarations = referencesResponse.declarations();
         if (fromSelector.hasLine()) {
-            declarations = declarations.stream()
-                    .filter(sourceRange -> fromSelector.matchesLineRange(sourceRange))
+            List<SourceRange> declarations = referencesResponse.declarations();
+
+            Stream<SourceRange> matchedDeclarations = declarations.stream()
+                    .filter(sourceRange -> fromSelector.matchesLineRange(sourceRange));
+            Stream<SourceRange> matchedReferenceDeclarations = referencesResponse.references().stream()
+                    .filter(ref -> fromSelector.matchesLineRange(ref.range()))
+                    .map(Reference::declarationRange);
+            selectedDeclarations = Stream.concat(matchedDeclarations, matchedReferenceDeclarations)
+                    .distinct()
                     .toList();
         }
-        if (declarations.isEmpty()) {
+
+        if (selectedDeclarations.isEmpty()) {
             return new SourceEditListResponse(false, "No matching declarations found in file", Arrays.asList());
         }
-        if (declarations.size() > 1) {
-            String options = declarations.stream().map(decl -> String.format("%s:%s", fromSelector.name(), decl.start().line())).collect(Collectors.joining("\n"));
+        if (selectedDeclarations.size() > 1) {
+            String options = selectedDeclarations.stream().map(decl -> String.format("%s:%s", fromSelector.name(), decl.start().line())).collect(Collectors.joining("\n"));
             String message = "Multiple matches, please specify with <name>:<line>, one of:\n" + options;
             return new SourceEditListResponse(false, message, Arrays.asList());
         }
-        SourceRange declarationRange = declarations.get(0);
+        SourceRange declarationRange = selectedDeclarations.get(0);
         return createRenameEdits(to, referencesResponse, declarationRange);
     }
 

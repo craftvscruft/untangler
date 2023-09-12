@@ -116,7 +116,7 @@ public class TestCTransformations {
         Assertions.assertEquals(Arrays.asList(refNames), refNode.get().childTags());
         Ast firstRef = refNode.get().children().get(0);
         Ast secondRef = refNode.get().children().get(1);
-        System.out.println(SyntaxTreeUtil.astToSexprWithRanges(ast));
+//        System.out.println(SyntaxTreeUtil.astToSexprWithRanges(ast));
         Assertions.assertEquals(new SourcePosition(2,14), firstRef.range().start());
         Assertions.assertEquals(new SourcePosition(2,14 + "currentPoint".length()), firstRef.range().end());
 

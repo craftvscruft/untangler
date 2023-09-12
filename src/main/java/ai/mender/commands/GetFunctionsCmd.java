@@ -14,7 +14,7 @@ import java.util.ArrayList;
 @CommandLine.Command(
         name = "functions",
         mixinStandardHelpOptions = true,
-        description = "Lists functions defined in a file as json",
+        description = "Lists functions defined in a file",
         aliases = {"function", "fns", "fn"})
 public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator {
     @CommandLine.Option(

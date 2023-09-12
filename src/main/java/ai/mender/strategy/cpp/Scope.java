@@ -112,7 +112,6 @@ public class Scope {
             Ast oldDeclNode = currentScope.get(name);
             if (null != oldDeclNode) {
                 this.referenceResponse.declarations().remove(oldDeclNode.range());
-                System.out.println(this.referenceResponse.declarations().size());
                 Predicate<Reference> isRefToOldDecl = ref -> ref.declarationRange().equals(oldDeclNode.range());
                 List<Reference> updatedReferences = this.referenceResponse.references().stream().filter(isRefToOldDecl).map(oldRef ->
                         new Reference(oldRef.name(), oldRef.range(), ast.range())

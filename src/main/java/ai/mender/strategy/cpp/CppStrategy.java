@@ -60,6 +60,16 @@ public class CppStrategy implements LanguageStrategy {
                         transformer.treeBuilder.setCurrentRange(node.range());
                     }
                 }, node -> {});
+        transformer.getListenerRegistry().listenForTag("type", node -> {
+                if (transformer.hasAncestorWithTag("simpleDeclWithSpec")) {
+                    node.children().forEach(child -> {
+                        transformer.treeBuilder.setCurrentRange(child.range());
+                        transformer.treeBuilder.accumulate("ref", child.tag());
+                    });
+
+                    transformer.treeBuilder.setCurrentRange(node.range());
+                }
+            }, Consumers.nop());
 
 
         return transformer.transform(ast);
@@ -85,6 +95,9 @@ public class CppStrategy implements LanguageStrategy {
         listenerRegistry.register(CPP14Parser.IdExpressionContext.class,
                 ctx -> treeBuilder.accumulate("idExpr", ctx.getText()),
                 Consumers.nop());
+        listenerRegistry.register(CPP14Parser.ClassNameContext.class, // Types and function names
+                ctx -> treeBuilder.accumulate("type", ctx.getText()),
+                Consumers.nop());
 
         var listenerNew = new CPP14ParserBaseListener() {
             @Override
@@ -99,9 +112,8 @@ public class CppStrategy implements LanguageStrategy {
             }
         };
         ParseTreeWalker.DEFAULT.walk(listenerNew, cppTopLevelNode.getTree());
-
-
-        return treeBuilder.root();
+        Ast ast = treeBuilder.root();
+        return ast;
     }
 
     @Override
@@ -234,7 +246,6 @@ public class CppStrategy implements LanguageStrategy {
                 if (!decls.isEmpty() && !isInForInit) {
                     DeclarationRec declaration = decls.get(decls.size() - 1);
                     SourceText sourceText = SyntaxTreeUtil.nodeToSourceText(ctx);
-                    System.out.println(sourceText);
                     if (sourceText.range().isWithin(declaration.range())) {
                         declaration.declarators().add(sourceText);
                     }

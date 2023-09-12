@@ -14,7 +14,8 @@
           "col" : 6
         },
         "unknown" : false
-      }
+      },
+      "lineCount" : 3
     }
   ]
 }

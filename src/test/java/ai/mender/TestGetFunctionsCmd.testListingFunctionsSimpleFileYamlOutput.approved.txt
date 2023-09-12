@@ -11,3 +11,4 @@ items:
       line: 5
       col: 2
     unknown: false
+  lineCount: 4

@@ -1,2 +1,2 @@
-Name Range
-main 2:1-5:2
+Name Range   LineCount
+main 2:1-5:2 4

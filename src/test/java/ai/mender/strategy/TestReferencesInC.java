@@ -86,7 +86,6 @@ public class TestReferencesInC {
         CppStrategy strategy = new CppStrategy();
         SourceFile.StringSourceFile stringSourceFile = new SourceFile.StringSourceFile("main.c", code);
         CppTopLevelNode topLevelNode = strategy.parseTopLevel(stringSourceFile);
-
         return strategy.references(topLevelNode, SimpleSelector.parse(name));
     }
 
@@ -107,6 +106,27 @@ public class TestReferencesInC {
         Assertions.assertEquals(3, reference.declarationRange().start().line());
         Assertions.assertEquals(3, declaration.start().line());
     }
+
+    @Test
+    public void regressionFunctionCall() {
+        // These function calls are getting parsed as though the function name is a class name.
+        // This is addressed by treating type names as references.
+        // Snippet of parse tree:
+        // (simpleDeclaration (declSpecifierSeq (declSpecifier (typeSpecifier
+        //    (trailingTypeSpecifier (simpleTypeSpecifier (theTypeName (className applesauce4))))))) ... )
+        String code = """
+                    void processInputWithTiming(int inputChar, clock_t startTime) {
+                        for (; iteration < 200 + lineCount * 25; iteration++) {
+                            applesauce4(inputChar);
+                            applesauce3(startTime);
+                        }
+                    }
+                """;
+
+        var refResponse = parseRefs(code, "applesauce4");
+        Assertions.assertEquals(1, refResponse.references().size(), refResponse.toString());
+    }
+
 }
 //postfixExpression:
 //        primaryExpression
