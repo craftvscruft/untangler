@@ -13,18 +13,16 @@ repositories {
     mavenCentral()
 }
 
-configurations {
-    antlrGen
-}
 
 dependencies {
+    implementation project(':antlr-engine')
+    implementation "org.antlr:antlr4-runtime:${property('antlr.version')}"
     implementation 'info.picocli:picocli:4.7.4'
-    implementation "org.antlr:antlr4-runtime:4.13.0"
     implementation 'com.ibm.icu:icu4j:73.2'
-    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.2'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.2'
-    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.15.2'
-    implementation 'com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.15.2'
+    implementation "com.fasterxml.jackson.core:jackson-core:${property('jackson.version')}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${property('jackson.version')}"
+    implementation "com.fasterxml.jackson.core:jackson-annotations:${property('jackson.version')}"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:${property('jackson.version')}"
     implementation 'org.slf4j:slf4j-api:2.0.7'
     implementation 'org.apache.commons:commons-lang3:3.13.0'
     implementation 'org.eclipse.lsp4j:org.eclipse.lsp4j:0.21.0'
@@ -38,7 +36,6 @@ dependencies {
     testImplementation 'com.approvaltests:approvaltests:18.7.1'
 
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.2'
-    antlrGen 'org.antlr:antlr4:4.13.0'
 }
 
 compileJava {
@@ -91,7 +88,7 @@ graalvmNative {
     toolchainDetection = false
 }
 
-sourceSets.main.java.srcDirs = ['src/main/java','src/main-generated/java']
+sourceSets.main.java.srcDirs = ['src/main/java']
 
 
 spotless {
@@ -117,125 +114,4 @@ spotless {
         googleJavaFormat('1.17.0').aosp().reflowLongStrings()
     }
 }
-import org.apache.tools.ant.filters.ConcatFilter
-tasks.addRule("Pattern: copyParserBase<Lang>") { String taskName ->
 
-    if (taskName.startsWith("copyParserBase")) {
-        def lang = taskName - 'copyParserBase'
-        def langLower = lang.toLowerCase()
-        def basePkg = providers.gradleProperty("untangler.antlrgen.basePackage").get()
-        def pkg = "${basePkg}.${langLower}"
-        def pkgDir = pkg.replaceAll(/\./, "/")
-        def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
-        def target = "Java"
-        def packagePrefixFile = "${buildDir}/tmp/${lang}-package.txt"
-
-        task(taskName, type: Copy) {
-            doFirst{
-                file(packagePrefixFile).setText("package $pkg;\n")
-            }
-            from("vendor/${lang}/${target}/")
-            into("$genSrcPath/$pkgDir/")
-            include('*.java')
-
-            filter(ConcatFilter, prepend: file(packagePrefixFile))
-        }
-    }
-}
-
-tasks.addRule("Pattern: generateLexer<Lang>") { String taskName ->
-    if (taskName.startsWith("generateLexer")) {
-        def lang = taskName - 'generateLexer'
-        def langLower = lang.toLowerCase()
-        def basePkg = providers.gradleProperty("untangler.antlrgen.basePackage").get()
-        def pkg = "${basePkg}.${langLower}"
-        def pkgDir = pkg.replaceAll(/\./, "/")
-        def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
-        def target = "Java"
-        def lexerName = "${lang}Lexer"
-
-        task(taskName, type: JavaExec) {
-            inputs.file("vendor/$lang/${lexerName}.g4")
-            outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.java")
-            outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.interp")
-            outputs.file("${genSrcPath}/${pkgDir}/${lexerName}.tokens")
-            main = 'org.antlr.v4.Tool'
-            classpath = files(configurations.antlrGen.resolvedConfiguration.resolvedArtifacts*.file)
-            workingDir = "vendor/${lang}"
-            args = [
-                    "-Dlanguage=$target",
-                    "${lexerName}.g4",
-                    '-o',
-                    "../../${genSrcPath}/${pkgDir}/",
-                    "-package",
-                    pkg
-            ]
-        }
-    }
-}
-
-tasks.addRule("Pattern: generateParser<Lang>") { String taskName ->
-    if (taskName.startsWith("generateParser")) {
-        def lang = taskName - "generateParser"
-        def langLower = lang.toLowerCase()
-        def basePkg = providers.gradleProperty("untangler.antlrgen.basePackage").get()
-        def pkg = "${basePkg}.${langLower}"
-        def pkgDir = pkg.replaceAll(/\./, "/")
-        def genSrcPath = providers.gradleProperty('untangler.antlrgen.outpath').get()
-        def target = "Java"
-        def lexerName = "${lang}Lexer"
-        // Special casing because we have one case with multiple parser files :(
-        //   CSharpPreprocessorParser.g4
-        //   CSharpParser.g4
-        def parserName = "${lang}Parser"
-        def preParserName = "${lang}PreprocessorParser"
-        def hasPreParser = file("vendor/${lang}/${preParserName}.g4").exists()
-        task(taskName, type: JavaExec) {
-            dependsOn "generateLexer${lang}", "copyParserBase${lang}"
-            inputs.file("vendor/${lang}/${parserName}.g4")
-
-            inputs.file("${genSrcPath}/${pkgDir}/${lexerName}.tokens")
-            outputs.file("${genSrcPath}/${pkgDir}/${parserName}.java")
-            outputs.file("${genSrcPath}/${pkgDir}/${parserName}.interp")
-            outputs.file("${genSrcPath}/${pkgDir}/${parserName}.tokens")
-            if (hasPreParser) {
-                outputs.file("${genSrcPath}/${pkgDir}/${preParserName}.java")
-                inputs.file("vendor/${lang}/${preParserName}.g4")
-                outputs.file("${genSrcPath}/${pkgDir}/${preParserName}.interp")
-                outputs.file("${genSrcPath}/${pkgDir}/${preParserName}.tokens")
-            }
-            main = 'org.antlr.v4.Tool'
-            classpath = files(configurations.antlrGen.resolvedConfiguration.resolvedArtifacts*.file)
-            if (hasPreParser) {
-                args = [
-                        "-Dlanguage=${target}",
-                        "${parserName}.g4",
-                        "${preParserName}.g4",
-                        '-o',
-                        "../../${genSrcPath}/${pkgDir}/",
-                        "-package",
-                        pkg
-                ]
-            } else {
-                args = [
-                        "-Dlanguage=${target}",
-                        "${parserName}.g4",
-                        '-o',
-                        "../../${genSrcPath}/${pkgDir}/",
-                        "-package",
-                        pkg
-                ]
-            }
-
-            workingDir = "vendor/$lang"
-        }
-    }
-}
-
-tasks.register('generateAllParsers') {
-    dependsOn 'generateParserPython'
-    dependsOn 'generateParserCPP14'
-    dependsOn 'generateParserJava20'
-    dependsOn 'generateParserCSharp'
-    dependsOn 'generateParserTypeScript'
-}
