@@ -1,8 +1,7 @@
 package ai.mender.strategy;
 
-import ai.mender.domain.SourcePosition;
+import ai.mender.untangler.shared.SourcePosition;
 import ai.mender.parsing.Ast;
-import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.strategy.cpp.CppStrategy;
 import ai.mender.strategy.cpp.CppTopLevelNode;
 import org.apache.commons.lang3.StringUtils;

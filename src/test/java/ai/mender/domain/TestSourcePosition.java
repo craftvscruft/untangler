@@ -1,5 +1,6 @@
 package ai.mender.domain;
 
+import ai.mender.untangler.shared.SourcePosition;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

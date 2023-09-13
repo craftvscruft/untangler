@@ -1,4 +1,91 @@
 [ {
+  "name" : "ai.mender.untangler.shared.SourcePosition",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "ai.mender.untangler.shared.SourcePosition" ]
+  }, {
+    "name" : "line",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "parse",
+    "parameterTypes" : [ "java.lang.String" ]
+  }, {
+    "name" : "col",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "isWithin",
+    "parameterTypes" : [ "ai.mender.untangler.shared.SourceRange" ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.SourceRange",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "end",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "start",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "parse",
+    "parameterTypes" : [ "java.lang.String" ]
+  }, {
+    "name" : "isUnknown",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "unknown",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "isWithin",
+    "parameterTypes" : [ "ai.mender.untangler.shared.SourceRange" ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.SourceText",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "range",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "text",
+    "parameterTypes" : [ ]
+  } ]
+}, {
   "name" : "ai.mender.domain.TestSourcePosition",
   "allDeclaredFields" : true,
   "queryAllDeclaredMethods" : true,

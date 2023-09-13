@@ -1,6 +1,6 @@
 package ai.mender;
 
-import ai.mender.domain.SourceRange;
+import ai.mender.untangler.shared.SourceRange;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -1,9 +1,9 @@
 package ai.mender.strategy.java;
 
-import ai.mender.domain.SourcePosition;
-import ai.mender.domain.SourceRange;
 import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.strategy.FunctionDefinitionNode;
+import ai.mender.untangler.shared.SourcePosition;
+import ai.mender.untangler.shared.SourceRange;
 import antlrgen.java20.Java20Parser;
 import org.antlr.v4.runtime.tree.TerminalNode;
 

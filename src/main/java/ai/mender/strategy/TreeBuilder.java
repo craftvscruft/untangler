@@ -1,8 +1,8 @@
 package ai.mender.strategy;
 
-import ai.mender.domain.SourceRange;
 import ai.mender.parsing.Ast;
 import ai.mender.parsing.SyntaxTreeUtil;
+import ai.mender.untangler.shared.SourceRange;
 
 import java.util.*;
 

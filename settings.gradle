@@ -7,3 +7,5 @@ pluginManagement {
 
 rootProject.name = 'untangler'
 include 'antlr-engine'
+include 'clang-engine'
+include 'shared'

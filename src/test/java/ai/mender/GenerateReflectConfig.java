@@ -1,6 +1,9 @@
 package ai.mender;
 
 import ai.mender.domain.FunctionRec;
+import ai.mender.untangler.shared.SourcePosition;
+import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.SourceText;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,26 +34,38 @@ public class GenerateReflectConfig {
     );
 
     public static void main(String[] args) throws JsonProcessingException {
-        String packageName = FunctionRec.class.getPackageName();
+        List<ConfigEntry> configEntries = new ArrayList<>();
+        // Naming all in the subproject explicitly for now
+        configEntries.add(getConfigEntryForClass(SourcePosition.class));
+        configEntries.add(getConfigEntryForClass(SourceRange.class));
+        configEntries.add(getConfigEntryForClass(SourceText.class));
+        addEntriesInPackage(FunctionRec.class.getPackageName(), configEntries);
+        configEntries.add(RECORD_COMPONENT_ENTRY);
+        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(configEntries));
+    }
+
+    private static void addEntriesInPackage(String packageName, List<ConfigEntry> configEntries) {
         InputStream stream = ClassLoader.getSystemClassLoader()
                 .getResourceAsStream(packageName.replaceAll("[.]", "/"));
         BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        List<ConfigEntry> configEntries = new ArrayList<>();
+
         reader.lines()
                 .filter(line -> line.endsWith(".class"))
                 .map(line -> getClass(line, packageName))
                 .map(klass ->
-                        new ConfigEntry(
-                                klass.getCanonicalName(),
-                                true,
-                                true,
-                                true,
-                                Arrays.stream(klass.getDeclaredMethods()).map(m -> new MethodEntry(
-                                        m.getName(), Arrays.stream(m.getParameterTypes()).map(Class::getCanonicalName).toArray(String[]::new)
-                                )).toArray(MethodEntry[]::new)
-                        )).forEachOrdered(configEntries::add);
-        configEntries.add(RECORD_COMPONENT_ENTRY);
-        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(configEntries));
+                        getConfigEntryForClass(klass)).forEachOrdered(configEntries::add);
+    }
+
+    private static ConfigEntry getConfigEntryForClass(Class klass) {
+        return new ConfigEntry(
+                klass.getCanonicalName(),
+                true,
+                true,
+                true,
+                Arrays.stream(klass.getDeclaredMethods()).map(m -> new MethodEntry(
+                        m.getName(), Arrays.stream(m.getParameterTypes()).map(Class::getCanonicalName).toArray(String[]::new)
+                )).toArray(MethodEntry[]::new)
+        );
     }
 
     private static Class getClass(String className, String packageName) {

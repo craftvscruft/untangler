@@ -1,4 +1,4 @@
-package ai.mender.domain;
+package ai.mender.untangler.shared;
 
 public record SourceRange(SourcePosition start, SourcePosition end) {
     public static SourceRange unknown() {

@@ -6,6 +6,8 @@ import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;
 import ai.mender.strategy.cpp.CppStrategy;
+import ai.mender.untangler.shared.SourcePosition;
+import ai.mender.untangler.shared.SourceText;
 import picocli.CommandLine;
 
 import java.io.File;

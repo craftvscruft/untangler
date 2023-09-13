@@ -1,8 +1,8 @@
 package ai.mender.strategy.cpp;
 
-import ai.mender.domain.SourceRange;
 import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.strategy.FunctionDefinitionNode;
+import ai.mender.untangler.shared.SourceRange;
 import antlrgen.cpp14.CPP14Parser;
 import antlrgen.cpp14.CPP14ParserBaseListener;
 import org.antlr.v4.runtime.ParserRuleContext;

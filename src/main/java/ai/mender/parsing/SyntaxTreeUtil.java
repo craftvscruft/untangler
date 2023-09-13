@@ -1,9 +1,9 @@
 package ai.mender.parsing;
 
-import ai.mender.domain.SourcePosition;
-import ai.mender.domain.SourceRange;
-import ai.mender.domain.SourceText;
 import ai.mender.strategy.TreeBuilder;
+import ai.mender.untangler.shared.SourcePosition;
+import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.SourceText;
 import antlrgen.cpp14.CPP14Parser;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;

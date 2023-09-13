@@ -1,10 +1,10 @@
 package ai.mender;
 
 import ai.mender.domain.EditMode;
-import ai.mender.domain.SourceEdit;
-import ai.mender.domain.SourcePosition;
-import ai.mender.domain.SourceRange;
+import ai.mender.domain.SourceEdit;;
 import ai.mender.strategy.SourceFile;
+import ai.mender.untangler.shared.SourcePosition;
+import ai.mender.untangler.shared.SourceRange;
 import com.google.common.collect.Ordering;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

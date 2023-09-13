@@ -1,8 +1,8 @@
 package ai.mender.strategy.csharp;
 
-import ai.mender.domain.SourceRange;
 import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.strategy.FunctionDefinitionNode;
+import ai.mender.untangler.shared.SourceRange;
 import antlrgen.csharp.CSharpParser;
 import org.antlr.v4.runtime.ParserRuleContext;
 

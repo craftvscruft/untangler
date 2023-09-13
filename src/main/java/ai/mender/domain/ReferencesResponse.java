@@ -1,6 +1,7 @@
 package ai.mender.domain;
 
 import ai.mender.SimpleSelector;
+import ai.mender.untangler.shared.SourceRange;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,7 +15,9 @@ repositories {
 
 
 dependencies {
+    implementation project(':shared')
     implementation project(':antlr-engine')
+    implementation project(':clang-engine')
     implementation "org.antlr:antlr4-runtime:${property('antlr.version')}"
     implementation 'info.picocli:picocli:4.7.4'
     implementation 'com.ibm.icu:icu4j:73.2'

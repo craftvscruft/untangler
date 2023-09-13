@@ -2,6 +2,8 @@ package ai.mender.strategy;
 
 import ai.mender.SimpleSelector;
 import ai.mender.domain.*;
+import ai.mender.untangler.shared.SourcePosition;
+import ai.mender.untangler.shared.SourceRange;
 
 import java.util.Arrays;
 import java.util.List;

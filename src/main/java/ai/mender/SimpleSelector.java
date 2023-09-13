@@ -1,6 +1,6 @@
 package ai.mender;
 
-import ai.mender.domain.SourceRange;
+import ai.mender.untangler.shared.SourceRange;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.Pair;
 

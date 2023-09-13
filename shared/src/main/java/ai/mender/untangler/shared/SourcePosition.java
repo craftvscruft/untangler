@@ -1,4 +1,4 @@
-package ai.mender.domain;
+package ai.mender.untangler.shared;
 
 import org.apache.commons.lang3.compare.ComparableUtils;
 
