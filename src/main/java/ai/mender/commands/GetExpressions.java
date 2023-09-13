@@ -10,11 +10,9 @@ import java.io.File;
 
 @CommandLine.Command(name = "expressions", mixinStandardHelpOptions = true,
         aliases = "expr",
-        description = "Display expressions within a function")
+        description = "Display expressions")
 public class GetExpressions implements Runnable, CommandLine.IExitCodeGenerator {
 
-    @CommandLine.Parameters(index = "0", description = "selector (try a function name)", defaultValue = "*")
-    private String selector;
     @CommandLine.Option(
             names = {"--file", "-f"},
             description = "The source code file to analyze",
@@ -51,7 +49,7 @@ public class GetExpressions implements Runnable, CommandLine.IExitCodeGenerator 
 //                    }
 //                });
                 String filePath = file.getAbsolutePath();
-                ClangRunner.runClang(this.selector, filePath);
+                ClangRunner.runClang(filePath);
 
                 success = true;
             }

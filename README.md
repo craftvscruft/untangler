@@ -40,7 +40,7 @@ Prototype, not ready for production use.
 * GraalVM JDK20 ([Homebrew tap](https://github.com/graalvm/homebrew-tap))
 
 We're using GraalVM in preparation to ship a static executable that does not require Java to be installed for the end
-user.
+user. This doc will assume version 20 but any JDK 16+ should work.
 
 ## Running
 
