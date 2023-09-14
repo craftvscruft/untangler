@@ -19,7 +19,6 @@ public class ClangEngine {
         private final Path filePath;
         private final Map<String, String> watchedKinds;
         private int curLine;
-        private boolean inFile;
         private boolean debug = false;
 
 
@@ -27,16 +26,9 @@ public class ClangEngine {
             this.filePath = filePath;
             this.watchedKinds = watchedKinds;
             this.curLine = -1;
-            this.inFile = false;
         }
 
         public void visit(JsonNode node, Ast resultTree) {
-            if (!inFile) {
-                JsonNode locFileNode = node.at("/loc/file");
-                if (!locFileNode.isMissingNode() && filePath.equals(Path.of(locFileNode.asText()))) {
-                    inFile = true;
-                }
-            }
             if (node.has("isImplicit") && node.get("isImplicit").asBoolean(false)) {
                 return;
             }
@@ -44,7 +36,7 @@ public class ClangEngine {
             if (!locLineNode.isMissingNode()) {
                 curLine = locLineNode.asInt();
             }
-            if (inFile && node.has("range")) {
+            if (node.has("range")) {
                 JsonNode beginLineNode = node.at("/range/begin/line");
                 JsonNode beginLineNode2 = node.at("/range/begin/expansionLoc/line");
                 JsonNode beginColNode = node.at("/range/begin/col");
