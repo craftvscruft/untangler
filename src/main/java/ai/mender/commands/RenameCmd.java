@@ -2,15 +2,15 @@ package ai.mender.commands;
 
 import ai.mender.Console;
 import ai.mender.SimpleSelector;
-import ai.mender.domain.SourceEdit;
 import ai.mender.domain.SourceEditListResponse;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;
+import ai.mender.untangler.clang.ClangEngine;
+import ai.mender.untangler.shared.Ast;
 import picocli.CommandLine;
 
 import java.io.File;
-import java.util.List;
 
 
 @CommandLine.Command(name = "rename", mixinStandardHelpOptions = true,
@@ -44,6 +44,13 @@ public class RenameCmd implements Runnable, CommandLine.IExitCodeGenerator {
             })
     private OutputFormat outputFormat;
 
+    @CommandLine.Option(names = {"--engine"}, defaultValue = "antlr",
+            description = {
+                    "Parsing engine",
+                    "Supported: antlr (default), clang"
+            })
+    private Engine engine;
+
     @CommandLine.Spec CommandLine.Model.CommandSpec spec;
     private boolean success = false;
 
@@ -60,8 +67,16 @@ public class RenameCmd implements Runnable, CommandLine.IExitCodeGenerator {
                 message = "Unknown file type! Cannot parse.";
                 success = false;
             } else {
-                TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
-                SourceEditListResponse response = languageStrategy.rename(tree, SimpleSelector.parse(from), to);
+
+                SourceEditListResponse response;
+                if (engine == Engine.clang) {
+                    Ast ast = ClangEngine.runClang(sourceFile.file().getPath());
+                    response = languageStrategy.renameWithAst(ast, SimpleSelector.parse(from), to);
+                } else {
+                    TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
+                    response = languageStrategy.rename(tree, SimpleSelector.parse(from), to);
+                }
+
                 Console.printOutput(response, spec.commandLine().getOut(), outputFormat);
                 success = response.success();
                 message = response.message();

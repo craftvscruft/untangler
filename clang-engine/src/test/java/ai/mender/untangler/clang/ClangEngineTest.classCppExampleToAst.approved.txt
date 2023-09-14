@@ -1,0 +1,87 @@
+{
+  "kind" : "root",
+  "children" : [ {
+    "kind" : "def:type",
+    "range" : "2:1-9:2",
+    "nameRange" : "2:7-2:13",
+    "children" : [ {
+      "kind" : "def:field",
+      "range" : "5:5-5:32",
+      "nameRange" : "5:28-5:32",
+      "props" : {
+        "name" : "data",
+        "id" : "0x1500bdc58",
+        "type" : "std::unique_ptr<int[]>"
+      }
+    }, {
+      "kind" : "param",
+      "range" : "7:12-7:26",
+      "nameRange" : "7:22-7:26",
+      "props" : {
+        "name" : "size",
+        "id" : "0x1500bdce8",
+        "type" : "const int"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "7:35-7:36",
+      "props" : {
+        "name" : "operator=",
+        "id" : "0x170026068",
+        "refId" : "0x1500b38b8",
+        "type" : "unique_ptr<int[]> &(unique_ptr<int[]> &&) noexcept"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "7:37-7:60",
+      "props" : {
+        "name" : "make_unique",
+        "id" : "0x170025228",
+        "refId" : "0x170024f18",
+        "type" : "typename __unique_if<int[]>::__unique_array_unknown_bound (size_t)"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "7:61-7:65",
+      "props" : {
+        "name" : "size",
+        "id" : "0x1700243e8",
+        "refId" : "0x1500bdce8",
+        "type" : "const int"
+      }
+    } ],
+    "props" : {
+      "name" : "widget",
+      "id" : "0x15009b2b8",
+      "type" : "class"
+    }
+  }, {
+    "kind" : "def:fn",
+    "range" : "11:1-16:2",
+    "nameRange" : "11:6-11:25",
+    "children" : [ {
+      "kind" : "def:var",
+      "range" : "12:5-12:22",
+      "nameRange" : "12:12-12:13",
+      "props" : {
+        "name" : "w",
+        "id" : "0x170026250",
+        "type" : "widget"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "14:5-14:6",
+      "props" : {
+        "name" : "w",
+        "id" : "0x170026448",
+        "refId" : "0x170026250",
+        "type" : "widget"
+      }
+    } ],
+    "props" : {
+      "name" : "functionUsingWidget",
+      "id" : "0x170026198",
+      "type" : "void ()"
+    }
+  } ]
+}

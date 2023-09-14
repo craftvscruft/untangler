@@ -1,0 +1,37 @@
+{
+  "id" : "0x153044208",
+  "kind" : "TranslationUnitDecl",
+  "loc" : { },
+  "range" : {
+    "begin" : { },
+    "end" : { }
+  },
+  "inner" : [ {
+    "id" : "0x1530c8f40",
+    "kind" : "VarDecl",
+    "loc" : {
+      "offset" : 4,
+      "file" : "/Users/rmyers/dev/untangler/clang-engine/build/resources/test/onevar.c",
+      "line" : 1,
+      "col" : 5,
+      "tokLen" : 1
+    },
+    "range" : {
+      "begin" : {
+        "offset" : 0,
+        "col" : 1,
+        "tokLen" : 3
+      },
+      "end" : {
+        "offset" : 4,
+        "col" : 5,
+        "tokLen" : 1
+      }
+    },
+    "name" : "a",
+    "mangledName" : "_a",
+    "type" : {
+      "qualType" : "int"
+    }
+  } ]
+}

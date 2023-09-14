@@ -2,7 +2,7 @@ package ai.mender.commands;
 
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
-import ai.mender.untangler.clang.ClangRunner;
+import ai.mender.untangler.clang.ClangEngine;
 import picocli.CommandLine;
 
 import java.io.File;
@@ -49,7 +49,7 @@ public class GetExpressions implements Runnable, CommandLine.IExitCodeGenerator 
 //                    }
 //                });
                 String filePath = file.getAbsolutePath();
-                ClangRunner.runClang(filePath);
+                ClangEngine.runClang(filePath);
 
                 success = true;
             }

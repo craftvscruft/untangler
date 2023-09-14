@@ -1,0 +1,75 @@
+{
+  "id" : "0x122841608",
+  "kind" : "TranslationUnitDecl",
+  "loc" : { },
+  "range" : {
+    "begin" : { },
+    "end" : { }
+  },
+  "inner" : [ {
+    "id" : "0x1302bb2b8",
+    "kind" : "CXXRecordDecl",
+    "loc" : {
+      "offset" : 24,
+      "file" : "/tmp/class.cpp",
+      "line" : 2,
+      "col" : 7,
+      "tokLen" : 6
+    },
+    "range" : {
+      "begin" : {
+        "offset" : 18,
+        "col" : 1,
+        "tokLen" : 5
+      },
+      "end" : {
+        "offset" : 179,
+        "line" : 9,
+        "col" : 1,
+        "tokLen" : 1
+      }
+    },
+    "isReferenced" : true,
+    "name" : "widget",
+    "tagUsed" : "class",
+    "completeDefinition" : true,
+    "definitionData" : {
+      "canConstDefaultInit" : true,
+      "copyAssign" : {
+        "hasConstParam" : true,
+        "implicitHasConstParam" : true,
+        "needsOverloadResolution" : true,
+        "trivial" : true
+      },
+      "copyCtor" : {
+        "hasConstParam" : true,
+        "implicitHasConstParam" : true,
+        "needsOverloadResolution" : true,
+        "trivial" : true
+      },
+      "defaultCtor" : {
+        "defaultedIsConstexpr" : true
+      },
+      "dtor" : {
+        "needsOverloadResolution" : true,
+        "nonTrivial" : true,
+        "simple" : true
+      },
+      "hasUserDeclaredConstructor" : true,
+      "isStandardLayout" : true,
+      "moveAssign" : {
+        "exists" : true,
+        "needsOverloadResolution" : true,
+        "nonTrivial" : true,
+        "simple" : true
+      },
+      "moveCtor" : {
+        "exists" : true,
+        "needsOverloadResolution" : true,
+        "nonTrivial" : true,
+        "simple" : true
+      }
+    },
+    "inner" : [ ]
+  } ]
+}

@@ -1,0 +1,1120 @@
+{
+  "id" : "0x122835608",
+  "kind" : "TranslationUnitDecl",
+  "loc" : { },
+  "range" : {
+    "begin" : { },
+    "end" : { }
+  },
+  "inner" : [ {
+    "id" : "0x15009b2b8",
+    "kind" : "CXXRecordDecl",
+    "loc" : {
+      "offset" : 24,
+      "file" : "/Users/rmyers/dev/untangler/clang-engine/build/resources/test/class.cpp",
+      "line" : 2,
+      "col" : 7,
+      "tokLen" : 6
+    },
+    "range" : {
+      "begin" : {
+        "offset" : 18,
+        "col" : 1,
+        "tokLen" : 5
+      },
+      "end" : {
+        "offset" : 179,
+        "line" : 9,
+        "col" : 1,
+        "tokLen" : 1
+      }
+    },
+    "isReferenced" : true,
+    "name" : "widget",
+    "tagUsed" : "class",
+    "completeDefinition" : true,
+    "definitionData" : {
+      "canConstDefaultInit" : true,
+      "copyAssign" : {
+        "hasConstParam" : true,
+        "implicitHasConstParam" : true,
+        "needsOverloadResolution" : true,
+        "trivial" : true
+      },
+      "copyCtor" : {
+        "hasConstParam" : true,
+        "implicitHasConstParam" : true,
+        "needsOverloadResolution" : true,
+        "trivial" : true
+      },
+      "defaultCtor" : {
+        "defaultedIsConstexpr" : true
+      },
+      "dtor" : {
+        "needsOverloadResolution" : true,
+        "nonTrivial" : true,
+        "simple" : true
+      },
+      "hasUserDeclaredConstructor" : true,
+      "isStandardLayout" : true,
+      "moveAssign" : {
+        "exists" : true,
+        "needsOverloadResolution" : true,
+        "nonTrivial" : true,
+        "simple" : true
+      },
+      "moveCtor" : {
+        "exists" : true,
+        "needsOverloadResolution" : true,
+        "nonTrivial" : true,
+        "simple" : true
+      }
+    },
+    "inner" : [ {
+      "id" : "0x15009b3d8",
+      "kind" : "CXXRecordDecl",
+      "loc" : {
+        "offset" : 24,
+        "line" : 2,
+        "col" : 7,
+        "tokLen" : 6
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 18,
+          "col" : 1,
+          "tokLen" : 5
+        },
+        "end" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        }
+      },
+      "isImplicit" : true,
+      "isReferenced" : true,
+      "name" : "widget",
+      "tagUsed" : "class"
+    }, {
+      "id" : "0x15009b468",
+      "kind" : "AccessSpecDecl",
+      "loc" : {
+        "offset" : 33,
+        "line" : 4,
+        "col" : 1,
+        "tokLen" : 7
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 33,
+          "col" : 1,
+          "tokLen" : 7
+        },
+        "end" : {
+          "offset" : 40,
+          "col" : 8,
+          "tokLen" : 1
+        }
+      },
+      "access" : "private"
+    }, {
+      "id" : "0x1500bdc58",
+      "kind" : "FieldDecl",
+      "loc" : {
+        "offset" : 69,
+        "line" : 5,
+        "col" : 28,
+        "tokLen" : 4
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 46,
+          "col" : 5,
+          "tokLen" : 3
+        },
+        "end" : {
+          "offset" : 69,
+          "col" : 28,
+          "tokLen" : 4
+        }
+      },
+      "isReferenced" : true,
+      "name" : "data",
+      "type" : {
+        "desugaredQualType" : "std::unique_ptr<int[]>",
+        "qualType" : "std::unique_ptr<int[]>"
+      }
+    }, {
+      "id" : "0x1500bdca8",
+      "kind" : "AccessSpecDecl",
+      "loc" : {
+        "offset" : 75,
+        "line" : 6,
+        "col" : 1,
+        "tokLen" : 6
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 75,
+          "col" : 1,
+          "tokLen" : 6
+        },
+        "end" : {
+          "offset" : 81,
+          "col" : 7,
+          "tokLen" : 1
+        }
+      },
+      "access" : "public"
+    }, {
+      "id" : "0x1500bdde8",
+      "kind" : "CXXConstructorDecl",
+      "loc" : {
+        "offset" : 87,
+        "line" : 7,
+        "col" : 5,
+        "tokLen" : 6
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 87,
+          "col" : 5,
+          "tokLen" : 6
+        },
+        "end" : {
+          "offset" : 150,
+          "col" : 68,
+          "tokLen" : 1
+        }
+      },
+      "isUsed" : true,
+      "name" : "widget",
+      "mangledName" : "__ZN6widgetC1Ei",
+      "type" : {
+        "qualType" : "void (const int)"
+      },
+      "inner" : [ {
+        "id" : "0x1500bdce8",
+        "kind" : "ParmVarDecl",
+        "loc" : {
+          "offset" : 104,
+          "col" : 22,
+          "tokLen" : 4
+        },
+        "range" : {
+          "begin" : {
+            "offset" : 94,
+            "col" : 12,
+            "tokLen" : 5
+          },
+          "end" : {
+            "offset" : 104,
+            "col" : 22,
+            "tokLen" : 4
+          }
+        },
+        "isUsed" : true,
+        "name" : "size",
+        "type" : {
+          "qualType" : "const int"
+        }
+      }, {
+        "kind" : "CXXCtorInitializer",
+        "anyInit" : {
+          "id" : "0x1500bdc58",
+          "kind" : "FieldDecl",
+          "name" : "data",
+          "type" : {
+            "desugaredQualType" : "std::unique_ptr<int[]>",
+            "qualType" : "std::unique_ptr<int[]>"
+          }
+        },
+        "inner" : [ {
+          "id" : "0x170024130",
+          "kind" : "CXXConstructExpr",
+          "range" : {
+            "begin" : {
+              "offset" : 87,
+              "col" : 5,
+              "tokLen" : 6
+            },
+            "end" : {
+              "offset" : 87,
+              "col" : 5,
+              "tokLen" : 6
+            }
+          },
+          "type" : {
+            "desugaredQualType" : "std::unique_ptr<int[]>",
+            "qualType" : "std::unique_ptr<int[]>"
+          },
+          "valueCategory" : "prvalue",
+          "ctorType" : {
+            "qualType" : "void () noexcept"
+          },
+          "hadMultipleCandidates" : true,
+          "constructionKind" : "complete"
+        } ]
+      }, {
+        "id" : "0x170026150",
+        "kind" : "CompoundStmt",
+        "range" : {
+          "begin" : {
+            "offset" : 110,
+            "col" : 28,
+            "tokLen" : 1
+          },
+          "end" : {
+            "offset" : 150,
+            "col" : 68,
+            "tokLen" : 1
+          }
+        },
+        "inner" : [ {
+          "id" : "0x170026138",
+          "kind" : "ExprWithCleanups",
+          "range" : {
+            "begin" : {
+              "offset" : 112,
+              "col" : 30,
+              "tokLen" : 4
+            },
+            "end" : {
+              "offset" : 147,
+              "col" : 65,
+              "tokLen" : 1
+            }
+          },
+          "type" : {
+            "desugaredQualType" : "std::unique_ptr<int[]>",
+            "qualType" : "unique_ptr<int[]>"
+          },
+          "valueCategory" : "lvalue",
+          "cleanupsHaveSideEffects" : true,
+          "inner" : [ {
+            "id" : "0x170026100",
+            "kind" : "CXXOperatorCallExpr",
+            "range" : {
+              "begin" : {
+                "offset" : 112,
+                "col" : 30,
+                "tokLen" : 4
+              },
+              "end" : {
+                "offset" : 147,
+                "col" : 65,
+                "tokLen" : 1
+              }
+            },
+            "type" : {
+              "desugaredQualType" : "std::unique_ptr<int[]>",
+              "qualType" : "unique_ptr<int[]>"
+            },
+            "valueCategory" : "lvalue",
+            "inner" : [ {
+              "id" : "0x1700260e8",
+              "kind" : "ImplicitCastExpr",
+              "range" : {
+                "begin" : {
+                  "offset" : 117,
+                  "col" : 35,
+                  "tokLen" : 1
+                },
+                "end" : {
+                  "offset" : 117,
+                  "col" : 35,
+                  "tokLen" : 1
+                }
+              },
+              "type" : {
+                "qualType" : "unique_ptr<int[]> &(*)(unique_ptr<int[]> &&) noexcept"
+              },
+              "valueCategory" : "prvalue",
+              "castKind" : "FunctionToPointerDecay",
+              "inner" : [ {
+                "id" : "0x170026068",
+                "kind" : "DeclRefExpr",
+                "range" : {
+                  "begin" : {
+                    "offset" : 117,
+                    "col" : 35,
+                    "tokLen" : 1
+                  },
+                  "end" : {
+                    "offset" : 117,
+                    "col" : 35,
+                    "tokLen" : 1
+                  }
+                },
+                "type" : {
+                  "qualType" : "unique_ptr<int[]> &(unique_ptr<int[]> &&) noexcept"
+                },
+                "valueCategory" : "lvalue",
+                "referencedDecl" : {
+                  "id" : "0x1500b38b8",
+                  "kind" : "CXXMethodDecl",
+                  "name" : "operator=",
+                  "type" : {
+                    "qualType" : "unique_ptr<int[]> &(unique_ptr<int[]> &&) noexcept"
+                  }
+                }
+              } ]
+            }, {
+              "id" : "0x1700242c8",
+              "kind" : "MemberExpr",
+              "range" : {
+                "begin" : {
+                  "offset" : 112,
+                  "col" : 30,
+                  "tokLen" : 4
+                },
+                "end" : {
+                  "offset" : 112,
+                  "col" : 30,
+                  "tokLen" : 4
+                }
+              },
+              "type" : {
+                "desugaredQualType" : "std::unique_ptr<int[]>",
+                "qualType" : "std::unique_ptr<int[]>"
+              },
+              "valueCategory" : "lvalue",
+              "name" : "data",
+              "isArrow" : true,
+              "referencedMemberDecl" : "0x1500bdc58",
+              "inner" : [ {
+                "id" : "0x1700242b8",
+                "kind" : "CXXThisExpr",
+                "range" : {
+                  "begin" : {
+                    "offset" : 112,
+                    "col" : 30,
+                    "tokLen" : 4
+                  },
+                  "end" : {
+                    "offset" : 112,
+                    "col" : 30,
+                    "tokLen" : 4
+                  }
+                },
+                "type" : {
+                  "qualType" : "widget *"
+                },
+                "valueCategory" : "prvalue",
+                "implicit" : true
+              } ]
+            }, {
+              "id" : "0x170026050",
+              "kind" : "MaterializeTemporaryExpr",
+              "range" : {
+                "begin" : {
+                  "offset" : 119,
+                  "col" : 37,
+                  "tokLen" : 3
+                },
+                "end" : {
+                  "offset" : 147,
+                  "col" : 65,
+                  "tokLen" : 1
+                }
+              },
+              "type" : {
+                "desugaredQualType" : "std::unique_ptr<int[]>",
+                "qualType" : "typename __unique_if<int[]>::__unique_array_unknown_bound",
+                "typeAliasDeclId" : "0x1700249f0"
+              },
+              "valueCategory" : "xvalue",
+              "storageDuration" : "full expression",
+              "inner" : [ {
+                "id" : "0x170025360",
+                "kind" : "CXXBindTemporaryExpr",
+                "range" : {
+                  "begin" : {
+                    "offset" : 119,
+                    "col" : 37,
+                    "tokLen" : 3
+                  },
+                  "end" : {
+                    "offset" : 147,
+                    "col" : 65,
+                    "tokLen" : 1
+                  }
+                },
+                "type" : {
+                  "desugaredQualType" : "std::unique_ptr<int[]>",
+                  "qualType" : "typename __unique_if<int[]>::__unique_array_unknown_bound",
+                  "typeAliasDeclId" : "0x1700249f0"
+                },
+                "valueCategory" : "prvalue",
+                "temp" : "0x170025358",
+                "dtor" : {
+                  "id" : "0x1500b64b0",
+                  "kind" : "CXXDestructorDecl",
+                  "name" : "~unique_ptr",
+                  "type" : {
+                    "qualType" : "void () noexcept"
+                  }
+                },
+                "inner" : [ {
+                  "id" : "0x170025300",
+                  "kind" : "CallExpr",
+                  "range" : {
+                    "begin" : {
+                      "offset" : 119,
+                      "col" : 37,
+                      "tokLen" : 3
+                    },
+                    "end" : {
+                      "offset" : 147,
+                      "col" : 65,
+                      "tokLen" : 1
+                    }
+                  },
+                  "type" : {
+                    "desugaredQualType" : "std::unique_ptr<int[]>",
+                    "qualType" : "typename __unique_if<int[]>::__unique_array_unknown_bound",
+                    "typeAliasDeclId" : "0x1700249f0"
+                  },
+                  "valueCategory" : "prvalue",
+                  "inner" : [ {
+                    "id" : "0x1700252e8",
+                    "kind" : "ImplicitCastExpr",
+                    "range" : {
+                      "begin" : {
+                        "offset" : 119,
+                        "col" : 37,
+                        "tokLen" : 3
+                      },
+                      "end" : {
+                        "offset" : 141,
+                        "col" : 59,
+                        "tokLen" : 1
+                      }
+                    },
+                    "type" : {
+                      "qualType" : "typename __unique_if<int[]>::__unique_array_unknown_bound (*)(size_t)"
+                    },
+                    "valueCategory" : "prvalue",
+                    "castKind" : "FunctionToPointerDecay",
+                    "inner" : [ {
+                      "id" : "0x170025228",
+                      "kind" : "DeclRefExpr",
+                      "range" : {
+                        "begin" : {
+                          "offset" : 119,
+                          "col" : 37,
+                          "tokLen" : 3
+                        },
+                        "end" : {
+                          "offset" : 141,
+                          "col" : 59,
+                          "tokLen" : 1
+                        }
+                      },
+                      "type" : {
+                        "qualType" : "typename __unique_if<int[]>::__unique_array_unknown_bound (size_t)"
+                      },
+                      "valueCategory" : "lvalue",
+                      "referencedDecl" : {
+                        "id" : "0x170024f18",
+                        "kind" : "FunctionDecl",
+                        "name" : "make_unique",
+                        "type" : {
+                          "qualType" : "typename __unique_if<int[]>::__unique_array_unknown_bound (size_t)"
+                        }
+                      },
+                      "foundReferencedDecl" : {
+                        "id" : "0x1068b88d0",
+                        "kind" : "FunctionTemplateDecl",
+                        "name" : "make_unique"
+                      }
+                    } ]
+                  }, {
+                    "id" : "0x170025340",
+                    "kind" : "ImplicitCastExpr",
+                    "range" : {
+                      "begin" : {
+                        "offset" : 143,
+                        "col" : 61,
+                        "tokLen" : 4
+                      },
+                      "end" : {
+                        "offset" : 143,
+                        "col" : 61,
+                        "tokLen" : 4
+                      }
+                    },
+                    "type" : {
+                      "desugaredQualType" : "unsigned long",
+                      "qualType" : "size_t",
+                      "typeAliasDeclId" : "0x121021ca8"
+                    },
+                    "valueCategory" : "prvalue",
+                    "castKind" : "IntegralCast",
+                    "inner" : [ {
+                      "id" : "0x170025328",
+                      "kind" : "ImplicitCastExpr",
+                      "range" : {
+                        "begin" : {
+                          "offset" : 143,
+                          "col" : 61,
+                          "tokLen" : 4
+                        },
+                        "end" : {
+                          "offset" : 143,
+                          "col" : 61,
+                          "tokLen" : 4
+                        }
+                      },
+                      "type" : {
+                        "qualType" : "int"
+                      },
+                      "valueCategory" : "prvalue",
+                      "castKind" : "LValueToRValue",
+                      "inner" : [ {
+                        "id" : "0x1700243e8",
+                        "kind" : "DeclRefExpr",
+                        "range" : {
+                          "begin" : {
+                            "offset" : 143,
+                            "col" : 61,
+                            "tokLen" : 4
+                          },
+                          "end" : {
+                            "offset" : 143,
+                            "col" : 61,
+                            "tokLen" : 4
+                          }
+                        },
+                        "type" : {
+                          "qualType" : "const int"
+                        },
+                        "valueCategory" : "lvalue",
+                        "referencedDecl" : {
+                          "id" : "0x1500bdce8",
+                          "kind" : "ParmVarDecl",
+                          "name" : "size",
+                          "type" : {
+                            "qualType" : "const int"
+                          }
+                        }
+                      } ]
+                    } ]
+                  } ]
+                } ]
+              } ]
+            } ]
+          } ]
+        } ]
+      } ]
+    }, {
+      "id" : "0x1500bdec0",
+      "kind" : "CXXMethodDecl",
+      "loc" : {
+        "offset" : 161,
+        "line" : 8,
+        "col" : 10,
+        "tokLen" : 12
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 156,
+          "col" : 5,
+          "tokLen" : 4
+        },
+        "end" : {
+          "offset" : 177,
+          "col" : 26,
+          "tokLen" : 1
+        }
+      },
+      "isUsed" : true,
+      "name" : "do_something",
+      "mangledName" : "__ZN6widget12do_somethingEv",
+      "type" : {
+        "qualType" : "void ()"
+      },
+      "inner" : [ {
+        "id" : "0x170026168",
+        "kind" : "CompoundStmt",
+        "range" : {
+          "begin" : {
+            "offset" : 176,
+            "col" : 25,
+            "tokLen" : 1
+          },
+          "end" : {
+            "offset" : 177,
+            "col" : 26,
+            "tokLen" : 1
+          }
+        }
+      } ]
+    }, {
+      "id" : "0x17001a7b8",
+      "kind" : "CXXConstructorDecl",
+      "loc" : {
+        "offset" : 24,
+        "line" : 2,
+        "col" : 7,
+        "tokLen" : 6
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        },
+        "end" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        }
+      },
+      "isImplicit" : true,
+      "name" : "widget",
+      "mangledName" : "__ZN6widgetC1ERKS_",
+      "type" : {
+        "qualType" : "void (const widget &)"
+      },
+      "inline" : true,
+      "constexpr" : true,
+      "explicitlyDefaulted" : "deleted",
+      "inner" : [ {
+        "id" : "0x17001a8d8",
+        "kind" : "ParmVarDecl",
+        "loc" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        },
+        "range" : {
+          "begin" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          },
+          "end" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          }
+        },
+        "type" : {
+          "qualType" : "const widget &"
+        }
+      } ]
+    }, {
+      "id" : "0x17001c800",
+      "kind" : "CXXConstructorDecl",
+      "loc" : {
+        "offset" : 24,
+        "col" : 7,
+        "tokLen" : 6
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        },
+        "end" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        }
+      },
+      "isImplicit" : true,
+      "name" : "widget",
+      "mangledName" : "__ZN6widgetC1EOS_",
+      "type" : {
+        "qualType" : "void (widget &&)"
+      },
+      "inline" : true,
+      "explicitlyDefaulted" : "default",
+      "inner" : [ {
+        "id" : "0x17001c918",
+        "kind" : "ParmVarDecl",
+        "loc" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        },
+        "range" : {
+          "begin" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          },
+          "end" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          }
+        },
+        "type" : {
+          "qualType" : "widget &&"
+        }
+      } ]
+    }, {
+      "id" : "0x17001c9f8",
+      "kind" : "CXXMethodDecl",
+      "loc" : {
+        "offset" : 24,
+        "col" : 7,
+        "tokLen" : 6
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        },
+        "end" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        }
+      },
+      "isImplicit" : true,
+      "name" : "operator=",
+      "mangledName" : "__ZN6widgetaSERKS_",
+      "type" : {
+        "qualType" : "widget &(const widget &)"
+      },
+      "inline" : true,
+      "explicitlyDefaulted" : "deleted",
+      "inner" : [ {
+        "id" : "0x17001cb08",
+        "kind" : "ParmVarDecl",
+        "loc" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        },
+        "range" : {
+          "begin" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          },
+          "end" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          }
+        },
+        "type" : {
+          "qualType" : "const widget &"
+        }
+      } ]
+    }, {
+      "id" : "0x17001e368",
+      "kind" : "CXXMethodDecl",
+      "loc" : {
+        "offset" : 24,
+        "col" : 7,
+        "tokLen" : 6
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        },
+        "end" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        }
+      },
+      "isImplicit" : true,
+      "name" : "operator=",
+      "mangledName" : "__ZN6widgetaSEOS_",
+      "type" : {
+        "qualType" : "widget &(widget &&)"
+      },
+      "inline" : true,
+      "explicitlyDefaulted" : "default",
+      "inner" : [ {
+        "id" : "0x17001e478",
+        "kind" : "ParmVarDecl",
+        "loc" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        },
+        "range" : {
+          "begin" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          },
+          "end" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          }
+        },
+        "type" : {
+          "qualType" : "widget &&"
+        }
+      } ]
+    }, {
+      "id" : "0x17001f1e8",
+      "kind" : "CXXDestructorDecl",
+      "loc" : {
+        "offset" : 24,
+        "col" : 7,
+        "tokLen" : 6
+      },
+      "range" : {
+        "begin" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        },
+        "end" : {
+          "offset" : 24,
+          "col" : 7,
+          "tokLen" : 6
+        }
+      },
+      "isImplicit" : true,
+      "isUsed" : true,
+      "name" : "~widget",
+      "mangledName" : "__ZN6widgetD1Ev",
+      "type" : {
+        "qualType" : "void () noexcept"
+      },
+      "inline" : true,
+      "explicitlyDefaulted" : "default",
+      "inner" : [ {
+        "id" : "0x170026420",
+        "kind" : "CompoundStmt",
+        "range" : {
+          "begin" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          },
+          "end" : {
+            "offset" : 24,
+            "col" : 7,
+            "tokLen" : 6
+          }
+        }
+      } ]
+    } ]
+  }, {
+    "id" : "0x170026198",
+    "kind" : "FunctionDecl",
+    "loc" : {
+      "offset" : 188,
+      "line" : 11,
+      "col" : 6,
+      "tokLen" : 19
+    },
+    "range" : {
+      "begin" : {
+        "offset" : 183,
+        "col" : 1,
+        "tokLen" : 4
+      },
+      "end" : {
+        "offset" : 279,
+        "line" : 16,
+        "col" : 1,
+        "tokLen" : 1
+      }
+    },
+    "name" : "functionUsingWidget",
+    "mangledName" : "__Z19functionUsingWidgetv",
+    "type" : {
+      "qualType" : "void ()"
+    },
+    "inner" : [ {
+      "id" : "0x1700264b8",
+      "kind" : "CompoundStmt",
+      "range" : {
+        "begin" : {
+          "offset" : 210,
+          "line" : 11,
+          "col" : 28,
+          "tokLen" : 1
+        },
+        "end" : {
+          "offset" : 279,
+          "line" : 16,
+          "col" : 1,
+          "tokLen" : 1
+        }
+      },
+      "inner" : [ {
+        "id" : "0x170026430",
+        "kind" : "DeclStmt",
+        "range" : {
+          "begin" : {
+            "offset" : 216,
+            "line" : 12,
+            "col" : 5,
+            "tokLen" : 6
+          },
+          "end" : {
+            "offset" : 233,
+            "col" : 22,
+            "tokLen" : 1
+          }
+        },
+        "inner" : [ {
+          "id" : "0x170026250",
+          "kind" : "VarDecl",
+          "loc" : {
+            "offset" : 223,
+            "col" : 12,
+            "tokLen" : 1
+          },
+          "range" : {
+            "begin" : {
+              "offset" : 216,
+              "col" : 5,
+              "tokLen" : 6
+            },
+            "end" : {
+              "offset" : 232,
+              "col" : 21,
+              "tokLen" : 1
+            }
+          },
+          "isUsed" : true,
+          "name" : "w",
+          "type" : {
+            "desugaredQualType" : "widget",
+            "qualType" : "widget"
+          },
+          "init" : "call",
+          "inner" : [ {
+            "id" : "0x1700263f0",
+            "kind" : "CXXConstructExpr",
+            "range" : {
+              "begin" : {
+                "offset" : 223,
+                "col" : 12,
+                "tokLen" : 1
+              },
+              "end" : {
+                "offset" : 232,
+                "col" : 21,
+                "tokLen" : 1
+              }
+            },
+            "type" : {
+              "desugaredQualType" : "widget",
+              "qualType" : "widget"
+            },
+            "valueCategory" : "prvalue",
+            "ctorType" : {
+              "qualType" : "void (const int)"
+            },
+            "hadMultipleCandidates" : true,
+            "constructionKind" : "complete",
+            "inner" : [ {
+              "id" : "0x1700262b8",
+              "kind" : "IntegerLiteral",
+              "range" : {
+                "begin" : {
+                  "offset" : 225,
+                  "col" : 14,
+                  "tokLen" : 7
+                },
+                "end" : {
+                  "offset" : 225,
+                  "col" : 14,
+                  "tokLen" : 7
+                }
+              },
+              "type" : {
+                "qualType" : "int"
+              },
+              "valueCategory" : "prvalue",
+              "value" : "1000000"
+            } ]
+          } ]
+        } ]
+      }, {
+        "id" : "0x170026498",
+        "kind" : "CXXMemberCallExpr",
+        "range" : {
+          "begin" : {
+            "offset" : 250,
+            "line" : 14,
+            "col" : 5,
+            "tokLen" : 1
+          },
+          "end" : {
+            "offset" : 265,
+            "col" : 20,
+            "tokLen" : 1
+          }
+        },
+        "type" : {
+          "qualType" : "void"
+        },
+        "valueCategory" : "prvalue",
+        "inner" : [ {
+          "id" : "0x170026468",
+          "kind" : "MemberExpr",
+          "range" : {
+            "begin" : {
+              "offset" : 250,
+              "col" : 5,
+              "tokLen" : 1
+            },
+            "end" : {
+              "offset" : 252,
+              "col" : 7,
+              "tokLen" : 12
+            }
+          },
+          "type" : {
+            "qualType" : "<bound member function type>"
+          },
+          "valueCategory" : "prvalue",
+          "name" : "do_something",
+          "isArrow" : false,
+          "referencedMemberDecl" : "0x1500bdec0",
+          "inner" : [ {
+            "id" : "0x170026448",
+            "kind" : "DeclRefExpr",
+            "range" : {
+              "begin" : {
+                "offset" : 250,
+                "col" : 5,
+                "tokLen" : 1
+              },
+              "end" : {
+                "offset" : 250,
+                "col" : 5,
+                "tokLen" : 1
+              }
+            },
+            "type" : {
+              "desugaredQualType" : "widget",
+              "qualType" : "widget"
+            },
+            "valueCategory" : "lvalue",
+            "referencedDecl" : {
+              "id" : "0x170026250",
+              "kind" : "VarDecl",
+              "name" : "w",
+              "type" : {
+                "desugaredQualType" : "widget",
+                "qualType" : "widget"
+              }
+            }
+          } ]
+        } ]
+      } ]
+    } ]
+  } ]
+}

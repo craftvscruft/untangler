@@ -1,0 +1,177 @@
+{
+  "kind" : "root",
+  "children" : [ {
+    "kind" : "def:type",
+    "range" : "1:1-4:2",
+    "nameRange" : "1:8-1:15",
+    "children" : [ {
+      "kind" : "def:field",
+      "range" : "2:4-2:11",
+      "nameRange" : "2:8-2:11",
+      "props" : {
+        "name" : "val",
+        "id" : "0x13b0371e8",
+        "type" : "int"
+      }
+    }, {
+      "kind" : "def:field",
+      "range" : "3:4-3:25",
+      "nameRange" : "3:21-3:25",
+      "props" : {
+        "name" : "next",
+        "id" : "0x13b0372f0",
+        "type" : "struct my_list *"
+      }
+    } ],
+    "props" : {
+      "name" : "my_list",
+      "id" : "0x13b037128",
+      "type" : "struct"
+    }
+  }, {
+    "kind" : "def:type",
+    "range" : "6:1-6:30",
+    "nameRange" : "6:24-6:30",
+    "props" : {
+      "name" : "l_list",
+      "id" : "0x13b037360",
+      "type" : "struct my_list"
+    }
+  }, {
+    "kind" : "def:fn",
+    "range" : "8:1-19:2",
+    "nameRange" : "8:6-8:10",
+    "children" : [ {
+      "kind" : "def:var",
+      "range" : "9:4-9:17",
+      "nameRange" : "9:13-9:17",
+      "props" : {
+        "name" : "curr",
+        "id" : "0x13b0375a0",
+        "type" : "l_list *"
+      }
+    }, {
+      "kind" : "def:var",
+      "range" : "9:4-9:25",
+      "nameRange" : "9:21-9:25",
+      "props" : {
+        "name" : "head",
+        "id" : "0x13b037620",
+        "type" : "l_list *"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "11:4-11:8",
+      "props" : {
+        "name" : "head",
+        "id" : "0x13b0376b8",
+        "refId" : "0x13b037620",
+        "type" : "l_list *"
+      }
+    }, {
+      "kind" : "def:var",
+      "range" : "13:9-13:16",
+      "nameRange" : "13:13-13:14",
+      "props" : {
+        "name" : "i",
+        "id" : "0x13b037780",
+        "type" : "int"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "13:18-13:19",
+      "props" : {
+        "name" : "i",
+        "id" : "0x13b037820",
+        "refId" : "0x13b037780",
+        "type" : "int"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "13:27-13:28",
+      "props" : {
+        "name" : "i",
+        "id" : "0x13b037898",
+        "refId" : "0x13b037780",
+        "type" : "int"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "14:7-14:11",
+      "props" : {
+        "name" : "curr",
+        "id" : "0x13b0378d0",
+        "refId" : "0x13b0375a0",
+        "type" : "l_list *"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "14:24-14:30",
+      "props" : {
+        "name" : "malloc",
+        "id" : "0x13a0174b8",
+        "refId" : "0x13a017318",
+        "type" : "void *(unsigned long)"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "15:7-15:11",
+      "props" : {
+        "name" : "curr",
+        "id" : "0x13a0175d8",
+        "refId" : "0x13b0375a0",
+        "type" : "l_list *"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "15:19-15:20",
+      "props" : {
+        "name" : "i",
+        "id" : "0x13a017640",
+        "refId" : "0x13b037780",
+        "type" : "int"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "16:7-16:11",
+      "props" : {
+        "name" : "curr",
+        "id" : "0x13a017698",
+        "refId" : "0x13b0375a0",
+        "type" : "l_list *"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "16:21-16:25",
+      "props" : {
+        "name" : "head",
+        "id" : "0x13a017700",
+        "refId" : "0x13b037620",
+        "type" : "l_list *"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "17:7-17:11",
+      "props" : {
+        "name" : "head",
+        "id" : "0x13a017758",
+        "refId" : "0x13b037620",
+        "type" : "l_list *"
+      }
+    }, {
+      "kind" : "ref",
+      "range" : "17:14-17:18",
+      "props" : {
+        "name" : "curr",
+        "id" : "0x13a017778",
+        "refId" : "0x13b0375a0",
+        "type" : "l_list *"
+      }
+    } ],
+    "props" : {
+      "name" : "main",
+      "id" : "0x13b037408",
+      "type" : "void ()"
+    }
+  } ]
+}
