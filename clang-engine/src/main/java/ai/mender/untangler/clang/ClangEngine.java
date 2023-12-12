@@ -14,16 +14,23 @@ import java.util.Map;
 
 public class ClangEngine {
 
-    static class Transformer {
+    public static final String KIND_DEF_VAR = "def:var";
+    public static final String KIND_DEF_FUNCTION = "def:fn";
+    public static final String KIND_PARAM = "param";
+    public static final String KIND_REF = "ref";
+    public static final String KIND_DEF_TYPE = "def:type";
+    public static final String KIND_DEF_FIELD = "def:field";
+    public static final String PROP_NAME = "name";
+    public static final String PROP_ID = "id";
+    public static final String PROP_REF_ID = "refId";
+    public static final String PROP_TYPE = "type";
 
-        private final Path filePath;
+    static class Transformer {
         private final Map<String, String> watchedKinds;
         private int curLine;
         private boolean debug = false;
 
-
-        public Transformer(Path filePath, Map<String, String> watchedKinds) {
-            this.filePath = filePath;
+        public Transformer(Map<String, String> watchedKinds) {
             this.watchedKinds = watchedKinds;
             this.curLine = -1;
         }
@@ -82,21 +89,21 @@ public class ClangEngine {
                 int endTokLenBackup = endColTokLenNode2.isMissingNode() ? -1 : endColTokLenNode2.asInt();
                 int endTokLen = endColTokLenNode.isMissingNode() ? endTokLenBackup : endColTokLenNode.asInt();
 
-                String id = node.path("id").asText(null);
-                String name = node.path("name").asText(null);
+                String id = node.path(PROP_ID).asText(null);
+                String name = node.path(PROP_NAME).asText(null);
                 SourcePosition start = new SourcePosition(curLine, beginCol);
                 SourcePosition end = new SourcePosition(endLine, endCol + endTokLen);
                 SourceRange range = new SourceRange(start, end);
                 String kind = node.path("kind").asText("UNKNOWN");
-                JsonNode typeNode = node.get("type");
+                JsonNode typeNode = node.get(PROP_TYPE);
                 ClangType type = parseTypeNode(typeNode);
                 ClangRef ref = null;
                 if (node.has("referencedDecl")) {
                     JsonNode refNode = node.get("referencedDecl");
-                    String refName = refNode.path("name").asText("UNKNOWN");
+                    String refName = refNode.path(PROP_NAME).asText("UNKNOWN");
                     String refKind = refNode.path("kind").asText("UNKNOWN");
-                    String refId = refNode.path("id").asText("UNKNOWN");
-                    ref = new ClangRef(refId, refName, refKind, parseTypeNode(refNode.get("type")));
+                    String refId = refNode.path(PROP_ID).asText("UNKNOWN");
+                    ref = new ClangRef(refId, refName, refKind, parseTypeNode(refNode.get(PROP_TYPE)));
                 }
 
                 if (watchedKinds.containsKey(kind)) {
@@ -106,22 +113,22 @@ public class ClangEngine {
                     Ast newAstNode = Ast.create(watchedKinds.get(kind), range, nameRange);
                     resultTree.children().add(newAstNode);
                     if (name != null) {
-                        newAstNode.props().put("name", name);
+                        newAstNode.props().put(PROP_NAME, name);
                     }
                     if (id != null) {
-                        newAstNode.props().put("id", id);
+                        newAstNode.props().put(PROP_ID, id);
                     }
                     if (ref != null) {
-                        newAstNode.props().put("refId", ref.id);
+                        newAstNode.props().put(PROP_REF_ID, ref.id);
                         if (name == null) {
-                            newAstNode.props().put("name", ref.name);
+                            newAstNode.props().put(PROP_NAME, ref.name);
                         }
                     }
 
                     if (type != null) {
-                        newAstNode.props().put("type", type.qualType);
+                        newAstNode.props().put(PROP_TYPE, type.qualType);
                     } else if (node.hasNonNull("tagUsed")) {
-                        newAstNode.props().put("type", node.get("tagUsed").asText());
+                        newAstNode.props().put(PROP_TYPE, node.get("tagUsed").asText());
                     }
 
                     resultTree = newAstNode;
@@ -165,17 +172,17 @@ public class ClangEngine {
 
     public static Ast transformClangAstToUnifiedAst(JsonNode root, ClangParseConfig config) {
         Map<String, String> watchedKinds = Map.of(
-                "VarDecl", "def:var",
-                "FunctionDecl", "def:fn",
-                "ParmVarDecl", "param",
-                "DeclRefExpr", "ref",
-                "TypedefDecl", "def:type",
-                "RecordDecl", "def:type",
-                "CXXRecordDecl", "def:type",
-                "FieldDecl", "def:field"
+                "VarDecl", KIND_DEF_VAR,
+                "FunctionDecl", KIND_DEF_FUNCTION,
+                "ParmVarDecl", KIND_PARAM,
+                "DeclRefExpr", KIND_REF,
+                "TypedefDecl", KIND_DEF_TYPE,
+                "RecordDecl", KIND_DEF_TYPE,
+                "CXXRecordDecl", KIND_DEF_TYPE,
+                "FieldDecl", KIND_DEF_FIELD
                 );
         Ast astRoot = Ast.create("root", null, null);
-        new Transformer(Path.of(config.filePath()), watchedKinds).visit(root, astRoot);
+        new Transformer(watchedKinds).visit(root, astRoot);
         return astRoot;
     }
 
