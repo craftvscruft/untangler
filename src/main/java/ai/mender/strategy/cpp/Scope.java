@@ -1,8 +1,8 @@
 package ai.mender.strategy.cpp;
 
-import ai.mender.SimpleSelector;
-import ai.mender.domain.Reference;
-import ai.mender.domain.ReferencesResponse;
+import ai.mender.untangler.shared.SimpleSelector;
+import ai.mender.untangler.shared.response.Reference;
+import ai.mender.untangler.shared.response.ReferencesResponse;
 import ai.mender.parsing.Ast;
 import ai.mender.untangler.shared.response.SourceRange;
 import org.slf4j.Logger;

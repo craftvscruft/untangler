@@ -1,6 +1,6 @@
 package ai.mender.strategy;
 
-import ai.mender.domain.SourceEdit;
+import ai.mender.untangler.shared.response.SourceEdit;
 import ai.mender.parsing.CharsetUtils;
 import ai.mender.strategy.cpp.CppStrategy;
 import ai.mender.strategy.csharp.CSharpStrategy;

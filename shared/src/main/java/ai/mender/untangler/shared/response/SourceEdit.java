@@ -1,7 +1,4 @@
-package ai.mender.domain;
-
-import ai.mender.untangler.shared.response.SourcePosition;
-import ai.mender.untangler.shared.response.SourceRange;
+package ai.mender.untangler.shared.response;
 
 public record SourceEdit(SourcePosition start, SourcePosition end, EditMode mode, String text) {
     public static SourceEdit insert(SourcePosition position, String text) {

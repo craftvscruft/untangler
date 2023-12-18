@@ -1,15 +1,15 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.domain.SourceEdit;
-import ai.mender.domain.SourceEditListResponse;
+import ai.mender.strategy.LanguageEngineFactory;
+import ai.mender.untangler.shared.LanguageEngine;
+import ai.mender.untangler.shared.response.SourceEditListResponse;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;
 import picocli.CommandLine;
 
 import java.io.File;
-import java.util.List;
 
 @CommandLine.Command(
         name = "comment",
@@ -50,16 +50,15 @@ public class AddCommentCmd implements Runnable, CommandLine.IExitCodeGenerator {
         var message = "OK";
         try {
             SourceFile sourceFile = new SourceFile(file);
-            LanguageStrategy languageStrategy = sourceFile.createStrategyForFile();
+            LanguageEngine engine = LanguageEngineFactory.forSource(sourceFile);
             if (!file.exists()) {
                 message = "File not found";
                 success = false;
-            } else if (languageStrategy == null) {
+            } else if (engine == null) {
                 message = "Unknown file type! Cannot parse.";
                 success = false;
             } else {
-                TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
-                SourceEditListResponse response = languageStrategy.insertComment(tree, line, text);
+                SourceEditListResponse response = engine.insertComment(line, text);
                 Console.printOutput(response, spec.commandLine().getOut(), outputFormat);
                 success = response.success();
                 if (success && write) {

@@ -1,7 +1,7 @@
 package ai.mender.strategy;
 
-import ai.mender.SimpleSelector;
-import ai.mender.domain.ReferencesResponse;
+import ai.mender.untangler.shared.SimpleSelector;
+import ai.mender.untangler.shared.response.ReferencesResponse;
 import ai.mender.untangler.shared.response.SourceRange;
 import ai.mender.parsing.Ast;
 import ai.mender.strategy.cpp.Scope;

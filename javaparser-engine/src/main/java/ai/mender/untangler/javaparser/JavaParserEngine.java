@@ -51,4 +51,9 @@ public class JavaParserEngine implements LanguageEngine {
         return new SourceRange(startPos, endPos);
     }
 
+    @Override
+    public String formatMultiLineComment(String text) {
+        return String.format("/* %s */\n", text);
+    }
+
 }

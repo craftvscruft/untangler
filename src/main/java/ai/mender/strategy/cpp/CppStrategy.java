@@ -1,16 +1,12 @@
 package ai.mender.strategy.cpp;
 
-import ai.mender.SimpleSelector;
-import ai.mender.domain.*;
+import ai.mender.untangler.shared.SimpleSelector;
 import ai.mender.parsing.*;
 import ai.mender.untangler.shared.ISourceFile;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.TopLevelNode;
 import ai.mender.strategy.TreeBuilder;
-import ai.mender.untangler.shared.response.CommentRec;
-import ai.mender.untangler.shared.response.DeclarationRec;
-import ai.mender.untangler.shared.response.SourceRange;
-import ai.mender.untangler.shared.response.SourceText;
+import ai.mender.untangler.shared.response.*;
 import antlrgen.cpp14.CPP14Lexer;
 import antlrgen.cpp14.CPP14Parser;
 import antlrgen.cpp14.CPP14ParserBaseListener;

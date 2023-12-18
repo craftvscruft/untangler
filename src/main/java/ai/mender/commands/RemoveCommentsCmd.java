@@ -4,10 +4,9 @@ import ai.mender.Console;
 import ai.mender.strategy.LanguageEngineFactory;
 import ai.mender.untangler.shared.LanguageEngine;
 import ai.mender.untangler.shared.response.CommentRec;
-import ai.mender.domain.EditMode;
-import ai.mender.domain.SourceEdit;
-import ai.mender.domain.SourceEditListResponse;
-import ai.mender.strategy.LanguageStrategy;
+import ai.mender.untangler.shared.response.EditMode;
+import ai.mender.untangler.shared.response.SourceEdit;
+import ai.mender.untangler.shared.response.SourceEditListResponse;
 import ai.mender.strategy.SourceFile;
 import picocli.CommandLine;
 

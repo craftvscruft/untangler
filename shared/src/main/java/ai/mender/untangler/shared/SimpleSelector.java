@@ -1,4 +1,4 @@
-package ai.mender;
+package ai.mender.untangler.shared;
 
 import ai.mender.untangler.shared.response.SourceRange;
 import org.apache.commons.lang3.StringUtils;

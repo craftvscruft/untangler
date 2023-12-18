@@ -1,9 +1,9 @@
 package ai.mender.strategy;
 
-import ai.mender.SimpleSelector;
-import ai.mender.domain.Reference;
-import ai.mender.domain.ReferencesResponse;
-import ai.mender.domain.SourceEditListResponse;
+import ai.mender.untangler.shared.SimpleSelector;
+import ai.mender.untangler.shared.response.Reference;
+import ai.mender.untangler.shared.response.ReferencesResponse;
+import ai.mender.untangler.shared.response.SourceEditListResponse;
 import ai.mender.untangler.shared.response.SourceRange;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

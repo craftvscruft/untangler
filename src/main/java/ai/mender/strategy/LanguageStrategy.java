@@ -1,12 +1,9 @@
 package ai.mender.strategy;
 
-import ai.mender.SimpleSelector;
-import ai.mender.domain.*;
+import ai.mender.untangler.shared.SimpleSelector;
 import ai.mender.untangler.shared.Ast;
 import ai.mender.untangler.shared.ISourceFile;
-import ai.mender.untangler.shared.response.CommentRec;
-import ai.mender.untangler.shared.response.SourcePosition;
-import ai.mender.untangler.shared.response.SourceRange;
+import ai.mender.untangler.shared.response.*;
 
 import java.util.Arrays;
 import java.util.HashSet;

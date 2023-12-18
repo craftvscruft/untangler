@@ -1,4 +1,4 @@
-package ai.mender.domain;
+package ai.mender.untangler.shared.response;
 
 import ai.mender.untangler.shared.TableOutput;
 

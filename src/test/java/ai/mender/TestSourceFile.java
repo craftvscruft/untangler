@@ -1,7 +1,7 @@
 package ai.mender;
 
-import ai.mender.domain.EditMode;
-import ai.mender.domain.SourceEdit;;
+import ai.mender.untangler.shared.response.EditMode;
+import ai.mender.untangler.shared.response.SourceEdit;;
 import ai.mender.strategy.SourceFile;
 import ai.mender.untangler.shared.response.SourcePosition;
 import ai.mender.untangler.shared.response.SourceRange;

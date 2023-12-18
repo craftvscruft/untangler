@@ -28,4 +28,9 @@ public class LanguageStrategyToEngineAdapter implements LanguageEngine  {
         strategy.forEachComment(sourceFile, items::add);
         return items.stream();
     }
+
+    @Override
+    public String formatMultiLineComment(String text) {
+        return strategy.formatMultiLineComment(text);
+    }
 }

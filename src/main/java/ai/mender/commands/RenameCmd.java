@@ -1,8 +1,8 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.SimpleSelector;
-import ai.mender.domain.SourceEditListResponse;
+import ai.mender.untangler.shared.SimpleSelector;
+import ai.mender.untangler.shared.response.SourceEditListResponse;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;

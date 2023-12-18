@@ -43,15 +43,14 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
         var message = "OK";
         try {
             SourceFile sourceFile = new SourceFile(file);
-            LanguageStrategy languageStrategy = sourceFile.createStrategyForFile();
+            LanguageEngine engine = LanguageEngineFactory.forSource(sourceFile);
             if (!file.exists()) {
                 message = "File not found";
                 success = false;
-            } else if (languageStrategy == null) {
+            } else if (engine == null) {
                 message = "Unknown file type! Cannot parse.";
                 success = false;
             } else {
-                LanguageEngine engine = LanguageEngineFactory.forSource(sourceFile);
                 engine.functions(sourceFile).forEach(items::add);
                 success = true;
             }

@@ -1,14 +1,11 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.domain.*;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;
 import ai.mender.strategy.cpp.CppStrategy;
-import ai.mender.untangler.shared.response.DeclarationRec;
-import ai.mender.untangler.shared.response.SourcePosition;
-import ai.mender.untangler.shared.response.SourceText;
+import ai.mender.untangler.shared.response.*;
 import picocli.CommandLine;
 
 import java.io.File;

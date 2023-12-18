@@ -2,12 +2,8 @@ package ai.mender;
 
 
 import ai.mender.commands.OutputFormat;
-import ai.mender.domain.*;
 import ai.mender.untangler.shared.TableOutput;
-import ai.mender.untangler.shared.response.CommentListResponse;
-import ai.mender.untangler.shared.response.CommentRec;
-import ai.mender.untangler.shared.response.FunctionListResponse;
-import ai.mender.untangler.shared.response.SourceRange;
+import ai.mender.untangler.shared.response.*;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

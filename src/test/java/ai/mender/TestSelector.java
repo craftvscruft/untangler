@@ -1,5 +1,6 @@
 package ai.mender;
 
+import ai.mender.untangler.shared.SimpleSelector;
 import ai.mender.untangler.shared.response.SourceRange;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
