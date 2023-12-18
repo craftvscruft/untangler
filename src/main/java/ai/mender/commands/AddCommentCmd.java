@@ -4,9 +4,7 @@ import ai.mender.Console;
 import ai.mender.strategy.LanguageEngineFactory;
 import ai.mender.untangler.shared.LanguageEngine;
 import ai.mender.untangler.shared.response.SourceEditListResponse;
-import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
-import ai.mender.strategy.TopLevelNode;
 import picocli.CommandLine;
 
 import java.io.File;
