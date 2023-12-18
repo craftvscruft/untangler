@@ -1,6 +1,8 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
+import ai.mender.strategy.LanguageEngineFactory;
+import ai.mender.untangler.shared.LanguageEngine;
 import ai.mender.untangler.shared.response.CommentRec;
 import ai.mender.domain.EditMode;
 import ai.mender.domain.SourceEdit;
@@ -53,15 +55,15 @@ public class RemoveCommentsCmd implements Runnable, CommandLine.IExitCodeGenerat
         var message = "OK";
         try {
             SourceFile sourceFile = new SourceFile(file);
-            LanguageStrategy languageStrategy = sourceFile.createStrategyForFile();
+            LanguageEngine engine = LanguageEngineFactory.forSource(sourceFile);
             if (!file.exists()) {
                 message = "File not found";
                 success = false;
-            } else if (languageStrategy == null) {
+            } else if (engine == null) {
                 message = "Unknown file type! Cannot parse.";
                 success = false;
             } else {
-                languageStrategy.forEachComment(sourceFile, comment -> {
+                engine.comments(sourceFile).forEach(comment -> {
                     if (Console.isLineMatch(comment.range(), line)) {
                         comments.add(comment);
                     }
