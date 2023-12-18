@@ -4,7 +4,7 @@ import ai.mender.SimpleSelector;
 import ai.mender.domain.Reference;
 import ai.mender.domain.ReferencesResponse;
 import ai.mender.parsing.Ast;
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.response.SourceRange;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

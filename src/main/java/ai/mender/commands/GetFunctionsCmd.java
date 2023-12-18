@@ -1,8 +1,10 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.domain.FunctionListResponse;
-import ai.mender.domain.FunctionRec;
+import ai.mender.strategy.LanguageEngineFactory;
+import ai.mender.untangler.shared.LanguageEngine;
+import ai.mender.untangler.shared.response.FunctionListResponse;
+import ai.mender.untangler.shared.response.FunctionRec;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;
@@ -10,6 +12,7 @@ import picocli.CommandLine;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 @CommandLine.Command(
         name = "functions",
@@ -48,8 +51,8 @@ public class GetFunctionsCmd implements Runnable, CommandLine.IExitCodeGenerator
                 message = "Unknown file type! Cannot parse.";
                 success = false;
             } else {
-                TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
-                tree.collectFunctions(items);
+                LanguageEngine engine = LanguageEngineFactory.forSource(sourceFile);
+                engine.functions(sourceFile).forEach(items::add);
                 success = true;
             }
         } catch (Exception e) {

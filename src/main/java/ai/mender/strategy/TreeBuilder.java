@@ -2,7 +2,7 @@ package ai.mender.strategy;
 
 import ai.mender.parsing.Ast;
 import ai.mender.parsing.SyntaxTreeUtil;
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.response.SourceRange;
 
 import java.util.*;
 

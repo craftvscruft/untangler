@@ -1,9 +1,9 @@
 package ai.mender;
 
-import ai.mender.domain.FunctionRec;
-import ai.mender.untangler.shared.SourcePosition;
-import ai.mender.untangler.shared.SourceRange;
-import ai.mender.untangler.shared.SourceText;
+import ai.mender.untangler.shared.response.FunctionRec;
+import ai.mender.untangler.shared.response.SourcePosition;
+import ai.mender.untangler.shared.response.SourceRange;
+import ai.mender.untangler.shared.response.SourceText;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 

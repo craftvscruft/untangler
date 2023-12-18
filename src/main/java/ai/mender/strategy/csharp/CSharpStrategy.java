@@ -3,8 +3,9 @@ package ai.mender.strategy.csharp;
 import ai.mender.SimpleSelector;
 import ai.mender.domain.CommentRec;
 import ai.mender.domain.ReferencesResponse;
+import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.parsing.ThrowingErrorListener;
-import ai.mender.strategy.ISourceFile;
+import ai.mender.untangler.shared.ISourceFile;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.TopLevelNode;
 import antlrgen.csharp.CSharpLexer;
@@ -18,7 +19,7 @@ import java.util.function.Consumer;
 public class CSharpStrategy implements LanguageStrategy {
 
     private static CSharpParser.Compilation_unitContext parseTree(ISourceFile sourceFile, boolean throwOnParseError) {
-        CSharpLexer lexer = new CSharpLexer(sourceFile.getCharStream());
+        CSharpLexer lexer = new CSharpLexer(SyntaxTreeUtil.fileToCharStream(sourceFile));
         if (throwOnParseError) {
             lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
         }

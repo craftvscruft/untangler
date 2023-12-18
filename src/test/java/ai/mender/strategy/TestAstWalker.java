@@ -1,7 +1,7 @@
 package ai.mender.strategy;
 
-import ai.mender.untangler.shared.SourcePosition;
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.response.SourcePosition;
+import ai.mender.untangler.shared.response.SourceRange;
 import ai.mender.parsing.Ast;
 import ai.mender.parsing.AstListenerRegistry;
 import ai.mender.parsing.AstWalker;

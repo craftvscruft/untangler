@@ -58,7 +58,7 @@ For easy rebuilding and running with the `un` shortcut, use:
 ```
 alias un="./gradlew installDist -q && build/install/untangler/bin/untangler"
 
-un get functions src/test/resources/hello.c
+un get functions -f src/test/resources/hello.c
 ```
 
 ## Testing
@@ -136,10 +136,11 @@ Try running GenerateReflectConfig to get new json (this should eventually be a b
 ## Acknowledgements
 
 * [Antlr](https://www.antlr.org/) - the leading parser generator
+* [JavaParser](https://javaparser.org) - analyze and transform Java Code
 * [picocli](https://picocli.info/) - a mighty tiny command line interface
 
 ## 📝 License
 
-Copyright © 2023 [Ray Myers](https://github.com/raymyers).
+Copyright © 2024 [Ray Myers](https://github.com/raymyers).
 
 This project is [Apache 2](https://www.apache.org/licenses/LICENSE-2.0) licensed.

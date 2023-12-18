@@ -3,15 +3,15 @@ package ai.mender.strategy.python;
 import ai.mender.SimpleSelector;
 import ai.mender.domain.CommentRec;
 import ai.mender.domain.ReferencesResponse;
+import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.parsing.ThrowingErrorListener;
-import ai.mender.strategy.ISourceFile;
+import ai.mender.untangler.shared.ISourceFile;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.TopLevelNode;
 import antlrgen.python.PythonLexer;
 import antlrgen.python.PythonParser;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.apache.commons.lang3.NotImplementedException;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -25,7 +25,7 @@ public class PythonStrategy implements LanguageStrategy {
 
     private static PythonParser.File_inputContext parseTree(ISourceFile sourceFile) {
         boolean throwOnParseError = false;
-        PythonLexer lexer = new PythonLexer(sourceFile.getCharStream());
+        PythonLexer lexer = new PythonLexer(SyntaxTreeUtil.fileToCharStream(sourceFile));
         if (throwOnParseError) {
             lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
         }

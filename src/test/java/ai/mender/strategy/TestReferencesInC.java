@@ -3,7 +3,7 @@ package ai.mender.strategy;
 import ai.mender.SimpleSelector;
 import ai.mender.domain.Reference;
 import ai.mender.domain.ReferencesResponse;
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.response.SourceRange;
 import ai.mender.strategy.cpp.CppStrategy;
 import ai.mender.strategy.cpp.CppTopLevelNode;
 import org.junit.jupiter.api.Assertions;

@@ -1,6 +1,6 @@
 package ai.mender.strategy;
 
-import ai.mender.domain.FunctionRec;
+import ai.mender.untangler.shared.response.FunctionRec;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -11,8 +11,6 @@ public interface TopLevelNode {
     default void collectFunctions(List<FunctionRec> items) {
         forEachFunctionNode(node -> items.add(node.toFunctionRec()));
     }
-
-
 
 
 }

@@ -4,7 +4,7 @@ import ai.mender.SimpleSelector;
 import ai.mender.domain.Reference;
 import ai.mender.domain.ReferencesResponse;
 import ai.mender.domain.SourceEditListResponse;
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.response.SourceRange;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

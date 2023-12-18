@@ -1,6 +1,6 @@
 package ai.mender.strategy;
 
-import ai.mender.untangler.shared.SourcePosition;
+import ai.mender.untangler.shared.response.SourcePosition;
 import ai.mender.parsing.Ast;
 import ai.mender.strategy.cpp.CppStrategy;
 import ai.mender.strategy.cpp.CppTopLevelNode;

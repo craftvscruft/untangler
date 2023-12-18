@@ -1,6 +1,6 @@
 package ai.mender.domain;
-import ai.mender.untangler.shared.SourceRange;
-import ai.mender.untangler.shared.SourceText;
+import ai.mender.untangler.shared.response.SourceRange;
+import ai.mender.untangler.shared.response.SourceText;
 
 import java.util.List;
 

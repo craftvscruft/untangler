@@ -1,15 +1,19 @@
 package ai.mender.parsing;
 
+import ai.mender.untangler.shared.ISourceFile;
 import ai.mender.strategy.TreeBuilder;
-import ai.mender.untangler.shared.SourcePosition;
-import ai.mender.untangler.shared.SourceRange;
-import ai.mender.untangler.shared.SourceText;
+import ai.mender.untangler.shared.response.SourcePosition;
+import ai.mender.untangler.shared.response.SourceRange;
+import ai.mender.untangler.shared.response.SourceText;
 import antlrgen.cpp14.CPP14Parser;
+import org.antlr.v4.runtime.CharStream;
+import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.Interval;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Stack;
 import java.util.stream.Collectors;
@@ -113,5 +117,13 @@ public class SyntaxTreeUtil {
         return new SourceText(
                 getTextIncludingWhitespace(ctx),
                 nodeToSourceRange(ctx));
+    }
+
+    public static CharStream fileToCharStream(ISourceFile file) {
+        try {
+            return CharStreams.fromReader(file.getReader(), file.getName());
+        } catch (IOException e) {
+            throw new RuntimeException(e.getMessage(), e);
+        }
     }
 }

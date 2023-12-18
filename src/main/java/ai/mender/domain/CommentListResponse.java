@@ -1,6 +1,6 @@
 package ai.mender.domain;
 
-import ai.mender.output.TableOutput;
+import ai.mender.untangler.shared.TableOutput;
 
 import java.io.PrintWriter;
 import java.util.List;

@@ -3,8 +3,9 @@ package ai.mender;
 
 import ai.mender.commands.OutputFormat;
 import ai.mender.domain.*;
-import ai.mender.output.TableOutput;
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.TableOutput;
+import ai.mender.untangler.shared.response.FunctionListResponse;
+import ai.mender.untangler.shared.response.SourceRange;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

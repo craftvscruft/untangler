@@ -3,8 +3,9 @@ package ai.mender.strategy.java;
 import ai.mender.SimpleSelector;
 import ai.mender.domain.CommentRec;
 import ai.mender.domain.ReferencesResponse;
+import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.parsing.ThrowingErrorListener;
-import ai.mender.strategy.ISourceFile;
+import ai.mender.untangler.shared.ISourceFile;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.TopLevelNode;
 import antlrgen.java20.Java20Lexer;
@@ -34,7 +35,7 @@ public class JavaStrategy implements LanguageStrategy {
 
     @Override
     public TopLevelNode parseTopLevel(ISourceFile sourceFile) {
-        return new JavaTopLevelNode(parseProgram(sourceFile.getCharStream(), false));
+        return new JavaTopLevelNode(parseProgram(SyntaxTreeUtil.fileToCharStream(sourceFile), false));
     }
 
     @Override

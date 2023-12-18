@@ -6,10 +6,9 @@ import ai.mender.strategy.cpp.CppStrategy;
 import ai.mender.strategy.csharp.CSharpStrategy;
 import ai.mender.strategy.java.JavaStrategy;
 import ai.mender.strategy.python.PythonStrategy;
+import ai.mender.untangler.shared.ISourceFile;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Ordering;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.CharStreams;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -19,9 +18,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public record SourceFile(File file) implements ISourceFile {
-    public static String getExtension(File file) {
-        return getExtension(file.getName());
-    }
 
     private static String getExtension(String name) {
         var extension = "";
@@ -47,18 +43,34 @@ public record SourceFile(File file) implements ISourceFile {
     }
 
     @Override
-    public CharStream getCharStream() {
+    public Reader getReader() {
         try {
-            return CharStreams.fromFileName(
-                    file().getAbsolutePath(), CharsetUtils.detectFileCharset(file()));
+            return new FileReader(file);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String getName() {
+        return file.getName();
+    }
+
+    public LanguageStrategy createStrategyForFile() {
+        return createStrategyForExtension(getExtension());
+    }
+
+    @Override
+    public Charset getCharset() {
+        try {
+            return CharsetUtils.detectFileCharset(file());
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage(), e);
         }
     }
 
-    @Override
-    public LanguageStrategy createStrategyForFile() {
-        return createStrategyForExtension(getExtension(this.file()));
+    public String getExtension() {
+        return getExtension(this.file().getName());
     }
 
     private static LanguageStrategy createStrategyForExtension(String extension) {
@@ -163,14 +175,24 @@ public record SourceFile(File file) implements ISourceFile {
             this.source = source;
         }
 
+
         @Override
-        public CharStream getCharStream() {
-            return CharStreams.fromString(source, name);
+        public Reader getReader() {
+            return new StringReader(source);
         }
 
         @Override
+        public String getName() {
+            return name;
+        }
+
         public LanguageStrategy createStrategyForFile() {
             return createStrategyForExtension(getExtension(name));
+        }
+
+        @Override
+        public Charset getCharset() {
+            return Charset.defaultCharset();
         }
 
         public String getSource() {

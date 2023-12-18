@@ -1,6 +1,6 @@
 package ai.mender.parsing;
 
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.response.SourceRange;
 import com.google.common.base.Objects;
 
 import java.util.List;

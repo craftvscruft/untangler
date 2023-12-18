@@ -1,4 +1,4 @@
-package ai.mender.untangler.shared;
+package ai.mender.untangler.shared.response;
 
 import org.apache.commons.lang3.compare.ComparableUtils;
 

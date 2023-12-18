@@ -1,9 +1,9 @@
 package ai.mender.strategy;
 
-import ai.mender.domain.FunctionRec;
+import ai.mender.untangler.shared.response.FunctionRec;
 import ai.mender.parsing.SyntaxTreeUtil;
-import ai.mender.untangler.shared.SourcePosition;
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.response.SourcePosition;
+import ai.mender.untangler.shared.response.SourceRange;
 import org.antlr.v4.runtime.ParserRuleContext;
 
 public interface FunctionDefinitionNode<T extends ParserRuleContext> extends IParseNode {

@@ -1,6 +1,4 @@
-package ai.mender.domain;
-
-import ai.mender.untangler.shared.SourceRange;
+package ai.mender.untangler.shared.response;
 
 public record FunctionRec(String name, SourceRange range, int lineCount) {
     public FunctionRec(String name, SourceRange range) {

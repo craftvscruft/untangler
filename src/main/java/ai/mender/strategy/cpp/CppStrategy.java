@@ -3,12 +3,12 @@ package ai.mender.strategy.cpp;
 import ai.mender.SimpleSelector;
 import ai.mender.domain.*;
 import ai.mender.parsing.*;
-import ai.mender.strategy.ISourceFile;
+import ai.mender.untangler.shared.ISourceFile;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.TopLevelNode;
 import ai.mender.strategy.TreeBuilder;
-import ai.mender.untangler.shared.SourceRange;
-import ai.mender.untangler.shared.SourceText;
+import ai.mender.untangler.shared.response.SourceRange;
+import ai.mender.untangler.shared.response.SourceText;
 import antlrgen.cpp14.CPP14Lexer;
 import antlrgen.cpp14.CPP14Parser;
 import antlrgen.cpp14.CPP14ParserBaseListener;
@@ -119,7 +119,7 @@ public class CppStrategy implements LanguageStrategy {
     @Override
     public CppTopLevelNode parseTopLevel(ISourceFile sourceFile) {
         boolean throwOnParseError = false;
-        CPP14Lexer lexer = new CPP14Lexer(sourceFile.getCharStream());
+        CPP14Lexer lexer = new CPP14Lexer(SyntaxTreeUtil.fileToCharStream(sourceFile));
         if (throwOnParseError) {
             lexer.addErrorListener(ThrowingErrorListener.INSTANCE);
         }
@@ -187,7 +187,7 @@ public class CppStrategy implements LanguageStrategy {
 
     @Override
     public void forEachComment(ISourceFile sourceFile, Consumer<CommentRec> consumer) {
-        CPP14Lexer lexer = new CPP14Lexer(sourceFile.getCharStream());
+        CPP14Lexer lexer = new CPP14Lexer(SyntaxTreeUtil.fileToCharStream(sourceFile));
         CommonTokenStream commonTokenStream = new CommonTokenStream(lexer, Token.HIDDEN_CHANNEL);
         Token token;
         while ((token = commonTokenStream.getTokenSource().nextToken()).getType()!= Token.EOF) {

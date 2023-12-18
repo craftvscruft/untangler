@@ -1,4 +1,4 @@
-package ai.mender.untangler.shared;
+package ai.mender.untangler.shared.response;
 
 public record SourceRange(SourcePosition start, SourcePosition end) {
     public static SourceRange unknown() {

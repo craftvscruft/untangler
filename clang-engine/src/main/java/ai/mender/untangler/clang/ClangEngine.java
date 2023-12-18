@@ -1,8 +1,8 @@
 package ai.mender.untangler.clang;
 
 import ai.mender.untangler.shared.Ast;
-import ai.mender.untangler.shared.SourcePosition;
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.response.SourcePosition;
+import ai.mender.untangler.shared.response.SourceRange;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;

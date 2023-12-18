@@ -1,7 +1,7 @@
 package ai.mender.untangler.clang;
 
 import ai.mender.untangler.shared.Ast;
-import ai.mender.untangler.shared.SourceRange;
+import ai.mender.untangler.shared.response.SourceRange;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;

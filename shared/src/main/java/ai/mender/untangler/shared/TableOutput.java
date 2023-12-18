@@ -1,4 +1,4 @@
-package ai.mender.output;
+package ai.mender.untangler.shared;
 
 import org.apache.commons.lang3.StringUtils;
 

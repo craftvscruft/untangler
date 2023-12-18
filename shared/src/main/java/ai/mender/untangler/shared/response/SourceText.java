@@ -1,4 +1,4 @@
-package ai.mender.untangler.shared;
+package ai.mender.untangler.shared.response;
 
 public record SourceText(String text, SourceRange range) {
 }
