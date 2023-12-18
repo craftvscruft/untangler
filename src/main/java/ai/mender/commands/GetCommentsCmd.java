@@ -1,10 +1,11 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.domain.CommentListResponse;
-import ai.mender.domain.CommentRec;
-import ai.mender.strategy.LanguageStrategy;
+import ai.mender.untangler.shared.response.CommentListResponse;
+import ai.mender.untangler.shared.response.CommentRec;
+import ai.mender.strategy.LanguageEngineFactory;
 import ai.mender.strategy.SourceFile;
+import ai.mender.untangler.shared.LanguageEngine;
 import picocli.CommandLine;
 
 import java.io.File;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 @CommandLine.Command(
         name = "comments",
         mixinStandardHelpOptions = true,
-        description = "Lists functions defined in a file as json",
+        description = "Lists comments defined in a file",
         aliases = {"comment", "com"})
 public class GetCommentsCmd implements Runnable, CommandLine.IExitCodeGenerator {
 
@@ -42,18 +43,18 @@ public class GetCommentsCmd implements Runnable, CommandLine.IExitCodeGenerator 
         var message = "OK";
         try {
             SourceFile sourceFile = new SourceFile(file);
-            LanguageStrategy languageStrategy = sourceFile.createStrategyForFile();
+            LanguageEngine engine = LanguageEngineFactory.forSource(sourceFile);
             if (!file.exists()) {
                 message = "File not found";
                 success = false;
-            } else if (languageStrategy == null) {
+            } else if (engine == null) {
                 message = "Unknown file type! Cannot parse.";
                 success = false;
             } else {
-                languageStrategy.forEachComment(sourceFile, comment -> {
-                    if (Console.isLineMatch(comment.range(), line)) {
+                engine.comments(sourceFile).forEach(comment -> {
+                     if (Console.isLineMatch(comment.range(), line)) {
                         items.add(comment);
-                    }
+                     }
                 });
                 success = true;
             }

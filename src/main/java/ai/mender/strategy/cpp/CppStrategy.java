@@ -7,6 +7,8 @@ import ai.mender.untangler.shared.ISourceFile;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.TopLevelNode;
 import ai.mender.strategy.TreeBuilder;
+import ai.mender.untangler.shared.response.CommentRec;
+import ai.mender.untangler.shared.response.DeclarationRec;
 import ai.mender.untangler.shared.response.SourceRange;
 import ai.mender.untangler.shared.response.SourceText;
 import antlrgen.cpp14.CPP14Lexer;

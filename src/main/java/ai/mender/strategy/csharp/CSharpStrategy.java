@@ -1,7 +1,7 @@
 package ai.mender.strategy.csharp;
 
 import ai.mender.SimpleSelector;
-import ai.mender.domain.CommentRec;
+import ai.mender.untangler.shared.response.CommentRec;
 import ai.mender.domain.ReferencesResponse;
 import ai.mender.parsing.SyntaxTreeUtil;
 import ai.mender.parsing.ThrowingErrorListener;

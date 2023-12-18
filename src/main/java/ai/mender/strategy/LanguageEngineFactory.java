@@ -8,7 +8,13 @@ public interface LanguageEngineFactory {
     static LanguageEngine forSource(SourceFile sourceFile) {
         return switch (sourceFile.getExtension().toLowerCase()) {
             case "java" -> new JavaParserEngine();
-            default -> new LanguageStrategyToEngineAdapter(sourceFile.createStrategyForFile());
+            default -> {
+                LanguageStrategy strategyForFile = sourceFile.createStrategyForFile();
+                if (strategyForFile == null) {
+                    yield null;
+                }
+                yield new LanguageStrategyToEngineAdapter(strategyForFile);
+            }
         };
     }
 }

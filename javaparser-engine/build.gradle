@@ -4,6 +4,11 @@ plugins {
 repositories {
     mavenCentral()
 }
+
+test {
+    useJUnitPlatform()
+}
+
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
 dependencies {
@@ -11,4 +16,5 @@ dependencies {
     implementation 'org.apache.commons:commons-lang3:3.13.0'
     implementation 'com.github.javaparser:javaparser-core:3.25.7'
     implementation 'com.github.javaparser:javaparser-symbol-solver-core:3.25.7'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.1'
 }

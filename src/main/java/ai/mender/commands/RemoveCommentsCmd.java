@@ -1,7 +1,7 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
-import ai.mender.domain.CommentRec;
+import ai.mender.untangler.shared.response.CommentRec;
 import ai.mender.domain.EditMode;
 import ai.mender.domain.SourceEdit;
 import ai.mender.domain.SourceEditListResponse;
@@ -11,7 +11,6 @@ import picocli.CommandLine;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
 @CommandLine.Command(
         name = "comments",

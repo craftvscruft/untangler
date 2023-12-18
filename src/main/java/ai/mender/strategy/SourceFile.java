@@ -165,43 +165,4 @@ public record SourceFile(File file) implements ISourceFile {
         }
     }
 
-    public static class StringSourceFile implements ISourceFile {
-        private String name;
-        private String source;
-
-        public StringSourceFile(String name, String source) {
-            this.name = name;
-
-            this.source = source;
-        }
-
-
-        @Override
-        public Reader getReader() {
-            return new StringReader(source);
-        }
-
-        @Override
-        public String getName() {
-            return name;
-        }
-
-        public LanguageStrategy createStrategyForFile() {
-            return createStrategyForExtension(getExtension(name));
-        }
-
-        @Override
-        public Charset getCharset() {
-            return Charset.defaultCharset();
-        }
-
-        public String getSource() {
-            return source;
-        }
-
-        public void setSource(String source) {
-            this.source = source;
-        }
-    }
-
 }

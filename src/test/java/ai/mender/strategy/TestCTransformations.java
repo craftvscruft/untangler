@@ -1,5 +1,6 @@
 package ai.mender.strategy;
 
+import ai.mender.untangler.shared.StringSourceFile;
 import ai.mender.untangler.shared.response.SourcePosition;
 import ai.mender.parsing.Ast;
 import ai.mender.strategy.cpp.CppStrategy;
@@ -41,7 +42,7 @@ public class TestCTransformations {
 //        (fnBody
 //                (decl initializer)
 //        (ref calculateBezierPoint t calculateBezierPoint u simpleDecl initializer))))
-        SourceFile.StringSourceFile sourceFile = new SourceFile.StringSourceFile("main.c", code);
+        StringSourceFile sourceFile = new StringSourceFile("main.c", code);
         CppTopLevelNode topLevelNode = new CppStrategy().parseTopLevel(sourceFile);
         List<String> astPhases = topLevelNode.exposeAstPasses();
         Approvals.verify(StringUtils.join(astPhases, "\n====PASS===\n"));
@@ -55,7 +56,7 @@ public class TestCTransformations {
               double s = currentPoint = calculateBezierPoint(t) - calculateBezierPoint(u);
               global1 = arg1;
             }""";
-        SourceFile.StringSourceFile sourceFile = new SourceFile.StringSourceFile("main.c", code);
+        StringSourceFile sourceFile = new StringSourceFile("main.c", code);
         CppTopLevelNode topLevelNode = new CppStrategy().parseTopLevel(sourceFile);
         Ast ast = CppStrategy.getTransformedAst(CppStrategy.parseAst(topLevelNode));
         Optional<Ast> fnNode = ast.getFirstChildByTag("fn");
@@ -71,7 +72,7 @@ public class TestCTransformations {
         String code = """
             void foo(double arg1, double arg2) {
             }""";
-        SourceFile.StringSourceFile sourceFile = new SourceFile.StringSourceFile("main.c", code);
+        StringSourceFile sourceFile = new StringSourceFile("main.c", code);
         CppTopLevelNode topLevelNode = new CppStrategy().parseTopLevel(sourceFile);
         Ast ast = CppStrategy.getTransformedAst(CppStrategy.parseAst(topLevelNode));
         Optional<Ast> fnNode = ast.getFirstChildByTag("fn");
@@ -93,7 +94,7 @@ public class TestCTransformations {
               double s = currentPoint = calculateBezierPoint(t) - calculateBezierPoint(u);
               global1 = arg1;
             }""";
-        SourceFile.StringSourceFile sourceFile = new SourceFile.StringSourceFile("main.c", code);
+        StringSourceFile sourceFile = new StringSourceFile("main.c", code);
         CppTopLevelNode topLevelNode = new CppStrategy().parseTopLevel(sourceFile);
         Ast ast = CppStrategy.getTransformedAst(CppStrategy.parseAst(topLevelNode));
 

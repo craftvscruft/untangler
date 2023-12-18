@@ -3,6 +3,7 @@ package ai.mender.strategy;
 import ai.mender.SimpleSelector;
 import ai.mender.domain.Reference;
 import ai.mender.domain.ReferencesResponse;
+import ai.mender.untangler.shared.StringSourceFile;
 import ai.mender.untangler.shared.response.SourceRange;
 import ai.mender.strategy.cpp.CppStrategy;
 import ai.mender.strategy.cpp.CppTopLevelNode;
@@ -84,7 +85,7 @@ public class TestReferencesInC {
 
     private static ReferencesResponse parseRefs(String code, String name) {
         CppStrategy strategy = new CppStrategy();
-        SourceFile.StringSourceFile stringSourceFile = new SourceFile.StringSourceFile("main.c", code);
+        StringSourceFile stringSourceFile = new StringSourceFile("main.c", code);
         CppTopLevelNode topLevelNode = strategy.parseTopLevel(stringSourceFile);
         return strategy.references(topLevelNode, SimpleSelector.parse(name));
     }

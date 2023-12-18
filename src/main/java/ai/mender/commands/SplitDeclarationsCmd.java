@@ -6,6 +6,7 @@ import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
 import ai.mender.strategy.TopLevelNode;
 import ai.mender.strategy.cpp.CppStrategy;
+import ai.mender.untangler.shared.response.DeclarationRec;
 import ai.mender.untangler.shared.response.SourcePosition;
 import ai.mender.untangler.shared.response.SourceText;
 import picocli.CommandLine;

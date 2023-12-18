@@ -4,6 +4,8 @@ package ai.mender;
 import ai.mender.commands.OutputFormat;
 import ai.mender.domain.*;
 import ai.mender.untangler.shared.TableOutput;
+import ai.mender.untangler.shared.response.CommentListResponse;
+import ai.mender.untangler.shared.response.CommentRec;
 import ai.mender.untangler.shared.response.FunctionListResponse;
 import ai.mender.untangler.shared.response.SourceRange;
 import com.fasterxml.jackson.core.JsonGenerator;
@@ -84,7 +86,9 @@ public class Console {
     }
 
     public static boolean isLineMatch(SourceRange range, String line) {
-        boolean numberMatch = (StringUtils.isNumeric(line) && Integer.parseInt(line) == range.start().line());
+        boolean numberMatch = StringUtils.isNumeric(line) &&
+                Integer.parseInt(line) >= range.start().line() &&
+                Integer.parseInt(line) <= range.end().line();
         boolean wildCard = "*".equals(line);
         return numberMatch || wildCard;
     }

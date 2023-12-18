@@ -86,6 +86,15 @@
     "parameterTypes" : [ ]
   } ]
 }, {
+  "name" : "ai.mender.domain.TestSourcePosition",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "compare",
+    "parameterTypes" : [ ]
+  } ]
+}, {
   "name" : "java.lang.reflect.RecordComponent",
   "allDeclaredFields" : true,
   "queryAllDeclaredMethods" : true,

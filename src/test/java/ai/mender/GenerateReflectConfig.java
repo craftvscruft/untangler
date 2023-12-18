@@ -1,5 +1,6 @@
 package ai.mender;
 
+import ai.mender.domain.SourceEdit;
 import ai.mender.untangler.shared.response.FunctionRec;
 import ai.mender.untangler.shared.response.SourcePosition;
 import ai.mender.untangler.shared.response.SourceRange;
@@ -39,6 +40,7 @@ public class GenerateReflectConfig {
         configEntries.add(getConfigEntryForClass(SourcePosition.class));
         configEntries.add(getConfigEntryForClass(SourceRange.class));
         configEntries.add(getConfigEntryForClass(SourceText.class));
+        addEntriesInPackage(SourceEdit.class.getPackageName(), configEntries);
         addEntriesInPackage(FunctionRec.class.getPackageName(), configEntries);
         configEntries.add(RECORD_COMPONENT_ENTRY);
         System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(configEntries));
