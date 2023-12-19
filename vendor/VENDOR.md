@@ -9,7 +9,6 @@ https://github.com/antlr/grammars-v4
 
 * Python: MIT
 * CPP14: MIT
-* Java: BSD
 * CSharp: Eclipse Public License - v1.0
 * TypeScript: MIT
 * Antlr itself: BSD 3-clause
