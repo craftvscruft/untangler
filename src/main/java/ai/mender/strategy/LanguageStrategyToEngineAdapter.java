@@ -2,8 +2,10 @@ package ai.mender.strategy;
 
 import ai.mender.untangler.shared.ISourceFile;
 import ai.mender.untangler.shared.LanguageEngine;
+import ai.mender.untangler.shared.SimpleSelector;
 import ai.mender.untangler.shared.response.CommentRec;
 import ai.mender.untangler.shared.response.FunctionRec;
+import ai.mender.untangler.shared.response.ReferencesResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,5 +34,11 @@ public class LanguageStrategyToEngineAdapter implements LanguageEngine  {
     @Override
     public String formatMultiLineComment(String text) {
         return strategy.formatMultiLineComment(text);
+    }
+
+    @Override
+    public ReferencesResponse references(ISourceFile sourceFile, SimpleSelector selector) {
+        TopLevelNode tree = strategy.parseTopLevel(sourceFile);
+        return strategy.references(tree, selector);
     }
 }

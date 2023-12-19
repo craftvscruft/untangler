@@ -16,6 +16,7 @@ import org.apache.commons.lang3.NotImplementedException;
 
 import java.util.function.Consumer;
 
+@Deprecated // Prefer JavaParserEngine
 public class JavaStrategy implements LanguageStrategy {
 
     private static Java20Parser.CompilationUnitContext parseProgram(

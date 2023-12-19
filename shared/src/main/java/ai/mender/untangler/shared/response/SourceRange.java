@@ -1,6 +1,8 @@
 package ai.mender.untangler.shared.response;
 
-public record SourceRange(SourcePosition start, SourcePosition end) {
+import java.util.Comparator;
+
+public record SourceRange(SourcePosition start, SourcePosition end) implements Comparable<SourceRange> {
     public static SourceRange unknown() {
         return new SourceRange(new SourcePosition(-1, -1), new SourcePosition(-1, -1));
     }
@@ -24,5 +26,11 @@ public record SourceRange(SourcePosition start, SourcePosition end) {
 
     public boolean isWithin(SourceRange outerRange) {
         return start.isWithin(outerRange) && end.isWithin(outerRange);
+    }
+
+
+    @Override
+    public int compareTo(SourceRange o) {
+        return Comparator.comparing(SourceRange::start).thenComparing(SourceRange::end).compare(this, o);
     }
 }

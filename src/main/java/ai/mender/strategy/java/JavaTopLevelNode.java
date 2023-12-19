@@ -8,6 +8,7 @@ import org.antlr.v4.runtime.tree.ParseTreeWalker;
 
 import java.util.function.Consumer;
 
+@Deprecated // Prefer JavaParserEngine
 public class JavaTopLevelNode implements TopLevelNode {
     private final Java20Parser.CompilationUnitContext tree;
 

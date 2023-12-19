@@ -16,4 +16,6 @@ public interface LanguageEngine {
     }
 
     String formatMultiLineComment(String text);
+
+    ReferencesResponse references(ISourceFile sourceFile, SimpleSelector selector);
 }

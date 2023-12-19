@@ -8,6 +8,7 @@ import antlrgen.java20.Java20Parser;
 import org.antlr.v4.runtime.tree.TerminalNode;
 
 
+@Deprecated // Prefer JavaParserEngine
 public class JavaFunctionDefinitionNode implements FunctionDefinitionNode<Java20Parser.MethodDeclarationContext> {
     private final Java20Parser.MethodDeclarationContext ctx;
 

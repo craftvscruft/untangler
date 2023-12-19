@@ -1,6 +1,8 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
+import ai.mender.strategy.LanguageEngineFactory;
+import ai.mender.untangler.shared.LanguageEngine;
 import ai.mender.untangler.shared.SimpleSelector;
 import ai.mender.untangler.shared.response.ReferencesResponse;
 import ai.mender.strategy.LanguageStrategy;
@@ -43,17 +45,17 @@ public class GetReferencesCmd implements Runnable, CommandLine.IExitCodeGenerato
         var message = "OK";
         try {
             SourceFile sourceFile = new SourceFile(file);
-            LanguageStrategy languageStrategy = sourceFile.createStrategyForFile();
+            LanguageEngine engine = LanguageEngineFactory.forSource(sourceFile);
             if (!file.exists()) {
                 message = "File not found";
                 success = false;
-            } else if (languageStrategy == null) {
+            } else if (engine == null) {
                 message = "Unknown file type! Cannot parse.";
                 success = false;
             } else {
-                TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
-                ReferencesResponse response = languageStrategy.references(tree, SimpleSelector.parse(selector));
 
+                SimpleSelector simpleSelector = SimpleSelector.parse(selector);
+                ReferencesResponse response = engine.references(sourceFile, simpleSelector);
                 Console.printOutput(response, spec.commandLine().getOut(), outputFormat);
                 success = true;
                 message = "OK";
