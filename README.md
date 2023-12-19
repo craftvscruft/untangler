@@ -28,24 +28,24 @@ Prototype, not ready for production use.
 |-------------------|--------|---------|------|------|---------|
 | get functions     | Beta   | Beta    | Beta | Beta | -       |
 | get references    | Beta   | Beta    | Beta | Beta | -       |
-| rename            | -      | Beta    | -    | -    | -       |
-| add comment       | -      | Beta    | -    | -    | -       |
-| remove comment    | -      | Beta    | -    | -    | -       |
+| rename            | -      | Beta    | Beta | -    | -       |
+| add comment       | -      | Beta    | Beta | -    | -       |
+| remove comment    | -      | Beta    | Beta | -    | -       |
 | extract variable  | -      | -       | -    | -    | -       |
 | extract parameter | -      | -       | -    | -    | -       |
 | extract field     | -      | -       | -    | -    | -       |
 
 # Requirements (build)
 
-* GraalVM JDK20 ([Homebrew tap](https://github.com/graalvm/homebrew-tap))
+* Java 16+ (GraalVM JDK20 to build static exe ([Homebrew tap](https://github.com/graalvm/homebrew-tap))
 
-We're using GraalVM in preparation to ship a static executable that does not require Java to be installed for the end
-user. This doc will assume version 20 but any JDK 16+ should work.
+GraalVM will allow us to ship untangler static executable that does not require Java to be installed for the end
+user.
 
 ## Running
 
 ```
-# Your GraalVM JDK 20 instalation
+# Set your GraalVM JDK instalation if you're using it
 export JAVA_HOME=...
 
 ./gradlew installDist
