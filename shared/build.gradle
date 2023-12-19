@@ -7,6 +7,6 @@ repositories {
 sourceCompatibility = JavaVersion.VERSION_16
 targetCompatibility = JavaVersion.VERSION_16
 dependencies {
-    implementation 'org.apache.commons:commons-lang3:3.13.0'
+    implementation "org.apache.commons:commons-lang3:${property('commons-lang3.version')}"
     implementation "com.fasterxml.jackson.core:jackson-annotations:${property('jackson.version')}"
 }
