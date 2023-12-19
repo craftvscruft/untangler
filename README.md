@@ -103,6 +103,7 @@ Coverage report in `open build/reports/jacoco/test/html/index.html`
 
 ## Building native binary
 
+This build is slower, but the resulting static executable is fast and shippable!
 ```
 # Your GraalVM JDK 20 instalation
 export JAVA_HOME=...

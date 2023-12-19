@@ -46,6 +46,12 @@
     "name" : "hashCode",
     "parameterTypes" : [ ]
   }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "ai.mender.untangler.shared.response.SourceRange" ]
+  }, {
     "name" : "end",
     "parameterTypes" : [ ]
   }, {
@@ -62,6 +68,354 @@
     "parameterTypes" : [ "ai.mender.untangler.shared.response.SourceRange" ]
   }, {
     "name" : "unknown",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.SourceText",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "range",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "text",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.SourceEditListResponse",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "message",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "success",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "writeTableOutput",
+    "parameterTypes" : [ "java.io.PrintWriter" ]
+  }, {
+    "name" : "edits",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.Reference",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "name",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "ai.mender.untangler.shared.response.Reference" ]
+  }, {
+    "name" : "range",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "declarationRange",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.DeclarationRec",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "range",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "declarators",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "specifier",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.SourcePosition",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "ai.mender.untangler.shared.response.SourcePosition" ]
+  }, {
+    "name" : "line",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "parse",
+    "parameterTypes" : [ "java.lang.String" ]
+  }, {
+    "name" : "col",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "isWithin",
+    "parameterTypes" : [ "ai.mender.untangler.shared.response.SourceRange" ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.ReferencesResponse",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "empty",
+    "parameterTypes" : [ "ai.mender.untangler.shared.SimpleSelector" ]
+  }, {
+    "name" : "selector",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "declarations",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "references",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.FunctionListResponse",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "message",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "success",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "writeTableOutput",
+    "parameterTypes" : [ "java.io.PrintWriter" ]
+  }, {
+    "name" : "items",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.SourceRange",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "compareTo",
+    "parameterTypes" : [ "ai.mender.untangler.shared.response.SourceRange" ]
+  }, {
+    "name" : "end",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "start",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "parse",
+    "parameterTypes" : [ "java.lang.String" ]
+  }, {
+    "name" : "isUnknown",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "isWithin",
+    "parameterTypes" : [ "ai.mender.untangler.shared.response.SourceRange" ]
+  }, {
+    "name" : "unknown",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.FunctionRec",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "name",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "range",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "lineCount",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.CommentListResponse",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "message",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "success",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "writeTableOutput",
+    "parameterTypes" : [ "java.io.PrintWriter" ]
+  }, {
+    "name" : "items",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.EditMode",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "values",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "valueOf",
+    "parameterTypes" : [ "java.lang.String" ]
+  }, {
+    "name" : "$values",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.SourceEdit",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "mode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "insert",
+    "parameterTypes" : [ "ai.mender.untangler.shared.response.SourcePosition", "java.lang.String" ]
+  }, {
+    "name" : "end",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "replace",
+    "parameterTypes" : [ "ai.mender.untangler.shared.response.SourceRange", "java.lang.String" ]
+  }, {
+    "name" : "start",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "text",
+    "parameterTypes" : [ ]
+  } ]
+}, {
+  "name" : "ai.mender.untangler.shared.response.CommentRec",
+  "allDeclaredFields" : true,
+  "queryAllDeclaredMethods" : true,
+  "queryAllDeclaredConstructors" : true,
+  "methods" : [ {
+    "name" : "equals",
+    "parameterTypes" : [ "java.lang.Object" ]
+  }, {
+    "name" : "toString",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "hashCode",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "range",
+    "parameterTypes" : [ ]
+  }, {
+    "name" : "text",
     "parameterTypes" : [ ]
   } ]
 }, {

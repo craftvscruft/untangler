@@ -7,8 +7,10 @@ import ai.mender.untangler.shared.response.SourceRange;
 import ai.mender.untangler.shared.response.SourceText;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.reflect.ClassPath;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class GenerateReflectConfig {
             }
     );
 
-    public static void main(String[] args) throws JsonProcessingException {
+    public static void main(String[] args) throws IOException {
         List<ConfigEntry> configEntries = new ArrayList<>();
         // Naming all in the subproject explicitly for now
         configEntries.add(getConfigEntryForClass(SourcePosition.class));
@@ -45,19 +47,28 @@ public class GenerateReflectConfig {
         System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(configEntries));
     }
 
-    private static void addEntriesInPackage(String packageName, List<ConfigEntry> configEntries) {
-        InputStream stream = ClassLoader.getSystemClassLoader()
-                .getResourceAsStream(packageName.replaceAll("[.]", "/"));
-        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+    private static void addEntriesInPackage(String packageName, List<ConfigEntry> configEntries) throws IOException {
+        ClassPath classPath = ClassPath.from(Thread.currentThread().getContextClassLoader());
+//        InputStream stream = ClassLoader.getSystemClassLoader()
+//                .getResourceAsStream(packageName.replaceAll("[.]", "/"));
+//        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
-        reader.lines()
-                .filter(line -> line.endsWith(".class"))
-                .map(line -> getClass(line, packageName))
+        classPath.getTopLevelClassesRecursive(packageName).stream()
                 .map(klass ->
                         getConfigEntryForClass(klass)).forEachOrdered(configEntries::add);
     }
 
-    private static ConfigEntry getConfigEntryForClass(Class klass) {
+    private static ConfigEntry getConfigEntryForClass(ClassPath.ClassInfo classInfo) {
+        try {
+            Class<?> klass = Class.forName(classInfo.getName());
+            return getConfigEntryForClass(klass);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private static ConfigEntry getConfigEntryForClass(Class<?> klass) {
         return new ConfigEntry(
                 klass.getCanonicalName(),
                 true,
