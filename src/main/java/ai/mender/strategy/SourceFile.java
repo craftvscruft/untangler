@@ -4,7 +4,6 @@ import ai.mender.untangler.shared.response.SourceEdit;
 import ai.mender.parsing.CharsetUtils;
 import ai.mender.strategy.cpp.CppStrategy;
 import ai.mender.strategy.csharp.CSharpStrategy;
-import ai.mender.strategy.java.JavaStrategy;
 import ai.mender.strategy.python.PythonStrategy;
 import ai.mender.untangler.shared.ISourceFile;
 import com.google.common.collect.ImmutableList;
@@ -77,7 +76,7 @@ public record SourceFile(File file) implements ISourceFile {
         return switch (extension.toLowerCase()) {
             case "c", "cpp", "cc" -> new CppStrategy();
             case "py" -> new PythonStrategy();
-            case "java" -> new JavaStrategy();
+            case "java" -> throw new UnsupportedOperationException("Java should now be handled by LanguageEngine");
             case "cs" -> new CSharpStrategy();
             default -> null;
         };

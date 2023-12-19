@@ -53,10 +53,6 @@ public class GenerateReflectConfig {
 
     private static void addEntriesInPackage(String packageName, List<ConfigEntry> configEntries) throws IOException {
         ClassPath classPath = ClassPath.from(Thread.currentThread().getContextClassLoader());
-//        InputStream stream = ClassLoader.getSystemClassLoader()
-//                .getResourceAsStream(packageName.replaceAll("[.]", "/"));
-//        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-
         classPath.getTopLevelClassesRecursive(packageName).stream()
                 .forEachOrdered(classInfo ->
                 {
