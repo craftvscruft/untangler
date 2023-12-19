@@ -1,5 +1,6 @@
 package ai.mender.strategy;
 
+import ai.mender.untangler.shared.LanguageEngine;
 import ai.mender.untangler.shared.SimpleSelector;
 import ai.mender.untangler.shared.response.Reference;
 import ai.mender.untangler.shared.response.ReferencesResponse;
@@ -27,7 +28,7 @@ public class TestLanguageStrategy {
         references.add(new Reference("ds", SourceRange.parse(ref2Range), SourceRange.parse(declRange)));
         ReferencesResponse referencesResponse = new ReferencesResponse(SimpleSelector.parse("to:1"), declarations, references);
         SourceRange declarationRange = SourceRange.parse(declRange);
-        SourceEditListResponse editListResponse = LanguageStrategy.createRenameEdits("to", referencesResponse, declarationRange);
+        SourceEditListResponse editListResponse = LanguageEngine.createRenameEdits("to", referencesResponse, declarationRange);
 
         Assertions.assertEquals(3, editListResponse.edits().size());
     }
@@ -44,7 +45,7 @@ public class TestLanguageStrategy {
         references.add(new Reference("ds", SourceRange.parse(ref1Range), SourceRange.parse(declRange)));
         ReferencesResponse referencesResponse = new ReferencesResponse(SimpleSelector.parse("to:1"), declarations, references);
         SourceRange declarationRange = SourceRange.parse(declRange);
-        SourceEditListResponse editListResponse = LanguageStrategy.createRenameEdits("to", referencesResponse, declarationRange);
+        SourceEditListResponse editListResponse = LanguageEngine.createRenameEdits("to", referencesResponse, declarationRange);
 
         Assertions.assertEquals(2, editListResponse.edits().size());
     }

@@ -5,14 +5,11 @@ import ai.mender.strategy.LanguageEngineFactory;
 import ai.mender.untangler.shared.LanguageEngine;
 import ai.mender.untangler.shared.response.FunctionListResponse;
 import ai.mender.untangler.shared.response.FunctionRec;
-import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
-import ai.mender.strategy.TopLevelNode;
 import picocli.CommandLine;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.stream.Collectors;
 
 @CommandLine.Command(
         name = "functions",

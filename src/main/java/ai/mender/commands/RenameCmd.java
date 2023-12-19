@@ -1,11 +1,12 @@
 package ai.mender.commands;
 
 import ai.mender.Console;
+import ai.mender.strategy.LanguageEngineFactory;
+import ai.mender.untangler.shared.LanguageEngine;
 import ai.mender.untangler.shared.SimpleSelector;
 import ai.mender.untangler.shared.response.SourceEditListResponse;
 import ai.mender.strategy.LanguageStrategy;
 import ai.mender.strategy.SourceFile;
-import ai.mender.strategy.TopLevelNode;
 import ai.mender.untangler.clang.ClangEngine;
 import ai.mender.untangler.shared.Ast;
 import picocli.CommandLine;
@@ -49,7 +50,7 @@ public class RenameCmd implements Runnable, CommandLine.IExitCodeGenerator {
                     "Parsing engine",
                     "Supported: antlr (default), clang"
             })
-    private Engine engine;
+    private Engine requesedEngine;
 
     @CommandLine.Spec CommandLine.Model.CommandSpec spec;
     private boolean success = false;
@@ -59,22 +60,22 @@ public class RenameCmd implements Runnable, CommandLine.IExitCodeGenerator {
         var message = "OK";
         try {
             SourceFile sourceFile = new SourceFile(file);
-            LanguageStrategy languageStrategy = sourceFile.createStrategyForFile();
+            LanguageEngine engine = LanguageEngineFactory.forSource(sourceFile);
             if (!file.exists()) {
                 message = "File not found";
                 success = false;
-            } else if (languageStrategy == null) {
+            } else if (engine == null) {
                 message = "Unknown file type! Cannot parse.";
                 success = false;
             } else {
 
                 SourceEditListResponse response;
-                if (engine == Engine.clang) {
+                if (requesedEngine == Engine.clang) {
+                    LanguageStrategy languageStrategy = sourceFile.createStrategyForFile();
                     Ast ast = ClangEngine.runClang(sourceFile.file().getPath());
                     response = languageStrategy.renameWithAst(ast, SimpleSelector.parse(from), to);
                 } else {
-                    TopLevelNode tree = languageStrategy.parseTopLevel(sourceFile);
-                    response = languageStrategy.rename(tree, SimpleSelector.parse(from), to);
+                    response = engine.rename(sourceFile, SimpleSelector.parse(from), to);
                 }
 
                 Console.printOutput(response, spec.commandLine().getOut(), outputFormat);

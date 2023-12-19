@@ -6,6 +6,7 @@ import ai.mender.untangler.shared.SimpleSelector;
 import ai.mender.untangler.shared.response.CommentRec;
 import ai.mender.untangler.shared.response.FunctionRec;
 import ai.mender.untangler.shared.response.ReferencesResponse;
+import ai.mender.untangler.shared.response.SourceEditListResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,5 +41,11 @@ public class LanguageStrategyToEngineAdapter implements LanguageEngine  {
     public ReferencesResponse references(ISourceFile sourceFile, SimpleSelector selector) {
         TopLevelNode tree = strategy.parseTopLevel(sourceFile);
         return strategy.references(tree, selector);
+    }
+
+    @Override
+    public SourceEditListResponse rename(ISourceFile sourceFile, SimpleSelector fromSelector, String to) {
+        TopLevelNode tree = strategy.parseTopLevel(sourceFile);
+        return LanguageEngine.renameInner(fromSelector, to, strategy.references(tree, fromSelector));
     }
 }
