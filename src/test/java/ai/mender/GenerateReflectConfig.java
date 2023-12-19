@@ -7,19 +7,18 @@ import ai.mender.untangler.shared.response.SourceRange;
 import ai.mender.untangler.shared.response.SourceText;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.javaparser.ast.Modifier;
+import com.google.common.io.Files;
 import com.google.common.reflect.ClassPath;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GenerateReflectConfig {
-    // This must be re-run on changes to the domain package
-    // TODO: Make this auto-run and dump to META-INF/native-image/reflect-config.json
+    // This must be re-run on changes to the domain package, and the tmp file copied.
+    // TODO: Make this auto-run and dump to src/main/resources/META-INF/native-image/reflect-config.json
     public record ConfigEntry(String name, boolean allDeclaredFields, boolean queryAllDeclaredMethods, boolean queryAllDeclaredConstructors, MethodEntry[] methods) {
     }
     public record MethodEntry(String name, String[] parameterTypes) {
@@ -43,8 +42,13 @@ public class GenerateReflectConfig {
         configEntries.add(getConfigEntryForClass(SourceRange.class));
         configEntries.add(getConfigEntryForClass(SourceText.class));
         addEntriesInPackage(FunctionRec.class.getPackageName(), configEntries);
+        addEntriesInPackage("com.github.javaparser.ast", configEntries);
+
         configEntries.add(RECORD_COMPONENT_ENTRY);
-        System.out.println(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(configEntries));
+        File tempFile = File.createTempFile("reflect-config", "json");
+        new ObjectMapper().writerWithDefaultPrettyPrinter().writeValue(tempFile, configEntries);
+        System.out.println("Next copy it:");
+        System.out.println("cp " + tempFile.getAbsolutePath() + " src/main/resources/META-INF/native-image/reflect-config.json");
     }
 
     private static void addEntriesInPackage(String packageName, List<ConfigEntry> configEntries) throws IOException {
@@ -54,28 +58,30 @@ public class GenerateReflectConfig {
 //        BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
 
         classPath.getTopLevelClassesRecursive(packageName).stream()
-                .map(klass ->
-                        getConfigEntryForClass(klass)).forEachOrdered(configEntries::add);
+                .forEachOrdered(classInfo ->
+                {
+                    try {
+                        Class<?> klass = Class.forName(classInfo.getName());
+                        configEntries.add(getConfigEntryForClass(klass));
+                        for (Class<?> innerClass : klass.getDeclaredClasses()) {
+                            configEntries.add(getConfigEntryForClass(innerClass));
+                        }
+                    } catch (ClassNotFoundException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
     }
 
-    private static ConfigEntry getConfigEntryForClass(ClassPath.ClassInfo classInfo) {
-        try {
-            Class<?> klass = Class.forName(classInfo.getName());
-            return getConfigEntryForClass(klass);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
 
-    }
 
     private static ConfigEntry getConfigEntryForClass(Class<?> klass) {
         return new ConfigEntry(
-                klass.getCanonicalName(),
+                klass.getName(),
                 true,
                 true,
                 true,
                 Arrays.stream(klass.getDeclaredMethods()).map(m -> new MethodEntry(
-                        m.getName(), Arrays.stream(m.getParameterTypes()).map(Class::getCanonicalName).toArray(String[]::new)
+                        m.getName(), Arrays.stream(m.getParameterTypes()).map(Class::getName).toArray(String[]::new)
                 )).toArray(MethodEntry[]::new)
         );
     }
